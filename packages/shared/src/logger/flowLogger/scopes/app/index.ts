@@ -62,17 +62,4 @@ export default class extends FlowLoggerScopeBase {
   apiCalls: SceneApiCalls = this._createSceneProxy('apiCalls') as SceneApiCalls;
 
   private _apiCalls = () => SceneApiCalls;
-
-  // wallet
-  // network
-  // account(accountSelector, address)
-  // notification(socket)
-  // migration
-  // backup
-  // upgrade
-  // onboarding
-  // secret(password)
-  // navigation(routes,deeplink,linking,url)
-  // webview(webembed api)
-  // store(redux,storage,cache,db,jotai)
 }
