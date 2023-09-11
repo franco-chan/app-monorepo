@@ -13,7 +13,7 @@ import {
   Typography,
 } from '@onekeyhq/components';
 import type { IEncodedTxEvm } from '@onekeyhq/engine/src/vaults/impl/evm/Vault';
-import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
+import flowLogger from '@onekeyhq/shared/src/logger/flowLogger/flowLogger';
 
 import ETHLogoPNG from '../../../../assets/staking/eth_staking.png';
 import backgroundApiProxy from '../../../background/instance/backgroundApiProxy';
@@ -54,7 +54,7 @@ export default function StakingETHNotes() {
           networkId,
         });
       } catch {
-        debugLogger.common.error('registerOnKele failed');
+        flowLogger.error.log('registerOnKele failed');
       }
 
       const value = new BigNumber(amount)

@@ -11,6 +11,7 @@ import {
 } from '@onekeyhq/shared/src/engine/engineConsts';
 import { OneKeyErrorClassNames } from '@onekeyhq/shared/src/errors/types/errorTypes';
 import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
+import flowLogger from '@onekeyhq/shared/src/logger/flowLogger/flowLogger';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
 import backgroundApiProxy from '../../../background/instance/backgroundApiProxy';
@@ -165,7 +166,7 @@ export function useFetchWalletAddress({
               !Number.isSafeInteger(pathComponentAccountIndex) ||
               Number(pathComponentAccountIndex) < 0
             ) {
-              debugLogger.common.error('can not find account index: ', account);
+              flowLogger.error.log('can not find account index: ', account);
               throw new Error('can not find account index');
             }
             const accountIndex = pathComponent[

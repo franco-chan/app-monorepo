@@ -23,10 +23,11 @@ import type {
   INFTInfo,
   ITransferInfo,
 } from '@onekeyhq/engine/src/vaults/types';
-import { makeTimeoutPromise } from '@onekeyhq/shared/src/background/backgroundUtils';
 import { isLightningNetworkByImpl } from '@onekeyhq/shared/src/engine/engineConsts';
 import type { OneKeyError } from '@onekeyhq/shared/src/errors';
 import { OneKeyErrorClassNames } from '@onekeyhq/shared/src/errors/types/errorTypes';
+import flowLogger from '@onekeyhq/shared/src/logger/flowLogger/flowLogger';
+import { createTimeoutPromise } from '@onekeyhq/shared/src/utils/promiseUtils';
 
 import backgroundApiProxy from '../../../background/instance/backgroundApiProxy';
 import AddressInput from '../../../components/AddressInput';
@@ -185,7 +186,7 @@ function PreSendAddress() {
 
   const isContractAddressCheck = useCallback(
     (address: string) =>
-      makeTimeoutPromise({
+      createTimeoutPromise({
         asyncFunc: async () => {
           const isContractAddressResp =
             await backgroundApiProxy.validator.isContractAddress(
@@ -448,6 +449,7 @@ function PreSendAddress() {
             },
           },
         });
+        flowLogger.send.common.inputToAddress({ address: toVal });
       }
     },
 

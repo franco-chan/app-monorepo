@@ -10,7 +10,7 @@ import {
   WALLET_TYPE_EXTERNAL,
   WALLET_TYPE_WATCHING,
 } from '@onekeyhq/engine/src/types/wallet';
-import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
+import flowLogger from '@onekeyhq/shared/src/logger/flowLogger/flowLogger';
 
 import { useTransactionSendContext } from '../../views/Send/utils/TransactionSendContext';
 
@@ -103,7 +103,7 @@ const {
           networkId,
         );
       } catch (error) {
-        debugLogger.common.error(error);
+        flowLogger.error.log(error);
       }
     }
     return isCompatibleNetwork$;

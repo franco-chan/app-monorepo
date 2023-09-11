@@ -9,6 +9,7 @@ import useModalClose from '@onekeyhq/components/src/Modal/Container/useModalClos
 import { copyToClipboard } from '@onekeyhq/components/src/utils/ClipboardUtils';
 import type { IBaseExternalAccountInfo } from '@onekeyhq/engine/src/dbs/simple/entity/SimpleDbEntityWalletConnect';
 import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
+import flowLogger from '@onekeyhq/shared/src/logger/flowLogger/flowLogger';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
 import backgroundApiProxy from '../../background/instance/backgroundApiProxy';
@@ -98,7 +99,7 @@ export function useWalletConnectQrcodeModal() {
             openConnectionUrl = uri;
             canOpenURL = await Linking.canOpenURL(openConnectionUrl);
           } catch (error) {
-            debugLogger.common.error(error);
+            flowLogger.error.log(error);
           }
         }
 
@@ -107,7 +108,7 @@ export function useWalletConnectQrcodeModal() {
             openConnectionUrl = connectionUrl;
             canOpenURL = await Linking.canOpenURL(openConnectionUrl);
           } catch (error) {
-            debugLogger.common.error(error);
+            flowLogger.error.log(error);
           }
         }
 
@@ -154,7 +155,7 @@ export function useWalletConnectQrcodeModal() {
           ])) && undefined
         );
       } catch (error) {
-        debugLogger.common.error(error);
+        flowLogger.error.log(error);
         return Promise.reject(error);
       }
     },
