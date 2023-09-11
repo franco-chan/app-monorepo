@@ -25,12 +25,6 @@ export abstract class KeyringBase extends VaultContext {
 
   vault: VaultBase;
 
-  // TODO: check history is added
-  abstract signTransaction(
-    unsignedTx: IUnsignedTxPro,
-    options: ISignCredentialOptions,
-  ): Promise<ISignedTxPro>;
-
   abstract signTransaction(
     unsignedTx: IUnsignedTxPro,
     options: ISignCredentialOptions,

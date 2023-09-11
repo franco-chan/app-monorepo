@@ -174,6 +174,8 @@ export type IEncodedTxEvm = {
   gasPrice?: string;
   maxFeePerGas?: string;
   maxPriorityFeePerGas?: string;
+
+  chainId?: number;
 };
 
 export enum IDecodedTxEvmType {
@@ -1177,6 +1179,10 @@ export default class Vault extends VaultBase {
     );
 
     encodedTx.nonce = nextNonce;
+
+    const chainIdStr = await this.getNetworkChainId();
+    const chainId = new BigNumber(chainIdStr).toNumber();
+    encodedTx.chainId = chainId;
 
     return { ...unsignedTx, encodedTx };
   }

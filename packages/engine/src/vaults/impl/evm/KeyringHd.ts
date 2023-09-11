@@ -1,39 +1,38 @@
+import BigNumber from 'bignumber.js';
+
+import type { CoreChainApiBase } from '@onekeyhq/core/src/chains/_base/CoreChainApiBase';
+import coreChainApi from '@onekeyhq/core/src/instance/coreChainApi';
 import { slicePathTemplate } from '@onekeyhq/engine/src/managers/derivation';
 import { batchGetPublicKeys } from '@onekeyhq/engine/src/secret';
 import { OneKeyInternalError } from '@onekeyhq/shared/src/errors';
+import bufferUtils from '@onekeyhq/shared/src/utils/bufferUtils';
 
 import {
   getAccountNameInfoByImpl,
   getAccountNameInfoByTemplate,
 } from '../../../managers/impl';
-import { Signer } from '../../../proxy';
 import { AccountType } from '../../../types/account';
 import { KeyringHdBase } from '../../keyring/KeyringHdBase';
 
 import type { ExportedSeedCredential } from '../../../dbs/base';
+import type { Signer } from '../../../proxy';
 import type { DBSimpleAccount } from '../../../types/account';
-import type { IPrepareSoftwareAccountsParams } from '../../types';
+import type {
+  IPrepareSoftwareAccountsParams,
+  ISignCredentialOptions,
+  ISignedTxPro,
+  IUnsignedTxPro,
+} from '../../types';
+import type { IEncodedTxEvm } from './Vault';
 
 export class KeyringHd extends KeyringHdBase {
-  override async getSigners(password: string, addresses: Array<string>) {
-    const dbAccount = await this.getDbAccount();
+  override chainApi = coreChainApi.evm.hd;
 
-    if (addresses.length !== 1) {
-      throw new OneKeyInternalError('EVM signers number should be 1.');
-    } else if (addresses[0] !== dbAccount.address) {
-      throw new OneKeyInternalError('Wrong address required for signing.');
-    }
-
-    const { [dbAccount.path]: privateKey } = await this.getPrivateKeys(
-      password,
-    );
-    if (typeof privateKey === 'undefined') {
-      throw new OneKeyInternalError('Unable to get signer.');
-    }
-
-    return {
-      [dbAccount.address]: new Signer(privateKey, password, 'secp256k1'),
-    };
+  override getSigners(
+    password: string,
+    addresses: string[],
+  ): Promise<Record<string, Signer>> {
+    throw new Error('EVM KeyringHd getSigners Method not implemented.');
   }
 
   override async prepareAccounts(
@@ -45,34 +44,20 @@ export class KeyringHd extends KeyringHdBase {
       password,
     )) as ExportedSeedCredential;
 
-    const { pathPrefix, pathSuffix } = slicePathTemplate(template);
-
-    const pubkeyInfos = batchGetPublicKeys(
-      'secp256k1',
-      seed,
+    const addressInfos = await this.chainApi.getAddressesFromHd({
+      template,
+      seed: bufferUtils.bytesToHex(seed),
       password,
-      pathPrefix,
-      indexes.map((index) => pathSuffix.replace('{index}', index.toString())),
-    );
-
-    if (pubkeyInfos.length !== indexes.length) {
-      throw new OneKeyInternalError('Unable to get publick key.');
-    }
+      indexes,
+    });
 
     const ret = [];
     let index = 0;
     const impl = await this.getNetworkImpl();
     const { prefix } = getAccountNameInfoByTemplate(impl, template);
-    for (const info of pubkeyInfos) {
-      const {
-        path,
-        extendedKey: { key: pubkey },
-      } = info;
-      const pub = pubkey.toString('hex');
-      const address = await this.engine.providerManager.addressFromPub(
-        this.networkId,
-        pub,
-      );
+    for (const info of addressInfos) {
+      const { path, publicKey, address } = info;
+
       const name = (names || [])[index] || `${prefix} #${indexes[index] + 1}`;
       const isLedgerLiveTemplate =
         getAccountNameInfoByImpl(impl).ledgerLive.template === template;
@@ -85,7 +70,7 @@ export class KeyringHd extends KeyringHdBase {
         type: AccountType.SIMPLE,
         path,
         coinType,
-        pub,
+        pub: publicKey,
         address,
         template,
       });

@@ -171,7 +171,7 @@ interface DBAPI {
   }: ISetNextAccountIdsParams): Promise<Wallet>;
 
   getCredential(
-    walletId: string,
+    credentialId: string, // walletId || acountId
     password: string,
   ): Promise<ExportedCredential>;
   confirmHDWalletBackuped(walletId: string): Promise<Wallet>;
