@@ -5,6 +5,8 @@ import type {
   IUnsignedTxPro,
 } from '@onekeyhq/engine/src/vaults/types';
 
+import type { IUnsignedMessageEvm } from '../../types';
+
 export abstract class CoreChainApiBase {
   abstract signTransaction({
     unsignedTx,
@@ -21,5 +23,13 @@ export abstract class CoreChainApiBase {
   //  getAddressesFromHw
   //  getAddressesFromHd
 
-  // signMessage
+  abstract signMessage({
+    unsignedMsg,
+    privateKey,
+    password,
+  }: {
+    unsignedMsg: IUnsignedMessageEvm;
+    privateKey: string; // encryptedPrivateKey by password
+    password: string;
+  }): Promise<string>;
 }

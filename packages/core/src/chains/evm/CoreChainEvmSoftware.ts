@@ -3,6 +3,8 @@ import { hexZeroPad, splitSignature } from '@ethersproject/bytes';
 import { keccak256 } from '@ethersproject/keccak256';
 import { serialize } from '@ethersproject/transactions';
 import BigNumber from 'bignumber.js';
+import * as ethUtil from 'ethereumjs-util';
+import { isString } from 'lodash';
 
 import { slicePathTemplate } from '@onekeyhq/engine/src/managers/derivation';
 import { Signer } from '@onekeyhq/engine/src/proxy';
@@ -25,6 +27,9 @@ import { toBigIntHex } from '@onekeyhq/shared/src/utils/numberUtils';
 
 import { CoreChainApiBase } from '../_base/CoreChainApiBase';
 
+import { hashMessage } from './message';
+
+import type { IUnsignedMessageEvm } from '../../types';
 import type { UnsignedTransaction } from '@ethersproject/transactions';
 
 export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
@@ -174,6 +179,53 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
 
         return { address, publicKey, path };
       }),
+    );
+  }
+
+  override async signMessage({
+    unsignedMsg,
+    privateKey,
+    password,
+  }: {
+    unsignedMsg: IUnsignedMessageEvm;
+    privateKey: string;
+    password: string;
+  }): Promise<string> {
+    const signer = await this.getSigner({ password, privateKey });
+
+    let finalMessage: any = unsignedMsg.message;
+
+    if (isString(unsignedMsg.message)) {
+      // Special temporary fix for attribute name error on SpaceSwap
+      // https://onekeyhq.atlassian.net/browse/OK-18748
+      try {
+        const finalMessageParsed: {
+          message: { value1?: string; value?: string };
+        } = JSON.parse(unsignedMsg.message);
+        if (
+          finalMessageParsed?.message?.value1 !== undefined &&
+          finalMessageParsed?.message?.value === undefined &&
+          finalMessageParsed?.message
+        ) {
+          finalMessageParsed.message.value =
+            finalMessageParsed?.message?.value1;
+          finalMessage = JSON.stringify(finalMessageParsed);
+        } else {
+          finalMessage = unsignedMsg.message;
+        }
+      } catch (e) {
+        finalMessage = unsignedMsg.message;
+      }
+    }
+
+    const messageHash = hashMessage({
+      messageType: unsignedMsg.type,
+      message: finalMessage,
+    });
+
+    const [sig, recId] = await signer.sign(ethUtil.toBuffer(messageHash));
+    return ethUtil.addHexPrefix(
+      Buffer.concat([sig, Buffer.from([recId + 27])]).toString('hex'),
     );
   }
 

@@ -47,6 +47,7 @@ export abstract class KeyringSoftwareBase extends KeyringBase {
     if (this.chainApi) {
       return this.signTransactionByChainApi(unsignedTx, options);
     }
+
     const { password } = options;
     if (typeof password === 'undefined') {
       throw new OneKeyInternalError('Software signing requires a password.');
@@ -93,11 +94,14 @@ export abstract class KeyringSoftwareBase extends KeyringBase {
     messages: any[],
     options: ISignCredentialOptions,
   ): Promise<string[]> {
+    if (this.chainApi) {
+      return this.signMessageByChainApi(messages, options);
+    }
+
     const { password } = options;
     if (typeof password === 'undefined') {
       throw new OneKeyInternalError('Software signing requires a password.');
     }
-
     const dbAccount = await this.getDbAccount();
     const [signer] = Object.values(
       await this.getSigners(password, [dbAccount.address]),
@@ -110,6 +114,31 @@ export abstract class KeyringSoftwareBase extends KeyringBase {
           message,
           signer,
         ),
+      ),
+    );
+  }
+
+  async signMessageByChainApi(
+    messages: any[],
+    options: ISignCredentialOptions,
+  ): Promise<string[]> {
+    const { password } = options;
+    if (!password) {
+      throw new Error('password not found');
+    }
+    const chainApi = this.ensureChainApi();
+    const dbAccount = await this.getDbAccount();
+    const { [dbAccount.path]: privateKey } = await this.getPrivateKeys(
+      password,
+    );
+    const privateKeyStr = bufferUtils.bytesToHex(privateKey);
+    return Promise.all(
+      messages.map((unsignedMsg) =>
+        chainApi.signMessage({
+          unsignedMsg,
+          privateKey: privateKeyStr,
+          password,
+        }),
       ),
     );
   }
