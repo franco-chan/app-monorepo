@@ -13,7 +13,7 @@ import type { Signer } from '../../../types/secret';
 import type { IPrepareImportedAccountsParams } from '../../types';
 
 export class KeyringImported extends KeyringImportedBase {
-  override chainApi = coreChainApi.evm.imported;
+  override chainApi: CoreChainApiBase = coreChainApi.evm.imported;
 
   override getSigners(
     password: string,
@@ -31,9 +31,12 @@ export class KeyringImported extends KeyringImportedBase {
     }
     const privateKeyRaw = bufferUtils.bytesToHex(privateKey);
 
-    const { address, publicKey } = await this.chainApi.getAddressFromPrivate({
-      privateKeyRaw,
+    const { addresses } = await this.chainApi.getAddresses({
+      imported: {
+        privateKeysRaw: [privateKeyRaw],
+      },
     });
+    const { publicKey, address } = addresses[0];
 
     return Promise.resolve([
       {

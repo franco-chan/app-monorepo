@@ -132,7 +132,7 @@ export abstract class KeyringSoftwareBase extends KeyringBase {
       password,
     );
     const privateKeyStr = bufferUtils.bytesToHex(privateKey);
-    return Promise.all(
+    const results = await Promise.all(
       messages.map((unsignedMsg) =>
         chainApi.signMessage({
           unsignedMsg,
@@ -141,6 +141,7 @@ export abstract class KeyringSoftwareBase extends KeyringBase {
         }),
       ),
     );
+    return results;
   }
 
   override getAddress(): Promise<string> {

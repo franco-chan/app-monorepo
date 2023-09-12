@@ -5,7 +5,11 @@ import type {
   IUnsignedTxPro,
 } from '@onekeyhq/engine/src/vaults/types';
 
-import type { IUnsignedMessageEvm } from '../../types';
+import type {
+  ICoreApiGetAddressesQuery,
+  ICoreApiGetAddressesResult,
+  IUnsignedMessageEvm,
+} from '../../types';
 
 export abstract class CoreChainApiBase {
   abstract signTransaction({
@@ -18,11 +22,6 @@ export abstract class CoreChainApiBase {
     password: string;
   }): Promise<ISignedTxPro>;
 
-  // prepareAccounts
-  //  getAddressesFromPvt (batch query)
-  //  getAddressesFromHw
-  //  getAddressesFromHd
-
   abstract signMessage({
     unsignedMsg,
     privateKey,
@@ -32,4 +31,8 @@ export abstract class CoreChainApiBase {
     privateKey: string; // encryptedPrivateKey by password
     password: string;
   }): Promise<string>;
+
+  abstract getAddresses(
+    query: ICoreApiGetAddressesQuery,
+  ): Promise<ICoreApiGetAddressesResult>;
 }

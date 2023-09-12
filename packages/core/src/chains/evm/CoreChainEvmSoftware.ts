@@ -29,7 +29,12 @@ import { CoreChainApiBase } from '../_base/CoreChainApiBase';
 
 import { hashMessage } from './message';
 
-import type { IUnsignedMessageEvm } from '../../types';
+import type {
+  ICoreApiGetAddressesQuery,
+  ICoreApiGetAddressesQueryHd,
+  ICoreApiGetAddressesResult,
+  IUnsignedMessageEvm,
+} from '../../types';
 import type { UnsignedTransaction } from '@ethersproject/transactions';
 
 export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
@@ -148,12 +153,7 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     seed,
     password,
     indexes,
-  }: {
-    template: string;
-    seed: string; // encryptedSeed
-    password: string;
-    indexes: number[];
-  }) {
+  }: ICoreApiGetAddressesQueryHd): Promise<ICoreApiGetAddressesResult> {
     const { pathPrefix, pathSuffix } = slicePathTemplate(template);
     const seedBuffer = bufferUtils.toBuffer(seed);
     const pubkeyInfos = batchGetPublicKeys(
@@ -167,7 +167,7 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     if (pubkeyInfos.length !== indexes.length) {
       throw new OneKeyInternalError('Unable to get publick key.');
     }
-    return Promise.all(
+    const addresses = await Promise.all(
       pubkeyInfos.map(async (info) => {
         const {
           path,
@@ -180,6 +180,7 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
         return { address, publicKey, path };
       }),
     );
+    return { addresses };
   }
 
   override async signMessage({
@@ -224,9 +225,10 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     });
 
     const [sig, recId] = await signer.sign(ethUtil.toBuffer(messageHash));
-    return ethUtil.addHexPrefix(
+    const result = ethUtil.addHexPrefix(
       Buffer.concat([sig, Buffer.from([recId + 27])]).toString('hex'),
     );
+    return result;
   }
 
   override async signTransaction({
@@ -254,5 +256,26 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     const rawTx: string = serialize(tx, signature);
     const txid = keccak256(rawTx);
     return { txid, rawTx };
+  }
+
+  override async getAddresses(
+    query: ICoreApiGetAddressesQuery,
+  ): Promise<ICoreApiGetAddressesResult> {
+    if (query.hd) {
+      return this.getAddressesFromHd(query.hd);
+    }
+    if (query.imported) {
+      const addresses = await Promise.all(
+        query.imported.privateKeysRaw.map((privateKeyRaw) =>
+          this.getAddressFromPrivate({
+            privateKeyRaw,
+          }),
+        ),
+      );
+      return {
+        addresses,
+      };
+    }
+    throw new Error('getAddresses query invalid');
   }
 }

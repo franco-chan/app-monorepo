@@ -26,7 +26,7 @@ import type {
 import type { IEncodedTxEvm } from './Vault';
 
 export class KeyringHd extends KeyringHdBase {
-  override chainApi = coreChainApi.evm.hd;
+  override chainApi: CoreChainApiBase = coreChainApi.evm.hd;
 
   override getSigners(
     password: string,
@@ -44,11 +44,13 @@ export class KeyringHd extends KeyringHdBase {
       password,
     )) as ExportedSeedCredential;
 
-    const addressInfos = await this.chainApi.getAddressesFromHd({
-      template,
-      seed: bufferUtils.bytesToHex(seed),
-      password,
-      indexes,
+    const { addresses: addressInfos } = await this.chainApi.getAddresses({
+      hd: {
+        template,
+        seed: bufferUtils.bytesToHex(seed),
+        password,
+        indexes,
+      },
     });
 
     const ret = [];
@@ -56,7 +58,11 @@ export class KeyringHd extends KeyringHdBase {
     const impl = await this.getNetworkImpl();
     const { prefix } = getAccountNameInfoByTemplate(impl, template);
     for (const info of addressInfos) {
-      const { path, publicKey, address } = info;
+      const { path = '', publicKey, address } = info;
+
+      if (!path) {
+        throw new Error('EVM KeyringHD prepareAccounts ERROR:  path not found');
+      }
 
       const name = (names || [])[index] || `${prefix} #${indexes[index] + 1}`;
       const isLedgerLiveTemplate =
