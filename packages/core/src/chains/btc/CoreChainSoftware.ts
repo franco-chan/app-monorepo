@@ -212,8 +212,9 @@ export default abstract class CoreChainSoftware extends CoreChainApiBase {
     const seedBuffer = bufferUtils.toBuffer(seed);
 
     // TODO usedIndexes.map((index) => `${index.toString()}'`),
-    const relPaths: string[] = indexes.map((index) =>
-      pathSuffix.replace('{index}', index.toString()),
+    const relPaths: string[] = indexes.map(
+      (index) => `${index.toString()}'`, // btc
+      // pathSuffix.replace('{index}', index.toString()),// evm
     );
     const pubkeyInfos = batchGetPublicKeys(
       'secp256k1',
