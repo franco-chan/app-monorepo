@@ -1,7 +1,7 @@
 import { sha256 } from '@noble/hashes/sha256';
 
 import type { ExportedSeedCredential } from '@onekeyhq/engine/src/dbs/base';
-import { Signer } from '@onekeyhq/engine/src/proxy';
+import { ChainSigner } from '@onekeyhq/engine/src/proxy';
 import { batchGetPublicKeys } from '@onekeyhq/engine/src/secret';
 import type { DBVariantAccount } from '@onekeyhq/engine/src/types/account';
 import { AccountType } from '@onekeyhq/engine/src/types/account';
@@ -48,7 +48,7 @@ export class KeyringHd extends KeyringHdBase {
     }
     const chainInfo = await this.getChainInfo();
     return {
-      [selectedAddress]: new Signer(
+      [selectedAddress]: new ChainSigner(
         privateKey,
         password,
         chainInfo?.implOptions?.curve ?? 'secp256k1',

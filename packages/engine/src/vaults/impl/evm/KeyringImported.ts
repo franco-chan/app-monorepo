@@ -8,8 +8,8 @@ import bufferUtils from '@onekeyhq/shared/src/utils/bufferUtils';
 import { AccountType } from '../../../types/account';
 import { KeyringImportedBase } from '../../keyring/KeyringImportedBase';
 
+import type { ChainSigner } from '../../../proxy';
 import type { DBSimpleAccount } from '../../../types/account';
-import type { Signer } from '../../../types/secret';
 import type { IPrepareImportedAccountsParams } from '../../types';
 
 export class KeyringImported extends KeyringImportedBase {
@@ -18,7 +18,7 @@ export class KeyringImported extends KeyringImportedBase {
   override getSigners(
     password: string,
     addresses: string[],
-  ): Promise<Record<string, Signer>> {
+  ): Promise<Record<string, ChainSigner>> {
     throw new Error('EVM KeyringImported getSigners Method not implemented.');
   }
 

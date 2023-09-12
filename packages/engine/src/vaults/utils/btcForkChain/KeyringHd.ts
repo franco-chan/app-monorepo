@@ -14,7 +14,7 @@ import { toPsbtNetwork } from '@onekeyhq/shared/src/providerApis/ProviderApiBtc/
 
 import { slicePathTemplate } from '../../../managers/derivation';
 import { getAccountNameInfoByTemplate } from '../../../managers/impl';
-import { Signer } from '../../../proxy';
+import { ChainSigner } from '../../../proxy';
 import { AccountType } from '../../../types/account';
 import { BtcMessageTypes } from '../../../types/message';
 import { KeyringHdBase } from '../../keyring/KeyringHdBase';
@@ -72,7 +72,7 @@ export class KeyringHd extends KeyringHdBase {
   override async getSigners(
     password: string,
     addresses: Array<string>,
-  ): Promise<Record<string, Signer>> {
+  ): Promise<Record<string, ChainSigner>> {
     const relPathToAddresses: Record<string, string> = {};
     const { utxos } = await (
       this.vault as unknown as BTCForkVault
@@ -91,7 +91,7 @@ export class KeyringHd extends KeyringHdBase {
       throw new OneKeyInternalError('No signers would be chosen.');
     }
     const privateKeys = await this.getPrivateKeys(password, relPaths);
-    const ret: Record<string, Signer> = {};
+    const ret: Record<string, ChainSigner> = {};
     for (const [path, privateKey] of Object.entries(privateKeys)) {
       let address = relPathToAddresses[path];
 
@@ -107,7 +107,7 @@ export class KeyringHd extends KeyringHdBase {
         }
       }
 
-      const signer = new Signer(privateKey, password, 'secp256k1');
+      const signer = new ChainSigner(privateKey, password, 'secp256k1');
 
       // TODO generate address from privateKey, and check if matched with utxo address
       const addressFromPrivateKey = address;

@@ -7,7 +7,7 @@ import * as ethUtil from 'ethereumjs-util';
 import { isString } from 'lodash';
 
 import { slicePathTemplate } from '@onekeyhq/engine/src/managers/derivation';
-import { Signer } from '@onekeyhq/engine/src/proxy';
+import { ChainSigner } from '@onekeyhq/engine/src/proxy';
 import {
   batchGetPublicKeys,
   uncompressPublicKey,
@@ -99,7 +99,9 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
       throw new OneKeyInternalError('Software signing requires a password.');
     }
     const privateKeyBuffer = bufferUtils.toBuffer(privateKey);
-    return Promise.resolve(new Signer(privateKeyBuffer, password, 'secp256k1'));
+    return Promise.resolve(
+      new ChainSigner(privateKeyBuffer, password, 'secp256k1'),
+    );
   }
 
   private async getPublicFromPrivate({
@@ -148,7 +150,7 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     };
   }
 
-  private async getAddressesFromHd({
+  async getAddressesFromHd({
     template,
     seed,
     password,

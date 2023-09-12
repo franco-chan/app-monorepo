@@ -12,7 +12,7 @@ import type { SignedTx } from '@onekeyhq/engine/src/types/provider';
 import { OneKeyInternalError } from '@onekeyhq/shared/src/errors';
 import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
 
-import { Signer } from '../../../proxy';
+import { ChainSigner } from '../../../proxy';
 import { AccountType } from '../../../types/account';
 import { KeyringImportedBase } from '../../keyring/KeyringImportedBase';
 
@@ -56,7 +56,7 @@ export class KeyringImported extends KeyringImportedBase {
   override async getSigners(
     password: string,
     addresses: string[],
-  ): Promise<Record<string, Signer>> {
+  ): Promise<Record<string, ChainSigner>> {
     const relPathToAddress: Record<string, string> = {};
     const { utxos } = await (
       this.vault as unknown as BTCForkVault
@@ -74,7 +74,7 @@ export class KeyringImported extends KeyringImportedBase {
       throw new OneKeyInternalError('No signers would be chosen.');
     }
 
-    const ret: Record<string, Signer> = {};
+    const ret: Record<string, ChainSigner> = {};
     const cache: Record<string, ExtendedKey> = {};
 
     const [encryptedXprv] = Object.values(await this.getPrivateKeys(password));
@@ -102,7 +102,7 @@ export class KeyringImported extends KeyringImportedBase {
       });
 
       const address = relPathToAddress[relPath];
-      ret[address] = new Signer(
+      ret[address] = new ChainSigner(
         encrypt(password, cache[relPath].key),
         password,
         'secp256k1',

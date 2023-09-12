@@ -6,7 +6,7 @@ import bufferUtils from '@onekeyhq/shared/src/utils/bufferUtils';
 
 import { KeyringBase } from './KeyringBase';
 
-import type { Signer } from '../../proxy';
+import type { ChainSigner } from '../../proxy';
 import type { DBAccount } from '../../types/account';
 import type {
   IPrepareAccountByAddressIndexParams,
@@ -26,7 +26,7 @@ export abstract class KeyringSoftwareBase extends KeyringBase {
   abstract getSigners(
     password: string,
     addresses: Array<string>,
-  ): Promise<Record<string, ISigner>>;
+  ): Promise<Record<string, ChainSigner>>;
   // TODO import type { Signer } from '../../proxy';
 
   // TODO: check history is added

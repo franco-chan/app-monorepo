@@ -2,7 +2,7 @@ import { COINTYPE_NEXA as COIN_TYPE } from '@onekeyhq/shared/src/engine/engineCo
 import { OneKeyInternalError } from '@onekeyhq/shared/src/errors';
 
 import { slicePathTemplate } from '../../../../managers/derivation';
-import { Signer } from '../../../../proxy';
+import { ChainSigner } from '../../../../proxy';
 import { batchGetPublicKeys } from '../../../../secret';
 import { AccountType } from '../../../../types/account';
 import { KeyringHdBase } from '../../../keyring/KeyringHdBase';
@@ -36,7 +36,7 @@ export class KeyringHd extends KeyringHdBase {
     }
 
     return {
-      [dbAccount.address]: new Signer(privateKey, password, curve),
+      [dbAccount.address]: new ChainSigner(privateKey, password, curve),
     };
   }
 

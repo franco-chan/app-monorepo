@@ -7,7 +7,7 @@ import { OneKeyInternalError } from '@onekeyhq/shared/src/errors';
 
 import { slicePathTemplate } from '../../../../managers/derivation';
 import { getAccountNameInfoByTemplate } from '../../../../managers/impl';
-import { Signer } from '../../../../proxy';
+import { ChainSigner } from '../../../../proxy';
 import { AccountType } from '../../../../types/account';
 import { KeyringHdBase } from '../../../keyring/KeyringHdBase';
 import { signMessage, signTransaction } from '../utils';
@@ -37,7 +37,7 @@ export class KeyringHd extends KeyringHdBase {
     }
 
     return {
-      [dbAccount.address]: new Signer(privateKey, password, 'ed25519'),
+      [dbAccount.address]: new ChainSigner(privateKey, password, 'ed25519'),
     };
   }
 

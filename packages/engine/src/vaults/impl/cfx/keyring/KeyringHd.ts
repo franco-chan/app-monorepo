@@ -3,7 +3,7 @@ import type { SignedTx } from '@onekeyhq/engine/src/types/provider';
 import { COINTYPE_CFX as COIN_TYPE } from '@onekeyhq/shared/src/engine/engineConsts';
 import { OneKeyInternalError } from '@onekeyhq/shared/src/errors';
 
-import { Signer, Verifier } from '../../../../proxy';
+import { ChainSigner, Verifier } from '../../../../proxy';
 import { AccountType } from '../../../../types/account';
 import { KeyringHdBase } from '../../../keyring/KeyringHdBase';
 import { pubkeyToAddress, signTransactionWithSigner } from '../utils';
@@ -38,7 +38,9 @@ export class KeyringHd extends KeyringHdBase {
       throw new OneKeyInternalError('Unable to get signer.');
     }
 
-    return { [selectedAddress]: new Signer(privateKey, password, CURVE_NAME) };
+    return {
+      [selectedAddress]: new ChainSigner(privateKey, password, CURVE_NAME),
+    };
   }
 
   override async prepareAccounts(

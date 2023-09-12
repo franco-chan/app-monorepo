@@ -15,7 +15,7 @@ import { AccountType } from '../../../types/account';
 import { KeyringHdBase } from '../../keyring/KeyringHdBase';
 
 import type { ExportedSeedCredential } from '../../../dbs/base';
-import type { Signer } from '../../../proxy';
+import type { ChainSigner } from '../../../proxy';
 import type { DBSimpleAccount } from '../../../types/account';
 import type {
   IPrepareSoftwareAccountsParams,
@@ -26,12 +26,12 @@ import type {
 import type { IEncodedTxEvm } from './Vault';
 
 export class KeyringHd extends KeyringHdBase {
-  override chainApi: CoreChainApiBase = coreChainApi.evm.hd;
+  override chainApi = coreChainApi.evm.hd;
 
   override getSigners(
     password: string,
     addresses: string[],
-  ): Promise<Record<string, Signer>> {
+  ): Promise<Record<string, ChainSigner>> {
     throw new Error('EVM KeyringHd getSigners Method not implemented.');
   }
 
@@ -39,18 +39,17 @@ export class KeyringHd extends KeyringHdBase {
     params: IPrepareSoftwareAccountsParams,
   ): Promise<Array<DBSimpleAccount>> {
     const { password, indexes, names, coinType, template } = params;
-    const { seed } = (await this.engine.dbApi.getCredential(
+    const { seed, entropy } = (await this.engine.dbApi.getCredential(
       this.walletId,
       password,
     )) as ExportedSeedCredential;
 
-    const { addresses: addressInfos } = await this.chainApi.getAddresses({
-      hd: {
-        template,
-        seed: bufferUtils.bytesToHex(seed),
-        password,
-        indexes,
-      },
+    const { addresses: addressInfos } = await this.chainApi.getAddressesFromHd({
+      template,
+      seed: bufferUtils.bytesToHex(seed),
+      entropy: bufferUtils.bytesToHex(entropy),
+      password,
+      indexes,
     });
 
     const ret = [];

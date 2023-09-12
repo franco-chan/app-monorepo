@@ -2,7 +2,7 @@ import { bytesToHex } from '@noble/hashes/utils';
 
 import type { ExportedSeedCredential } from '@onekeyhq/engine/src/dbs/base';
 import { getAccountNameInfoByImpl } from '@onekeyhq/engine/src/managers/impl';
-import { Signer } from '@onekeyhq/engine/src/proxy';
+import { ChainSigner } from '@onekeyhq/engine/src/proxy';
 import { mnemonicFromEntropy } from '@onekeyhq/engine/src/secret';
 import { encrypt } from '@onekeyhq/engine/src/secret/encryptors/aes256';
 import type { DBVariantAccount } from '@onekeyhq/engine/src/types/account';
@@ -94,7 +94,7 @@ export class KeyringHd extends KeyringHdBase {
     }
 
     return {
-      [selectedAddress]: new Signer(privateKey, password, 'ed25519'),
+      [selectedAddress]: new ChainSigner(privateKey, password, 'ed25519'),
     };
   }
 

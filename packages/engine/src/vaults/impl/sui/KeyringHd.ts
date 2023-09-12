@@ -17,7 +17,7 @@ import { COINTYPE_SUI as COIN_TYPE } from '@onekeyhq/shared/src/engine/engineCon
 import { OneKeyInternalError } from '@onekeyhq/shared/src/errors';
 import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
 
-import { Signer } from '../../../proxy';
+import { ChainSigner } from '../../../proxy';
 import { AccountType } from '../../../types/account';
 import { KeyringHdBase } from '../../keyring/KeyringHdBase';
 import { addHexPrefix } from '../../utils/hexUtils';
@@ -53,7 +53,7 @@ export class KeyringHd extends KeyringHdBase {
     }
 
     return {
-      [dbAccount.address]: new Signer(privateKey, password, 'ed25519'),
+      [dbAccount.address]: new ChainSigner(privateKey, password, 'ed25519'),
     };
   }
 

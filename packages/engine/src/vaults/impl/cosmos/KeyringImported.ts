@@ -1,6 +1,6 @@
 import { sha256 } from '@noble/hashes/sha256';
 
-import { Signer } from '@onekeyhq/engine/src/proxy';
+import { ChainSigner } from '@onekeyhq/engine/src/proxy';
 import type { CurveName } from '@onekeyhq/engine/src/secret';
 import { ed25519, secp256k1 } from '@onekeyhq/engine/src/secret/curves';
 import type { DBVariantAccount } from '@onekeyhq/engine/src/types/account';
@@ -45,7 +45,7 @@ export class KeyringImported extends KeyringImportedBase {
     }
     const chainInfo = await this.getChainInfo();
     return {
-      [selectedAddress]: new Signer(
+      [selectedAddress]: new ChainSigner(
         privateKey,
         password,
         chainInfo?.implOptions?.curve ?? 'secp256k1',

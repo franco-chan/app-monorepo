@@ -111,6 +111,7 @@ export interface IVerifierPro extends IVerifier {
   }): Promise<boolean>;
 }
 
+// TODO move to core
 export class Verifier implements IVerifierPro {
   private uncompressedPublicKey: Buffer;
 
@@ -156,8 +157,9 @@ export class Verifier implements IVerifierPro {
   }
 }
 
+// TODO move to core
 // @ts-ignore
-export class Signer extends Verifier implements ISigner {
+export class ChainSigner extends Verifier implements ISigner {
   constructor(
     private encryptedPrivateKey: Buffer,
     private password: string,
