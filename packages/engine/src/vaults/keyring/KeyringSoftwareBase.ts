@@ -16,16 +16,6 @@ import type {
 } from '../types';
 
 export abstract class KeyringSoftwareBase extends KeyringBase {
-  // TODO CoreChainApiSoftwareBase
-  abstract chainApi: CoreChainApiBase | undefined;
-
-  ensureChainApi(): CoreChainApiBase {
-    if (!this.chainApi) {
-      throw new OneKeyInternalError('chainApi is undefined');
-    }
-    return this.chainApi;
-  }
-
   // Implemented by HD & imported base.
   abstract getPrivateKeys(
     password: string,
@@ -75,7 +65,7 @@ export abstract class KeyringSoftwareBase extends KeyringBase {
     if (!options.password) {
       throw new Error('password not found');
     }
-    const chainApi = this.ensureChainApi();
+    const chainApi = this.getChainApi();
     const dbAccount = await this.getDbAccount();
     const { [dbAccount.path]: privateKey } = await this.getPrivateKeys(
       options.password,
@@ -126,7 +116,7 @@ export abstract class KeyringSoftwareBase extends KeyringBase {
     if (!password) {
       throw new Error('password not found');
     }
-    const chainApi = this.ensureChainApi();
+    const chainApi = this.getChainApi();
     const dbAccount = await this.getDbAccount();
     const { [dbAccount.path]: privateKey } = await this.getPrivateKeys(
       password,

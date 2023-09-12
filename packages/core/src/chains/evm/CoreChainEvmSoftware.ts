@@ -102,7 +102,7 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     return Promise.resolve(new Signer(privateKeyBuffer, password, 'secp256k1'));
   }
 
-  async getPublicFromPrivate({
+  private async getPublicFromPrivate({
     privateKeyRaw,
   }: {
     privateKeyRaw: string;
@@ -116,7 +116,7 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     return Promise.resolve({ publicKey });
   }
 
-  async getAddressFromPublic({
+  private async getAddressFromPublic({
     publicKey,
   }: {
     publicKey: string;
@@ -132,7 +132,7 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     return Promise.resolve({ address });
   }
 
-  async getAddressFromPrivate({
+  private async getAddressFromPrivate({
     privateKeyRaw,
   }: {
     privateKeyRaw: string;
@@ -148,7 +148,7 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     };
   }
 
-  async getAddressesFromHd({
+  private async getAddressesFromHd({
     template,
     seed,
     password,

@@ -1,6 +1,7 @@
 import { mnemonicToSeedSync } from 'bip39';
 import bs58check from 'bs58check';
 
+import coreChainApi from '@onekeyhq/core/src/instance/coreChainApi';
 import {
   batchGetPublicKeys,
   generateRootFingerprint,
@@ -12,6 +13,7 @@ import {
   COINTYPE_DOGE,
 } from '@onekeyhq/shared/src/engine/engineConsts';
 import { OneKeyInternalError } from '@onekeyhq/shared/src/errors';
+import bufferUtils from '@onekeyhq/shared/src/utils/bufferUtils';
 
 import { slicePathTemplate } from '../../../managers/derivation';
 import { getAccountNameInfoByTemplate } from '../../../managers/impl';
@@ -30,6 +32,8 @@ import type { IPrepareSoftwareAccountsParams } from '../../types';
 import type BTCForkVault from '../../utils/btcForkChain/VaultBtcFork';
 
 export class KeyringHd extends KeyringHdBtcFork {
+  override chainApi = coreChainApi.btc.hd;
+
   override async prepareAccounts(
     params: IPrepareSoftwareAccountsParams,
   ): Promise<DBUTXOAccount[]> {
@@ -50,6 +54,7 @@ export class KeyringHd extends KeyringHdBtcFork {
 
     const usedPurpose = purpose || defaultPurpose;
     const ignoreFirst = indexes[0] !== 0;
+    // TODO why
     const usedIndexes = [...(ignoreFirst ? [indexes[0] - 1] : []), ...indexes];
     const { addressEncoding } = getAccountDefaultByPurpose(
       usedPurpose,
@@ -63,81 +68,52 @@ export class KeyringHd extends KeyringHdBtcFork {
     const provider = await (
       this.vault as unknown as BTCForkVault
     ).getProvider();
-    const { network } = provider;
-    const { pathPrefix } = slicePathTemplate(template);
-    const pubkeyInfos = batchGetPublicKeys(
-      'secp256k1',
-      seed,
-      password,
-      pathPrefix,
-      usedIndexes.map((index) => `${index.toString()}'`),
-    );
-    if (pubkeyInfos.length !== usedIndexes.length) {
-      throw new OneKeyInternalError('Unable to get publick key.');
-    }
+    const btcForkChainCode = provider.chainInfo.code;
 
-    const { public: xpubVersionBytes } =
-      (network.segwitVersionBytes || {})[addressEncoding] || network.bip32;
-
-    const ret = [];
-    let index = 0;
-    const mnemonic = mnemonicFromEntropy(entropy, password);
-    const root = getBitcoinBip32().fromSeed(mnemonicToSeedSync(mnemonic));
-    for (const { path, parentFingerPrint, extendedKey } of pubkeyInfos) {
-      const node = root.derivePath(`${path}/0/0`);
-      const keyPair = getBitcoinECPair().fromWIF(node.toWIF());
-
-      const xpub = bs58check.encode(
-        Buffer.concat([
-          Buffer.from(xpubVersionBytes.toString(16).padStart(8, '0'), 'hex'),
-          Buffer.from([3]),
-          parentFingerPrint,
-          Buffer.from(
-            (usedIndexes[index] + 2 ** 31).toString(16).padStart(8, '0'),
-            'hex',
-          ),
-          extendedKey.chainCode,
-          extendedKey.key,
-        ]),
-      );
-      const firstAddressRelPath = '0/0';
-      const { [firstAddressRelPath]: address } = provider.xpubToAddresses(
-        xpub,
-        [firstAddressRelPath],
+    const { addresses: addressesInfo } = await this.chainApi.getAddressesFromHd(
+      {
+        template,
+        seed: bufferUtils.bytesToHex(seed),
+        entropy: bufferUtils.bytesToHex(entropy),
+        password,
+        indexes: usedIndexes,
+        btcForkChainCode,
         addressEncoding,
-      );
+      },
+    );
+
+    const ret: DBUTXOAccount[] = [];
+    let index = 0;
+    for (const {
+      path,
+      publicKey,
+      xpub,
+      xpubSegwit,
+      address,
+      addresses,
+    } of addressesInfo) {
       const prefix = [COINTYPE_DOGE, COINTYPE_BCH].includes(COIN_TYPE)
         ? coinName
         : namePrefix;
       const name =
         (names || [])[index] || `${prefix} #${usedIndexes[index] + 1}`;
-      let xpubSegwit = xpub;
-      if (isTaprootPath(pathPrefix)) {
-        const rootFingerprint = generateRootFingerprint(
-          'secp256k1',
-          seed,
-          password,
-        );
-        const fingerprint = Number(
-          Buffer.from(rootFingerprint).readUInt32BE(0) || 0,
-        )
-          .toString(16)
-          .padStart(8, '0');
-        const descriptorPath = `${fingerprint}${path.substring(1)}`;
-        xpubSegwit = `tr([${descriptorPath}]${xpub}/<0;1>/*)`;
+
+      if (!path || !xpub || !addresses) {
+        throw new Error('path or xpub or addresses is undefined');
       }
+
       if (!ignoreFirst || index > 0) {
         ret.push({
-          id: `${this.walletId}--${path}`,
+          id: `${this.walletId}--${path || ''}`,
           name,
           type: AccountType.UTXO,
           path,
           coinType: COIN_TYPE,
-          pubKey: keyPair.publicKey.toString('hex'),
+          pubKey: publicKey,
           xpub,
           xpubSegwit,
           address,
-          addresses: { [firstAddressRelPath]: address },
+          addresses,
           template,
         });
       }
@@ -150,8 +126,13 @@ export class KeyringHd extends KeyringHdBtcFork {
       if (skipCheckAccountExist) {
         index += 1;
       } else {
+        const xpubFinal = xpubSegwit || xpub;
+        if (!xpubFinal) {
+          throw new Error('xpubFinal is undefined');
+        }
+
         const { txs } = (await provider.getAccount(
-          { type: 'simple', xpub: xpubSegwit || xpub },
+          { type: 'simple', xpub: xpubFinal },
           addressEncoding,
         )) as { txs: number };
         if (txs > 0) {

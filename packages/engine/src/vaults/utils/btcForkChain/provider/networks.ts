@@ -9,6 +9,7 @@ export interface Network extends BitcoinJS.Network {
   //   - segwit address version bytes
   segwitVersionBytes?: Record<AddressEncodings, BitcoinJS.Network['bip32']>;
 }
+export type IBtcForkNetwork = Network;
 
 const btc = {
   ...BitcoinJS.networks.bitcoin,
@@ -181,6 +182,8 @@ const extendedNetworks: Record<string, BitcoinJS.Network> = {
   dash,
 };
 
+export type IBtcForkExtendedNetworks = keyof typeof extendedNetworks;
+
 const getNetwork = (chainCode: string): Network => {
   const network = extendedNetworks[chainCode];
   if (typeof network === 'undefined') {
@@ -188,6 +191,8 @@ const getNetwork = (chainCode: string): Network => {
   }
   return network;
 };
+
+export const getBtcForkNetwork = getNetwork;
 
 const NETWORK_TYPES = {
   bitcoinCash: [bch],

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/require-await */
 // eslint-disable-next-line max-classes-per-file
+import type { CoreChainApiBase } from '@onekeyhq/core/src/chains/_base/CoreChainApiBase';
 import type { SignedTx, UnsignedTx } from '@onekeyhq/engine/src/types/provider';
+import { OneKeyInternalError } from '@onekeyhq/shared/src/errors';
 
 import { IVaultOptions } from '../types';
 import { VaultContext } from '../VaultContext';
@@ -24,6 +26,15 @@ export abstract class KeyringBase extends VaultContext {
   }
 
   vault: VaultBase;
+
+  chainApi: CoreChainApiBase | undefined;
+
+  getChainApi(): CoreChainApiBase {
+    if (!this.chainApi) {
+      throw new OneKeyInternalError('chainApi is undefined');
+    }
+    return this.chainApi;
+  }
 
   abstract signTransaction(
     unsignedTx: IUnsignedTxPro,

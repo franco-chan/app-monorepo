@@ -8,6 +8,7 @@ import type {
 import type {
   ICoreApiGetAddressesQuery,
   ICoreApiGetAddressesResult,
+  IUnsignedMessage,
   IUnsignedMessageEvm,
 } from '../../types';
 
@@ -27,11 +28,12 @@ export abstract class CoreChainApiBase {
     privateKey,
     password,
   }: {
-    unsignedMsg: IUnsignedMessageEvm;
+    unsignedMsg: IUnsignedMessage;
     privateKey: string; // encryptedPrivateKey by password
     password: string;
   }): Promise<string>;
 
+  // TODO split to hd and imported method
   abstract getAddresses(
     query: ICoreApiGetAddressesQuery,
   ): Promise<ICoreApiGetAddressesResult>;

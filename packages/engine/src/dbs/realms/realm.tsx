@@ -1477,7 +1477,7 @@ class RealmDB implements DBAPI {
    * @NOTE: this method is only used for hd wallet
    */
   getCredential(
-    credentialId: string,  // walletId || acountId
+    credentialId: string, // walletId || acountId
     password: string,
   ): Promise<ExportedCredential> {
     try {

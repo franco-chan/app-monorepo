@@ -1,4 +1,6 @@
-import { MessageTypes, hashMessage } from './message';
+import { EUnsignedMessageTypeEvm } from '../../types';
+
+import { hashMessage } from './message';
 
 const MAX_SAFE_INTEGER_AS_HEX = `0x${Number.MAX_SAFE_INTEGER.toString(16)}`;
 const MAX_SAFE_INTEGER_PLUS_ONE_CHAR_AS_HEX = `0x${Number.MAX_SAFE_INTEGER.toString(
@@ -174,7 +176,7 @@ describe('hashMessage', () => {
     test('should hash message', () => {
       expect(
         hashMessage({
-          messageType: MessageTypes.ETH_SIGN,
+          messageType: EUnsignedMessageTypeEvm.ETH_SIGN,
           message,
         }),
       ).toMatchSnapshot();
@@ -186,7 +188,7 @@ describe('hashMessage', () => {
     test('should hash message', () => {
       expect(
         hashMessage({
-          messageType: MessageTypes.PERSONAL_SIGN,
+          messageType: EUnsignedMessageTypeEvm.PERSONAL_SIGN,
           message,
         }),
       ).toMatchSnapshot();
@@ -202,7 +204,7 @@ describe('hashMessage', () => {
 
           expect(
             hashMessage({
-              messageType: MessageTypes.TYPE_DATA_V1,
+              messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V1,
               message: typedData,
             }),
           ).toMatchSnapshot();
@@ -218,7 +220,7 @@ describe('hashMessage', () => {
 
           expect(() =>
             hashMessage({
-              messageType: MessageTypes.TYPE_DATA_V1,
+              messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V1,
               message: typedData,
             }),
           ).toThrow(errorMessage);
@@ -284,7 +286,7 @@ describe('hashMessage', () => {
       test(`should throw when given ${label}`, () => {
         expect(() =>
           hashMessage({
-            messageType: MessageTypes.TYPE_DATA_V1,
+            messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V1,
             message: input as Array<unknown>,
           }),
         ).toThrow(errorMessage);
@@ -306,7 +308,7 @@ describe('hashMessage', () => {
       ];
       expect(
         hashMessage({
-          messageType: MessageTypes.TYPE_DATA_V1,
+          messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V1,
           message: typedData,
         }),
       ).toMatchInlineSnapshot(
@@ -317,7 +319,7 @@ describe('hashMessage', () => {
   describe('TYPE_DATA_V3', () => {
     test('should hash a minimal valid typed message', () => {
       const hash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {
             EIP712Domain: [],
@@ -332,7 +334,7 @@ describe('hashMessage', () => {
     });
     test('minimal typed message hash should be identical to minimal valid typed message hash', () => {
       const minimalHash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {},
           primaryType: 'EIP712Domain',
@@ -340,7 +342,7 @@ describe('hashMessage', () => {
       });
 
       const minimalValidHash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {
             EIP712Domain: [],
@@ -355,7 +357,7 @@ describe('hashMessage', () => {
     });
     test('should ignore extra top-level properties', () => {
       const minimalValidHash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {
             EIP712Domain: [],
@@ -367,7 +369,7 @@ describe('hashMessage', () => {
       });
 
       const extraPropertiesHash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {
             EIP712Domain: [],
@@ -384,7 +386,7 @@ describe('hashMessage', () => {
     });
     test('should hash a typed message with a domain separator that uses all fields', () => {
       const hash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {
             EIP712Domain: [
@@ -426,7 +428,7 @@ describe('hashMessage', () => {
     });
     test('should hash a typed message with extra domain seperator fields', () => {
       const hash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {
             EIP712Domain: [
@@ -472,7 +474,7 @@ describe('hashMessage', () => {
     });
     test('should hash a typed message with only custom domain seperator fields', () => {
       const hash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {
             EIP712Domain: [
@@ -519,7 +521,7 @@ describe('hashMessage', () => {
     });
     test('should hash a typed message with data', () => {
       const hash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {
             EIP712Domain: [
@@ -563,7 +565,7 @@ describe('hashMessage', () => {
     });
     test('should ignore message if the primary type is EIP712Domain', () => {
       const hashWithMessage = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {
             EIP712Domain: [
@@ -604,7 +606,7 @@ describe('hashMessage', () => {
         },
       });
       const hashWithoutMessage = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V3,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V3,
         message: {
           types: {
             EIP712Domain: [
@@ -648,7 +650,7 @@ describe('hashMessage', () => {
   describe('TYPE_DATA_V4', () => {
     test('should hash a minimal valid typed message', () => {
       const hash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {
             EIP712Domain: [],
@@ -662,7 +664,7 @@ describe('hashMessage', () => {
     });
     test('minimal typed message hash should be identical to minimal valid typed message hash', () => {
       const minimalHash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {},
           primaryType: 'EIP712Domain',
@@ -670,7 +672,7 @@ describe('hashMessage', () => {
       });
 
       const minimalValidHash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {
             EIP712Domain: [],
@@ -685,7 +687,7 @@ describe('hashMessage', () => {
     });
     test('should ignore extra top-level properties', () => {
       const minimalValidHash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {
             EIP712Domain: [],
@@ -697,7 +699,7 @@ describe('hashMessage', () => {
       });
 
       const extraPropertiesHash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {
             EIP712Domain: [],
@@ -714,7 +716,7 @@ describe('hashMessage', () => {
     });
     test('should hash a typed message with a domain separator that uses all fields', () => {
       const hash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {
             EIP712Domain: [
@@ -756,7 +758,7 @@ describe('hashMessage', () => {
     });
     test('should hash a typed message with extra domain seperator fields', () => {
       const hash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {
             EIP712Domain: [
@@ -802,7 +804,7 @@ describe('hashMessage', () => {
     });
     test('should hash a typed message with only custom domain seperator fields', () => {
       const hash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {
             EIP712Domain: [
@@ -849,7 +851,7 @@ describe('hashMessage', () => {
     });
     test('should hash a typed message with data', () => {
       const hash = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {
             EIP712Domain: [
@@ -893,7 +895,7 @@ describe('hashMessage', () => {
     });
     test('should ignore message if the primary type is EIP712Domain', () => {
       const hashWithMessage = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {
             EIP712Domain: [
@@ -934,7 +936,7 @@ describe('hashMessage', () => {
         },
       });
       const hashWithoutMessage = hashMessage({
-        messageType: MessageTypes.TYPE_DATA_V4,
+        messageType: EUnsignedMessageTypeEvm.TYPE_DATA_V4,
         message: {
           types: {
             EIP712Domain: [

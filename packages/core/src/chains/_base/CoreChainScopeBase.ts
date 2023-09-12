@@ -14,9 +14,9 @@ export abstract class CoreChainScopeBase {
 
   protected abstract _imported: () => Promise<typeof CoreChainApiBase>;
 
-  abstract hardware: CoreChainApiBase;
-
-  protected abstract _hardware: () => Promise<typeof CoreChainApiBase>;
+  // **** hardware cannot run in webview, so we don't need to implement it
+  // abstract hardware: CoreChainApiBase;
+  // protected abstract _hardware: () => Promise<typeof CoreChainApiBase>;
 
   private apiProxyCache: {
     [apiName: string]: any;
