@@ -30,7 +30,6 @@ import { CoreChainApiBase } from '../_base/CoreChainApiBase';
 import { hashMessage } from './message';
 
 import type {
-  ICoreApiGetAddressesQuery,
   ICoreApiGetAddressesQueryHd,
   ICoreApiGetAddressesResult,
   IUnsignedMessageEvm,

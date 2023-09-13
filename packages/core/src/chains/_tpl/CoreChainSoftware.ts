@@ -7,9 +7,27 @@ import type {
 
 import { CoreChainApiBase } from '../_base/CoreChainApiBase';
 
-import type { ICoreApiGetAddressesResult, IUnsignedMessage } from '../../types';
+import type {
+  ICoreApiGetAddressItem,
+  ICoreApiGetAddressQueryImported,
+  ICoreApiGetAddressesQueryHd,
+  ICoreApiGetAddressesResult,
+  IUnsignedMessage,
+} from '../../types';
 
-export default abstract class CoreChainSoftware extends CoreChainApiBase {
+export default class CoreChainSoftware extends CoreChainApiBase {
+  override getAddressFromPrivate(
+    query: ICoreApiGetAddressQueryImported,
+  ): Promise<ICoreApiGetAddressItem> {
+    throw new Error('Method not implemented.');
+  }
+
+  override getAddressesFromHd(
+    query: ICoreApiGetAddressesQueryHd,
+  ): Promise<ICoreApiGetAddressesResult> {
+    throw new Error('Method not implemented.');
+  }
+
   override signMessage({
     unsignedMsg,
     privateKey,
