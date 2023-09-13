@@ -13,7 +13,7 @@ import type { DBSimpleAccount } from '../../../types/account';
 import type { IPrepareImportedAccountsParams } from '../../types';
 
 export class KeyringImported extends KeyringImportedBase {
-  override chainApi: CoreChainApiBase = coreChainApi.evm.imported;
+  override chainApi = coreChainApi.evm.imported;
 
   override getSigners(
     password: string,
@@ -31,12 +31,9 @@ export class KeyringImported extends KeyringImportedBase {
     }
     const privateKeyRaw = bufferUtils.bytesToHex(privateKey);
 
-    const { addresses } = await this.chainApi.getAddresses({
-      imported: {
-        privateKeysRaw: [privateKeyRaw],
-      },
+    const { address, publicKey } = await this.chainApi.getAddressFromPrivate({
+      privateKeyRaw,
     });
-    const { publicKey, address } = addresses[0];
 
     return Promise.resolve([
       {

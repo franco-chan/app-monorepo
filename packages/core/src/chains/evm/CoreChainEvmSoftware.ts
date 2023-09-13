@@ -134,7 +134,7 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     return Promise.resolve({ address });
   }
 
-  private async getAddressFromPrivate({
+  async getAddressFromPrivate({
     privateKeyRaw,
   }: {
     privateKeyRaw: string;
@@ -258,26 +258,5 @@ export default abstract class CoreChainEvmSoftware extends CoreChainApiBase {
     const rawTx: string = serialize(tx, signature);
     const txid = keccak256(rawTx);
     return { txid, rawTx };
-  }
-
-  override async getAddresses(
-    query: ICoreApiGetAddressesQuery,
-  ): Promise<ICoreApiGetAddressesResult> {
-    if (query.hd) {
-      return this.getAddressesFromHd(query.hd);
-    }
-    if (query.imported) {
-      const addresses = await Promise.all(
-        query.imported.privateKeysRaw.map((privateKeyRaw) =>
-          this.getAddressFromPrivate({
-            privateKeyRaw,
-          }),
-        ),
-      );
-      return {
-        addresses,
-      };
-    }
-    throw new Error('getAddresses query invalid');
   }
 }

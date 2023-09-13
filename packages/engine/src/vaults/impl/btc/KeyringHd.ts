@@ -231,15 +231,15 @@ export class KeyringHd extends KeyringHdBtcFork {
       address,
       addresses,
     } of addressesInfo) {
+      if (!path || !xpub || !addresses) {
+        throw new Error('path or xpub or addresses is undefined');
+      }
+
       const prefix = [COINTYPE_DOGE, COINTYPE_BCH].includes(COIN_TYPE)
         ? coinName
         : namePrefix;
       const name =
         (names || [])[index] || `${prefix} #${usedIndexes[index] + 1}`;
-
-      if (!path || !xpub || !addresses) {
-        throw new Error('path or xpub or addresses is undefined');
-      }
 
       if (!ignoreFirst || index > 0) {
         ret.push({

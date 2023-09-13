@@ -1,6 +1,9 @@
 import { isString } from 'lodash';
 
-import { ensureSerializable } from '@onekeyhq/shared/src/utils/assertUtils';
+import {
+  ensurePromiseObject,
+  ensureSerializable,
+} from '@onekeyhq/shared/src/utils/assertUtils';
 import { isPromiseObject } from '@onekeyhq/shared/src/utils/promiseUtils';
 
 import type { CoreChainApiBase } from './CoreChainApiBase';
@@ -53,13 +56,14 @@ export abstract class CoreChainScopeBase {
             // @ts-ignore
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
             let result = apiInstance[method](...args);
+            ensurePromiseObject(result, {
+              serviceName: `coreChainApi.${apiName}`,
+              methodName: method,
+            });
             if (isPromiseObject(result)) {
               result = await result;
             }
-            if (process.env.NODE_ENV !== 'production') {
-              // TODO ensureSerializable
-              // ensureSerializable(result);
-            }
+            ensureSerializable(result);
             return result as unknown;
           },
       },

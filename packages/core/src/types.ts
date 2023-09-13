@@ -13,9 +13,7 @@ export type IUnsignedMessageEvm = {
   message: string;
 };
 export type IUnsignedMessage = IUnsignedMessageEvm;
-export type ICoreApiGetAddressesQueryImported = {
-  privateKeysRaw: string[];
-};
+
 export type ICoreApiGetAddressesQueryHdBase = {
   template: string;
   seed: string; // encryptedSeed
@@ -23,19 +21,30 @@ export type ICoreApiGetAddressesQueryHdBase = {
   password: string;
   indexes: number[];
 };
+export type ICoreApiGetAddressesQueryHdEvm = ICoreApiGetAddressesQueryHdBase;
 export type ICoreApiGetAddressesQueryHdBtc = ICoreApiGetAddressesQueryHdBase & {
   btcForkChainCode: string;
   addressEncoding: AddressEncodings;
 };
 export type ICoreApiGetAddressesQueryHd =
-  | ICoreApiGetAddressesQueryHdBtc
-  | ICoreApiGetAddressesQueryHdBase;
-export type ICoreApiGetAddressesQuery = {
-  imported?: ICoreApiGetAddressesQueryImported;
-  hd?: ICoreApiGetAddressesQueryHd;
-  // hardware?
+  | ICoreApiGetAddressesQueryHdBase
+  | ICoreApiGetAddressesQueryHdEvm
+  | ICoreApiGetAddressesQueryHdBtc;
+
+export type ICoreApiGetAddressQueryImportedBase = {
+  privateKeyRaw: string;
 };
-export type ICoreApiGetAddressesItem = {
+export type ICoreApiGetAddressQueryImportedBtc =
+  ICoreApiGetAddressQueryImportedBase & {
+    // TODO rename networkChainCode
+    btcForkChainCode: string;
+    template?: string;
+  };
+export type ICoreApiGetAddressQueryImported =
+  | ICoreApiGetAddressQueryImportedBase
+  | ICoreApiGetAddressQueryImportedBtc;
+
+export type ICoreApiGetAddressItem = {
   address: string;
   publicKey: string;
   path?: string;
@@ -44,5 +53,5 @@ export type ICoreApiGetAddressesItem = {
   addresses?: { [relPath: string]: string };
 };
 export type ICoreApiGetAddressesResult = {
-  addresses: ICoreApiGetAddressesItem[];
+  addresses: ICoreApiGetAddressItem[];
 };

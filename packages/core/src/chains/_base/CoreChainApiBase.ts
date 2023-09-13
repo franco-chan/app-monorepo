@@ -6,35 +6,33 @@ import type {
 } from '@onekeyhq/engine/src/vaults/types';
 
 import type {
-  ICoreApiGetAddressesQuery,
+  ICoreApiGetAddressItem,
+  ICoreApiGetAddressQueryImported,
+  ICoreApiGetAddressesQueryHd,
   ICoreApiGetAddressesResult,
   IUnsignedMessage,
   IUnsignedMessageEvm,
 } from '../../types';
 
 export abstract class CoreChainApiBase {
-  abstract signTransaction({
-    unsignedTx,
-    privateKey,
-    password,
-  }: {
+  abstract signTransaction(query: {
     unsignedTx: IUnsignedTxPro;
     privateKey: string; // encryptedPrivateKey by password
     password: string;
   }): Promise<ISignedTxPro>;
 
-  abstract signMessage({
-    unsignedMsg,
-    privateKey,
-    password,
-  }: {
+  // TODO define types
+  abstract signMessage(query: {
     unsignedMsg: IUnsignedMessage;
     privateKey: string; // encryptedPrivateKey by password
     password: string;
   }): Promise<string>;
 
-  // TODO split to hd and imported method
-  abstract getAddresses(
-    query: ICoreApiGetAddressesQuery,
+  abstract getAddressFromPrivate(
+    query: ICoreApiGetAddressQueryImported,
+  ): Promise<ICoreApiGetAddressItem>;
+
+  abstract getAddressesFromHd(
+    query: ICoreApiGetAddressesQueryHd,
   ): Promise<ICoreApiGetAddressesResult>;
 }

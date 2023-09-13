@@ -3,6 +3,7 @@
 import { mnemonicToSeedSync } from 'bip39';
 import * as BitcoinJS from 'bitcoinjs-lib';
 import bs58check from 'bs58check';
+import { omit } from 'lodash';
 
 import { slicePathTemplate } from '@onekeyhq/engine/src/managers/derivation';
 import {
@@ -11,6 +12,7 @@ import {
   generateRootFingerprint,
   mnemonicFromEntropy,
 } from '@onekeyhq/engine/src/secret';
+import { secp256k1 } from '@onekeyhq/engine/src/secret/curves';
 import type {
   ISignedTxPro,
   IUnsignedTxPro,
@@ -33,42 +35,33 @@ import bufferUtils from '@onekeyhq/shared/src/utils/bufferUtils';
 import { CoreChainApiBase } from '../_base/CoreChainApiBase';
 
 import type {
-  ICoreApiGetAddressesItem,
-  ICoreApiGetAddressesQuery,
-  ICoreApiGetAddressesQueryHd,
+  ICoreApiGetAddressItem,
+  ICoreApiGetAddressQueryImported,
+  ICoreApiGetAddressQueryImportedBtc,
   ICoreApiGetAddressesQueryHdBtc,
   ICoreApiGetAddressesResult,
   IUnsignedMessage,
 } from '../../types';
 
 export default abstract class CoreChainSoftware extends CoreChainApiBase {
-  override async getAddresses(
-    query: ICoreApiGetAddressesQuery,
-  ): Promise<ICoreApiGetAddressesResult> {
-    if (query.hd) {
-      return this.getAddressesFromHd(query.hd as any);
-    }
-    // if (query.imported) {
-    //   const addresses = await Promise.all(
-    //     query.imported.privateKeysRaw.map((privateKeyRaw) =>
-    //       this.getAddressFromPrivate({
-    //         privateKeyRaw,
-    //       }),
-    //     ),
-    //   );
-    //   return {
-    //     addresses,
-    //   };
-    // }
-    throw new Error('getAddresses query invalid');
-  }
-
-  // TODO memo
-  getVersionBytesToEncodings({ network }: { network: IBtcForkNetwork }): {
+  // TODO memo and move to utils (file with getBtcForkNetwork)
+  getVersionBytesToEncodings({
+    btcForkChainCode,
+  }: {
+    btcForkChainCode: string | undefined;
+  }): {
     public: Record<number, Array<AddressEncodings>>;
     private: Record<number, Array<AddressEncodings>>;
   } {
-    const tmp = {
+    const network = getBtcForkNetwork(btcForkChainCode);
+    const tmp: {
+      public: {
+        [bytes: number]: AddressEncodings[];
+      };
+      private: {
+        [bytes: number]: AddressEncodings[];
+      };
+    } = {
       public: { [network.bip32.public]: [AddressEncodings.P2PKH] },
       private: { [network.bip32.private]: [AddressEncodings.P2PKH] },
     };
@@ -150,7 +143,9 @@ export default abstract class CoreChainSoftware extends CoreChainApiBase {
     const versionBytes = parseInt(decodedXpub.slice(0, 4).toString('hex'), 16);
     const encoding =
       addressEncoding ??
-      this.getVersionBytesToEncodings({ network }).public[versionBytes][0];
+      this.getVersionBytesToEncodings({
+        btcForkChainCode: network.networkChainCode,
+      }).public[versionBytes][0];
 
     const ret: Record<string, string> = {};
 
@@ -199,7 +194,87 @@ export default abstract class CoreChainSoftware extends CoreChainApiBase {
     return address;
   }
 
-  async getAddressesFromHd({
+  override async getAddressFromPrivate(
+    query: ICoreApiGetAddressQueryImportedBtc,
+  ): Promise<ICoreApiGetAddressItem> {
+    const { privateKeyRaw, btcForkChainCode, template } = query;
+    const privateKey = bufferUtils.toBuffer(privateKeyRaw);
+
+    let xpub = '';
+    let pubKey = '';
+    const network = getBtcForkNetwork(btcForkChainCode);
+
+    const xprvVersionBytesNum = parseInt(
+      privateKey.slice(0, 4).toString('hex'),
+      16,
+    );
+    const versionByteOptions = [
+      // ...Object.values(network.segwitVersionBytes || {}),
+      ...Object.values(omit(network.segwitVersionBytes, AddressEncodings.P2TR)),
+      network.bip32,
+    ];
+
+    for (const versionBytes of versionByteOptions) {
+      if (versionBytes.private === xprvVersionBytesNum) {
+        const privateKeySlice = privateKey.slice(46, 78);
+        const publicKey = secp256k1.publicFromPrivate(privateKeySlice);
+        const pubVersionBytes = Buffer.from(
+          versionBytes.public.toString(16).padStart(8, '0'),
+          'hex',
+        );
+        const keyPair = getBitcoinECPair().fromPrivateKey(privateKeySlice, {
+          network,
+        });
+        try {
+          xpub = bs58check.encode(
+            privateKey.fill(pubVersionBytes, 0, 4).fill(publicKey, 45, 78),
+          );
+          // "02ef3f230c658514a2de5191e57af38e0c94f2f28f1cec1a0febfc6ff004dc6b43"
+          const publicKeyStr1 = keyPair.publicKey.toString('hex');
+          const publicKeyStr2 = publicKey.toString('hex');
+          // TODO publicKey is different with HD account
+          pubKey = publicKeyStr2;
+        } catch (e) {
+          console.error(e);
+        }
+        break;
+      }
+    }
+    if (xpub === '') {
+      throw new OneKeyInternalError('Invalid private key.');
+    }
+
+    let addressEncoding;
+    let xpubSegwit = xpub;
+    if (template) {
+      if (template.startsWith(`m/44'/`)) {
+        addressEncoding = AddressEncodings.P2PKH;
+      } else if (template.startsWith(`m/86'/`)) {
+        addressEncoding = AddressEncodings.P2TR;
+        // TODO if (isTaprootPath(pathPrefix)) {
+        xpubSegwit = `tr(${xpub})`;
+      } else {
+        addressEncoding = undefined;
+      }
+    }
+
+    const firstAddressRelPath = '0/0';
+    const { [firstAddressRelPath]: address } = this.getAddressFromXpub({
+      network,
+      xpub,
+      relativePaths: [firstAddressRelPath],
+      addressEncoding,
+    });
+    return Promise.resolve({
+      publicKey: pubKey,
+      xpub,
+      xpubSegwit,
+      address,
+      addresses: { [firstAddressRelPath]: address },
+    });
+  }
+
+  override async getAddressesFromHd({
     template,
     seed,
     entropy,
@@ -211,10 +286,9 @@ export default abstract class CoreChainSoftware extends CoreChainApiBase {
     const { pathPrefix, pathSuffix } = slicePathTemplate(template);
     const seedBuffer = bufferUtils.toBuffer(seed);
 
-    // TODO usedIndexes.map((index) => `${index.toString()}'`),
     const relPaths: string[] = indexes.map(
       (index) => `${index.toString()}'`, // btc
-      // pathSuffix.replace('{index}', index.toString()),// evm
+      // (index) => pathSuffix.replace('{index}', index.toString()), // evm
     );
     const pubkeyInfos = batchGetPublicKeys(
       'secp256k1',
@@ -253,6 +327,7 @@ export default abstract class CoreChainSoftware extends CoreChainApiBase {
 
         const node = root.derivePath(`${path}/0/0`);
         const keyPair = getBitcoinECPair().fromWIF(node.toWIF());
+        const publicKey = keyPair.publicKey.toString('hex');
 
         const xpub = bs58check.encode(
           Buffer.concat([
@@ -292,9 +367,9 @@ export default abstract class CoreChainSoftware extends CoreChainApiBase {
           xpubSegwit = `tr([${descriptorPath}]${xpub}/<0;1>/*)`;
         }
 
-        const addressItem: ICoreApiGetAddressesItem = {
+        const addressItem: ICoreApiGetAddressItem = {
           address,
-          publicKey: keyPair.publicKey.toString('hex'),
+          publicKey,
           path,
           xpub,
           xpubSegwit,

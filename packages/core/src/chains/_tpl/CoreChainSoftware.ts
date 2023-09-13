@@ -7,19 +7,9 @@ import type {
 
 import { CoreChainApiBase } from '../_base/CoreChainApiBase';
 
-import type {
-  ICoreApiGetAddressesQuery,
-  ICoreApiGetAddressesResult,
-  IUnsignedMessage,
-} from '../../types';
+import type { ICoreApiGetAddressesResult, IUnsignedMessage } from '../../types';
 
 export default abstract class CoreChainSoftware extends CoreChainApiBase {
-  override getAddresses(
-    query: ICoreApiGetAddressesQuery,
-  ): Promise<ICoreApiGetAddressesResult> {
-    throw new Error('Method not implemented.');
-  }
-
   override signMessage({
     unsignedMsg,
     privateKey,

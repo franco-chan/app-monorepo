@@ -11,6 +11,8 @@ import {
 
 import platformEnv from '../platformEnv';
 
+import { isPromiseObject } from './promiseUtils';
+
 type ErrorType = undefined | string | Error;
 
 const check = (statement: any, orError?: ErrorType) => {
@@ -100,7 +102,8 @@ export function ensurePromiseObject(
   },
 ) {
   if (process.env.NODE_ENV !== 'production') {
-    if (obj !== undefined && !(obj instanceof Promise)) {
+    // if (obj !== undefined && !(obj instanceof Promise)) {
+    if (!isPromiseObject(obj)) {
       throwCrossError(
         `${
           serviceName ? `${serviceName}.` : ''

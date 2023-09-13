@@ -4,14 +4,19 @@ import typeforce from 'typeforce';
 
 import { AddressEncodings } from '../types';
 
+// TODO rename
 export interface Network extends BitcoinJS.Network {
+  networkChainCode?: string;
   // Extends the network interface to support:
   //   - segwit address version bytes
-  segwitVersionBytes?: Record<AddressEncodings, BitcoinJS.Network['bip32']>;
+  segwitVersionBytes?: Partial<
+    Record<AddressEncodings, BitcoinJS.Network['bip32']>
+  >;
+  forkId?: number; // bch
 }
 export type IBtcForkNetwork = Network;
 
-const btc = {
+const btc: IBtcForkNetwork = {
   ...BitcoinJS.networks.bitcoin,
   segwitVersionBytes: {
     [AddressEncodings.P2SH_P2WPKH]: {
@@ -29,7 +34,7 @@ const btc = {
   },
 };
 
-const tbtc = {
+const tbtc: IBtcForkNetwork = {
   ...BitcoinJS.networks.testnet,
   segwitVersionBytes: {
     [AddressEncodings.P2SH_P2WPKH]: {
@@ -47,7 +52,7 @@ const tbtc = {
   },
 };
 
-const rbtc = {
+const rbtc: IBtcForkNetwork = {
   ...BitcoinJS.networks.regtest,
   segwitVersionBytes: {
     [AddressEncodings.P2SH_P2WPKH]: {
@@ -61,7 +66,7 @@ const rbtc = {
   },
 };
 
-const ltc = {
+const ltc: IBtcForkNetwork = {
   messagePrefix: '\x19Litecoin Signed Message:\n',
   bech32: 'ltc',
   bip32: {
@@ -83,7 +88,7 @@ const ltc = {
   wif: 0xb0,
 };
 
-const bch = {
+const bch: IBtcForkNetwork = {
   messagePrefix: '\x18Bitcoin Signed Message:\n',
   bech32: '',
   bip32: {
@@ -96,7 +101,7 @@ const bch = {
   forkId: 0x00,
 };
 
-const doge = {
+const doge: IBtcForkNetwork = {
   messagePrefix: '\x19Dogecoin Signed Message:\n',
   bech32: '',
   bip32: {
@@ -108,7 +113,7 @@ const doge = {
   wif: 0x9e,
 };
 
-const btg = {
+const btg: IBtcForkNetwork = {
   messagePrefix: '\x1dBitcoin Gold Signed Message:\n',
   bech32: 'btg',
   bip32: {
@@ -120,7 +125,7 @@ const btg = {
   wif: 0x80,
 };
 
-const dgb = {
+const dgb: IBtcForkNetwork = {
   messagePrefix: '\x19DigiByte Signed Message:\n',
   bech32: 'dgb',
   bip32: {
@@ -132,7 +137,7 @@ const dgb = {
   wif: 0xb0,
 };
 
-const nmc = {
+const nmc: IBtcForkNetwork = {
   messagePrefix: '\x19Namecoin Signed Message:\n',
   bech32: '',
   bip32: {
@@ -144,7 +149,7 @@ const nmc = {
   wif: 0x80,
 };
 
-const vtc = {
+const vtc: IBtcForkNetwork = {
   messagePrefix: '\x19Vertcoin Signed Message:\n',
   bech32: 'vtc',
   bip32: {
@@ -156,7 +161,7 @@ const vtc = {
   wif: 0x80,
 };
 
-const dash = {
+const dash: IBtcForkNetwork = {
   messagePrefix: '\x19DarkCoin Signed Message:\n',
   bech32: '',
   bip32: {
@@ -168,7 +173,7 @@ const dash = {
   wif: 0xcc,
 };
 
-const extendedNetworks: Record<string, BitcoinJS.Network> = {
+const extendedNetworks: Record<string, IBtcForkNetwork> = {
   btc,
   tbtc,
   rbtc,
@@ -184,8 +189,12 @@ const extendedNetworks: Record<string, BitcoinJS.Network> = {
 
 export type IBtcForkExtendedNetworks = keyof typeof extendedNetworks;
 
-const getNetwork = (chainCode: string): Network => {
+const getNetwork = (chainCode: string | undefined): IBtcForkNetwork => {
+  if (!chainCode) {
+    throw new Error('getBtcForkNetwork ERROR: chainCode is undefined');
+  }
   const network = extendedNetworks[chainCode];
+  network.networkChainCode = chainCode;
   if (typeof network === 'undefined') {
     throw new Error(`Network not found. chainCode: ${chainCode}`);
   }
@@ -222,7 +231,6 @@ export function isNetworkType(type: NetworkTypes, network?: Network) {
       n.bip32.public === network.bip32.public &&
       n.bip32.private === network.bip32.private &&
       ((!n.bech32 && !network.bech32) || n.bech32 === network.bech32) &&
-      // @ts-expect-error
       ((!n.forkId && !network.forkId) || n.forkId === network.forkId) &&
       n.pubKeyHash === network.pubKeyHash &&
       n.scriptHash === network.scriptHash,
