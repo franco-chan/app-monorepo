@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/core';
 import { useIntl } from 'react-intl';
 
 import { Center, Modal, Spinner } from '@onekeyhq/components';
+import type { StackScreenProps } from '@onekeyhq/components/src/Navigation';
 import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
 
 import backgroundApiProxy from '../../background/instance/backgroundApiProxy';
@@ -13,7 +14,6 @@ import Protected, { ValidationFields } from '../../components/Protected';
 
 import type { ManageTokenModalRoutes } from '../../routes/routesEnum';
 import type { ManageTokenRoutesParams } from './types';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type EnableLocalAuthenticationProps = {
   password: string;
@@ -65,12 +65,12 @@ const Done: FC<EnableLocalAuthenticationProps> = ({
   );
 };
 
-type NavigationProps = NativeStackScreenProps<
+type NavigationProps = StackScreenProps<
   ManageTokenRoutesParams,
   ManageTokenModalRoutes.ActivateToken
 >;
 
-const ActivateTokenAuthModal: FC<NavigationProps> = ({ route }) => {
+function ActivateTokenAuthModal({ route }: NavigationProps) {
   const intl = useIntl();
   const { walletId, accountId, networkId, tokenId, onSuccess, onFailure } =
     route.params || {};
@@ -106,6 +106,6 @@ const ActivateTokenAuthModal: FC<NavigationProps> = ({ route }) => {
       </Protected>
     </Modal>
   );
-};
+}
 
 export default ActivateTokenAuthModal;

@@ -3,6 +3,8 @@ import { useCallback, useMemo, useRef } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { useRoute } from '@react-navigation/native';
 
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
+
 import useDappApproveAction from '../../../hooks/useDappApproveAction';
 
 import type {
@@ -11,7 +13,6 @@ import type {
   SendRoutesParams,
 } from '../types';
 import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 type NavigationProps = StackNavigationProp<
   SendRoutesParams,

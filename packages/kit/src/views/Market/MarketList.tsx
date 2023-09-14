@@ -10,6 +10,7 @@ import {
   IconButton,
   useUserDevice,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { MAX_PAGE_CONTAINER_WIDTH } from '@onekeyhq/shared/src/config/appConfig';
 
 import { HomeRoutes } from '../../routes/routesEnum';
@@ -38,7 +39,6 @@ import { useMarketWidthLayout } from './hooks/useMarketLayout';
 import { useMarketList } from './hooks/useMarketList';
 
 import type { HomeRoutesParams } from '../../routes/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type {
   FlatList as FlatListType,
   ListRenderItem,
@@ -46,7 +46,7 @@ import type {
   NativeSyntheticEvent,
 } from 'react-native';
 
-type NavigationProps = NativeStackNavigationProp<HomeRoutesParams>;
+type NavigationProps = StackNavigationProp<HomeRoutesParams>;
 
 const MarketList: FC = () => {
   const { screenWidth } = useUserDevice();

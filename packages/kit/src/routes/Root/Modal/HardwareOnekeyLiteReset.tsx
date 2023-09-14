@@ -1,9 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import OnekeyLiteReset from '../../../views/Hardware/OnekeyLite/Reset';
 import { OnekeyLiteResetModalRoutes } from '../../routesEnum';
-
-import createStackNavigator from './createStackNavigator';
 
 import type {
   OnekeyLiteModalRoutes,

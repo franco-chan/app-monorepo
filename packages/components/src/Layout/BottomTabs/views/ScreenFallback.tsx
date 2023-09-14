@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import * as React from 'react';
 
 import { ResourceSavingView } from '@react-navigation/elements';
 import { View } from 'react-native';
@@ -7,7 +7,7 @@ import type { StyleProp, ViewProps, ViewStyle } from 'react-native';
 
 type Props = {
   visible: boolean;
-  children: ReactNode;
+  children: React.ReactNode;
   enabled: boolean;
   freezeOnBlur?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -16,7 +16,6 @@ type Props = {
 let Screens: typeof import('react-native-screens') | undefined;
 
 try {
-  // eslint-disable-next-line global-require
   Screens = require('react-native-screens');
 } catch (e) {
   // Ignore
@@ -28,7 +27,7 @@ export const MaybeScreenContainer = ({
 }: ViewProps & {
   enabled: boolean;
   hasTwoStates: boolean;
-  children: ReactNode;
+  children: React.ReactNode;
 }) => {
   if (Screens?.screensEnabled?.()) {
     return <Screens.ScreenContainer enabled={enabled} {...rest} />;

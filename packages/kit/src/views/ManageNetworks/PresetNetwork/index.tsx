@@ -17,6 +17,10 @@ import {
   useForm,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type {
+  StackNavigationProp,
+  StackScreenProps,
+} from '@onekeyhq/components/src/Navigation';
 import { OnekeyNetwork } from '@onekeyhq/shared/src/config/networkIds';
 
 import backgroundApiProxy from '../../../background/instance/backgroundApiProxy';
@@ -30,12 +34,8 @@ import type {
   ManageNetworkModalRoutes,
   ManageNetworkRoutesParams,
 } from '../types';
-import type {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   ManageNetworkRoutesParams,
   ManageNetworkModalRoutes.PresetNetwork
 >;
@@ -49,7 +49,7 @@ type NetworkValues = {
   id: string;
 };
 
-type PresetNetwokProps = NativeStackScreenProps<
+type PresetNetwokProps = StackScreenProps<
   ManageNetworkRoutesParams,
   ManageNetworkModalRoutes.PresetNetwork
 >;

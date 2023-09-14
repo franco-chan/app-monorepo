@@ -14,6 +14,7 @@ import {
   useIsVerticalLayout,
 } from '@onekeyhq/components';
 import NavHeader from '@onekeyhq/components/src/NavHeader/NavHeader';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { BulkTypeEnum } from '@onekeyhq/engine/src/types/batchTransfer';
 
 import IdentityAssertion from '../../components/IdentityAssertion';
@@ -29,11 +30,10 @@ import { OneToMany } from './OneToMany';
 
 import type { HomeRoutesParams } from '../../routes/types';
 import type { RouteProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { MessageDescriptor } from 'react-intl';
 
 type RouteProps = RouteProp<HomeRoutesParams, HomeRoutes.BulkSender>;
-type NavigationProps = NativeStackNavigationProp<HomeRoutesParams>;
+type NavigationProps = StackNavigationProp<HomeRoutesParams>;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function BulkSenderHeader() {

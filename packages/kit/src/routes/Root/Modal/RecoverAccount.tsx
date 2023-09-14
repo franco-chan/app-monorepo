@@ -1,12 +1,13 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 import BitcoinUsedAddress from '@onekeyhq/kit/src/views/Account/AddNewAccount/BitcoinUsedAddress';
 
 import RecoverAccountsAdvanced from '../../../views/Account/AddNewAccount/RecoverAccountsAdvanced';
 import BulkCopyAddresses from '../../../views/Account/BulkCopyAddress';
 import { RecoverAccountModalRoutes } from '../../routesEnum';
-
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 type RecoverAccountsAdvancedParams = {
   fromIndex: number;
@@ -56,7 +57,7 @@ const RecoverAccountModalStack = () => {
   return (
     <RecoverAccountNavigator.Navigator
       screenOptions={(navInfo) => ({
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

@@ -14,6 +14,7 @@ import {
   useIsVerticalLayout,
 } from '@onekeyhq/components';
 import NavHeader from '@onekeyhq/components/src/NavHeader/NavHeader';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
@@ -25,7 +26,6 @@ import { KeyTagMnemonicStatus } from '../types';
 import { generalKeyTagMnemonic, keyTagWordDataToMnemonic } from '../utils';
 
 import type { IOnboardingRoutesParams } from '../../Onboarding/routes/types';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 type NavigationProps = StackNavigationProp<
   IOnboardingRoutesParams,

@@ -1,9 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import { SubmitRequest } from '../../../views/Help/Request/SubmitRequest';
 import { SubmitRequestModalRoutes } from '../../routesEnum';
-
-import createStackNavigator from './createStackNavigator';
 
 export type SubmitRequestModalRoutesParams = {
   [SubmitRequestModalRoutes.SubmitRequestModal]: undefined;

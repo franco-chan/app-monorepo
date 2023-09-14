@@ -1,13 +1,13 @@
 import type { FC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
-import { useNavigation, useRoute } from '@react-navigation/core';
-import { useIsFocused } from '@react-navigation/native';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/core';
 import axios from 'axios';
 import { SimpleGrid } from 'native-base';
 import { useIntl } from 'react-intl';
 
 import { Box, Modal, NetImage, Text } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
 import { useSettings } from '../../../hooks/redux';
@@ -23,7 +23,6 @@ import type {
   RequestPayload,
 } from './types';
 import type { RouteProp } from '@react-navigation/core';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { ListRenderItem } from 'react-native';
 
 type RouteProps = RouteProp<
@@ -69,7 +68,7 @@ const Attachment: FC<AttachmentsType> = ({ id, size }) => {
   );
 };
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HistoryRequestModalRoutesParams,
   HistoryRequestRoutes.ReplyTicketModel
 >;

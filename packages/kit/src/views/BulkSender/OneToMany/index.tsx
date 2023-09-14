@@ -11,6 +11,7 @@ import {
   ToastManager,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import { TokenIcon } from '@onekeyhq/components/src/Token';
 import { batchTransferContractAddress } from '@onekeyhq/engine/src/presets/batchTransferContractAddress';
@@ -50,7 +51,6 @@ import { AmountTypeEnum, BulkSenderRoutes, TraderTypeEnum } from '../types';
 
 import type { RootRoutesParams } from '../../../routes/types';
 import type { TokenTrader } from '../types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface Props {
   accountId: string;
@@ -58,10 +58,7 @@ interface Props {
   accountAddress: string;
 }
 
-type NavigationProps = NativeStackNavigationProp<
-  RootRoutesParams,
-  RootRoutes.Main
->;
+type NavigationProps = StackNavigationProp<RootRoutesParams, RootRoutes.Main>;
 
 const bulkType = BulkTypeEnum.OneToMany;
 

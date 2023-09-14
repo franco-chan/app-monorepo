@@ -2,78 +2,113 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useMemo } from 'react';
 
-import { CommonActions, useNavigation } from '@react-navigation/native';
-import { useIntl } from 'react-intl';
+import { CommonActions } from '@react-navigation/native';
 import { Platform, StyleSheet } from 'react-native';
+import { useSafeAreaFrame } from 'react-native-safe-area-context';
 
-import {
-  Text,
-  useIsVerticalLayout,
-  useSafeAreaInsets,
-  useUserDevice,
-} from '@onekeyhq/components';
-// import { navigationShortcuts } from '@onekeyhq/kit/src/routes/navigationShortcuts';
-import {
-  bottomTabBarDescriptors,
-  bottomTabBarRoutes,
-  swapAndMarketRoutes,
-} from '@onekeyhq/kit/src/routes/Root/Main/Tab/routes/tabRoutes.base';
-import type { TabRoutes } from '@onekeyhq/kit/src/routes/routesEnum';
+import { Text, useUserDevice } from '@onekeyhq/components';
 import { PortalContainer } from '@onekeyhq/kit/src/views/Overlay/RootPortal';
-import platformEnv from '@onekeyhq/shared/src/platformEnv';
+import PlatformEnv from '@onekeyhq/shared/src/platformEnv';
 
 import Box from '../../Box';
 import Icon from '../../Icon';
 import Pressable from '../../Pressable';
+import useIsKeyboardShown from '../BottomTabs/utils/useIsKeyboardShown';
 
-import type { ICON_NAMES } from '../../Icon/Icons';
-import type { LocaleIds } from '../../locale';
+import type { ICON_NAMES } from '../../Icon';
 import type { DeviceState } from '../../Provider/device';
-import type { BottomTabBarProps } from '../BottomTabs/types';
+import type { BottomTabBarProps } from '../BottomTabs';
+import type { Animated, StyleProp, ViewStyle } from 'react-native';
 import type { EdgeInsets } from 'react-native-safe-area-context';
 
 const DEFAULT_TABBAR_HEIGHT = 49;
+const COMPACT_TABBAR_HEIGHT = 32;
+const useNativeDriver = !!PlatformEnv.isNative;
 
 type Options = {
   deviceSize: DeviceState['size'];
+  dimensions?: { height: number; width: number };
 };
 
 const shouldUseHorizontalLabels = ({ deviceSize }: Options) =>
-  !!['NORMAL'].includes(deviceSize);
+  ['NORMAL'].includes(deviceSize);
 
 const getPaddingBottom = (insets: EdgeInsets) =>
   Math.max(insets.bottom - Platform.select({ ios: 4, default: 0 }), 0);
 
-export const getTabBarHeight = ({ insets }: { insets: EdgeInsets }) => {
+export const getTabBarHeight = ({
+  dimensions,
+  insets,
+  style,
+  deviceSize,
+}: Options & {
+  insets: EdgeInsets;
+  style: Animated.WithAnimatedValue<StyleProp<ViewStyle>> | undefined;
+}) => {
+  // @ts-ignore
+  const customHeight = StyleSheet.flatten(style)?.height;
+
+  if (typeof customHeight === 'number' && customHeight > 0) {
+    return customHeight;
+  }
+
+  const isLandscape = dimensions ? dimensions.width > dimensions.height : false;
+  const horizontalLabels = shouldUseHorizontalLabels({
+    deviceSize,
+    dimensions,
+  });
   const paddingBottom = getPaddingBottom(insets);
+
+  if (
+    Platform.OS === 'ios' &&
+    !Platform.isPad &&
+    isLandscape &&
+    horizontalLabels
+  ) {
+    return COMPACT_TABBAR_HEIGHT + paddingBottom;
+  }
 
   return DEFAULT_TABBAR_HEIGHT + paddingBottom;
 };
 
+export type MobileBottomTabBarProps = BottomTabBarProps & {
+  backgroundColor?: string;
+  style?: Animated.WithAnimatedValue<StyleProp<ViewStyle>>;
+};
+
 export default function MobileBottomTabBar({
-  inlineMode,
   navigation,
   state,
   descriptors,
   backgroundColor,
-}: BottomTabBarProps) {
+  insets,
+  style,
+}: MobileBottomTabBarProps) {
   const { size } = useUserDevice();
-  const insets = useSafeAreaInsets();
-  const { routes } = state;
-  const intl = useIntl();
 
-  const isHide = !inlineMode && platformEnv.isNewRouteMode;
+  const dimensions = useSafeAreaFrame();
+  const isKeyboardShown = useIsKeyboardShown();
+  const { routes } = state;
+
+  const isHide = isKeyboardShown;
+
+  const focusedRoute = state.routes[state.index];
+  const focusedDescriptor = descriptors[focusedRoute.key];
+  const focusedOptions = focusedDescriptor.options;
+
+  const { tabBarStyle } = focusedOptions;
 
   const paddingBottom = getPaddingBottom(insets);
   const tabBarHeight = getTabBarHeight({
     insets,
+    dimensions,
+    deviceSize: size,
+    style: [tabBarStyle, style],
   });
 
   const horizontal = shouldUseHorizontalLabels({
     deviceSize: size,
   });
-
-  // const isVertical = useIsVerticalLayout();
 
   const tabs = useMemo(
     () =>
@@ -82,27 +117,6 @@ export default function MobileBottomTabBar({
         const { options } = descriptors[route.key];
 
         const onPress = () => {
-          if (inlineMode) {
-            // const isSwapOrMarketRoute = swapAndMarketRoutes.includes(
-            //   route.name as TabRoutes,
-            // );
-            // if (isVertical && isSwapOrMarketRoute) {
-            //   const { appSelector } =
-            //     require('@onekeyhq/kit/src/store') as typeof import('@onekeyhq/kit/src/store');
-            //   const marketTopTabName =
-            //     appSelector((s) => s.market.marketTopTabName) || TabRoutes.Swap;
-            //   navigation.navigate(marketTopTabName);
-            //   // navigationShortcuts.navigateToAppRootTab(
-            //   //   marketTopTabName as unknown as TabRoutes,
-            //   // );
-            // } else {
-            //   navigation.navigate(route.name);
-            //   // navigationShortcuts.navigateToAppRootTab(route.name as TabRoutes);
-            // }
-            navigation.navigate(route.name);
-            return;
-          }
-
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
@@ -117,8 +131,6 @@ export default function MobileBottomTabBar({
           }
         };
 
-        // @ts-expect-error
-        const translationId = options?.translationId as LocaleIds;
         return (
           <Box
             testID="Mobile-AppTabBar-TabItem"
@@ -133,6 +145,7 @@ export default function MobileBottomTabBar({
               alignItems="center"
               px={0.5}
               py={isHide ? 0 : 1.5}
+              mb={isHide ? 0 : 4}
               onPress={onPress}
               _hover={{ bg: 'surface-hovered' }}
               rounded="xl"
@@ -154,14 +167,14 @@ export default function MobileBottomTabBar({
                 color={isActive ? 'icon-default' : 'icon-subdued'}
                 size={28}
               />
-              {translationId?.length && platformEnv.isNative ? (
+              {useNativeDriver && options?.tabBarLabel?.length ? (
                 <Text
                   typography="Caption"
                   color={isActive ? 'text-default' : 'text-subdued'}
                   fontSize={11}
                   numberOfLines={1}
                 >
-                  {intl.formatMessage({ id: translationId })}
+                  {options?.tabBarLabel}
                 </Text>
               ) : null}
             </Pressable>
@@ -172,10 +185,7 @@ export default function MobileBottomTabBar({
       backgroundColor,
       descriptors,
       horizontal,
-      inlineMode,
-      intl,
       isHide,
-      // isVertical,
       navigation,
       routes,
       state.index,
@@ -212,43 +222,5 @@ export default function MobileBottomTabBar({
         name={`BottomTab-Overlay-${state.key}`}
       />
     </Box>
-  );
-}
-
-// TODO use Portal render, or redux controlled singleton
-export function MobileBottomTabBarInline({ name }: { name: TabRoutes }) {
-  const navigation = useNavigation();
-  const isVertical = useIsVerticalLayout();
-
-  const routes = bottomTabBarRoutes;
-  const descriptors = bottomTabBarDescriptors;
-
-  const index = useMemo(() => {
-    let idx = routes.findIndex((route) => route.name === name);
-    if (idx < 0 && isVertical && swapAndMarketRoutes.includes(name)) {
-      idx = routes.findIndex((route) =>
-        swapAndMarketRoutes.includes(route.name),
-      );
-    }
-    return idx;
-  }, [name, routes, isVertical]);
-  if (!isVertical || !platformEnv.isNewRouteMode) {
-    return null;
-  }
-
-  return (
-    <MobileBottomTabBar
-      // backgroundColor="#EEE"
-      inlineMode
-      navigation={navigation as any}
-      descriptors={descriptors as any}
-      state={
-        {
-          routes,
-          index,
-          key: name,
-        } as any
-      }
-    />
   );
 }

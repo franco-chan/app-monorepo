@@ -5,6 +5,7 @@ import { merge } from 'lodash';
 import { useIntl } from 'react-intl';
 
 import { Box, Empty, useIsVerticalLayout } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 
 import { LazyDisplayView } from '../../../components/LazyDisplayView';
 import { useActiveSideAccount } from '../../../hooks';
@@ -20,9 +21,8 @@ import type { IAccountToken } from '../../Overview/types';
 import type { ISendTokenTabViewItem } from '../components/SendTokenTabView';
 import type { SendRoutesParams } from '../types';
 import type { RouteProp } from '@react-navigation/core';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   SendRoutesParams,
   SendModalRoutes.PreSendToken
 >;

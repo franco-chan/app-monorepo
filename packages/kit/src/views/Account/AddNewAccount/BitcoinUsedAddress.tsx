@@ -33,7 +33,7 @@ import BitcoinUsedAddressMenu from './BitcoinUsedAddressMenu';
 
 import type { CreateAccountRoutesParams } from '../../../routes';
 import type { CreateAccountModalRoutes } from '../../../routes/routesEnum';
-import type { RouteProp } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/core';
 
 type RouteProps = RouteProp<
   CreateAccountRoutesParams,

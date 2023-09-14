@@ -10,6 +10,7 @@ import {
   useIsVerticalLayout,
   useTheme,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import keytagDark1 from '@onekeyhq/kit/assets/keytag/keytag_1_dark.png';
 import keytagLight1 from '@onekeyhq/kit/assets/keytag/keytag_1_light.png';
 import keytagDark2 from '@onekeyhq/kit/assets/keytag/keytag_2_dark.png';
@@ -23,7 +24,6 @@ import { KeyTagRoutes } from '../Routes/enums';
 import { keyTagShoppingUrl } from '../utils';
 
 import type { IKeytagRoutesParams } from '../Routes/types';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 type NavigationProps = StackNavigationProp<IKeytagRoutesParams>;
 

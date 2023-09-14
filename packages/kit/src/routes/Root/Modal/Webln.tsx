@@ -1,11 +1,10 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import WeblnAuthenticationModal from '../../../views/Account/AddNewAccount/Authentication';
 import { WeblnModalRoutes } from '../../../views/LightningNetwork/Webln/types';
 import MakeInvoice from '../../../views/LightningNetwork/Webln/WeblnMakeInvoice';
 import VerifyMessage from '../../../views/LightningNetwork/Webln/WeblnVerifyMessage';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { WeblnRoutesParams } from '../../../views/LightningNetwork/Webln/types';
 

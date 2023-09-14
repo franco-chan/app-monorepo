@@ -1,26 +1,28 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 
 import {
+  ActivateTokenAuthModal,
   AddToken,
   CustomToken,
   Listing,
+  TokenRiskDetail,
   VerifiedToken,
   ViewTokenModal,
 } from '../../../views/ManageTokens';
-import ActivateTokenAuthModal from '../../../views/ManageTokens/ActivateTokenAuthModal';
-import TokenRiskDetail from '../../../views/ManageTokens/RiskDetail';
 import { PriceAlertAddModal } from '../../../views/PushNotification/PriceAlertAddModal';
 import { PriceAlertListModal } from '../../../views/PushNotification/PriceAlertListModal';
 import { ManageTokenModalRoutes } from '../../routesEnum';
 
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
-
 import type { ManageTokenRoutesParams } from '../../../views/ManageTokens/types';
+import type { ModalRoutesType } from './types';
 
 const ManageTokenNavigator = createStackNavigator<ManageTokenRoutesParams>();
 
-const modalRoutes = [
+const modalRoutes: ModalRoutesType<ManageTokenModalRoutes> = [
   {
     name: ManageTokenModalRoutes.Listing,
     component: Listing,
@@ -65,7 +67,7 @@ const ManageTokenModalStack = () => {
     <ManageTokenNavigator.Navigator
       screenOptions={(navInfo) => ({
         headerShown: false,
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

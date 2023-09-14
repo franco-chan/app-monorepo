@@ -13,13 +13,13 @@ import {
   useIsVerticalLayout,
 } from '@onekeyhq/components';
 import { Tabs } from '@onekeyhq/components/src/CollapsibleTabView';
+import type { StackScreenProps } from '@onekeyhq/components/src/Navigation';
 import { isAllNetworks } from '@onekeyhq/engine/src/managers/network';
 import { isLightningNetworkByNetworkId } from '@onekeyhq/shared/src/engine/engineConsts';
 import { isBRC20Token } from '@onekeyhq/shared/src/utils/tokenUtils';
 
 import { LazyDisplayView } from '../../components/LazyDisplayView';
-import { useAppSelector, useTokenPositionInfo } from '../../hooks';
-import { isSTETH, isSupportStakingType } from '../Staking/utils';
+import { useTokenPositionInfo } from '../../hooks';
 import { SwapPlugins } from '../Swap/Plugins/Swap';
 import { TxHistoryListView } from '../TxHistory/TxHistoryListView';
 
@@ -35,10 +35,9 @@ import VerticalPriceChartSection from './TokenDetailHeader/VerticalPriceChartSec
 import type { HomeRoutes } from '../../routes/routesEnum';
 import type { HomeRoutesParams } from '../../routes/types';
 import type { RouteProp } from '@react-navigation/core';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { LayoutChangeEvent } from 'react-native';
 
-export type TokenDetailViewProps = NativeStackScreenProps<
+export type TokenDetailViewProps = StackScreenProps<
   HomeRoutesParams,
   HomeRoutes.ScreenTokenDetail
 >;

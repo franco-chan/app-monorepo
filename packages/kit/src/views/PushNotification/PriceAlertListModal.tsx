@@ -7,6 +7,7 @@ import { useIntl } from 'react-intl';
 
 import { Box, Modal, useTheme } from '@onekeyhq/components';
 import type { ModalProps } from '@onekeyhq/components/src/Modal';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { PriceAlertItem } from '@onekeyhq/engine/src/managers/notification';
 import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
 
@@ -20,9 +21,8 @@ import PriceItem from './PriceItem';
 
 import type { ManageTokenRoutesParams } from '../ManageTokens/types';
 import type { RouteProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   ManageTokenRoutesParams,
   ManageTokenModalRoutes.PriceAlertList
 >;

@@ -1,11 +1,10 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 import type { EVMDecodedItem } from '@onekeyhq/engine/src/vaults/impl/evm/decoder/decoder';
 import type { IDecodedTx, IHistoryTx } from '@onekeyhq/engine/src/vaults/types';
 
 import { TxHistoryDetailModal } from '../../../views/TxHistory/TxHistoryDetailModal';
 import { TransactionDetailModalRoutes } from '../../routesEnum';
-
-import createStackNavigator from './createStackNavigator';
 
 export type TransactionDetailRoutesParams = {
   [TransactionDetailModalRoutes.HistoryDetailModal]: {

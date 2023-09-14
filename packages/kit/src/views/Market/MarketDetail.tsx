@@ -13,6 +13,7 @@ import {
   Typography,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { SCREEN_SIZE } from '@onekeyhq/components/src/Provider/device';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
@@ -41,12 +42,11 @@ import type {
 } from '../../routes/types';
 import type { MarketTokenItem } from '../../store/reducers/market';
 import type { RouteProp } from '@react-navigation/core';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { LayoutChangeEvent } from 'react-native';
 
 type RouteProps = RouteProp<HomeRoutesParams, HomeRoutes.MarketDetail>;
 
-type NavigationProps = NativeStackNavigationProp<TabRoutesParams> &
+type NavigationProps = StackNavigationProp<TabRoutesParams> &
   ModalScreenProps<FiatPayModalRoutesParams>;
 
 export const FavoritButton = ({

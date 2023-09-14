@@ -1,11 +1,12 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 
 import MoonpayWebView from '../../../views/FiatPay/MoonpayWebView';
 import SupportTokenList from '../../../views/FiatPay/SupportTokenList';
 import { FiatPayModalRoutes } from '../../routesEnum';
-
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 import type { FiatPayModeType } from '../../../views/FiatPay/types';
 
@@ -36,7 +37,7 @@ const FiatPayModalStack = () => {
     <BuyNavigator.Navigator
       screenOptions={(navInfo) => ({
         headerShown: false,
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

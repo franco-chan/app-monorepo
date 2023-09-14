@@ -1,9 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import { GasPanel } from '../../../views/GasPanel';
 import { GasPanelRoutes } from '../../../views/GasPanel/types';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { GasPanelRoutesParams } from '../../../views/GasPanel/types';
 

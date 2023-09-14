@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 import useSWR from 'swr';
 
 import { Box, ToastManager } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import { backupPlatform } from '@onekeyhq/shared/src/cloudfs';
 import supportedNFC from '@onekeyhq/shared/src/detector/nfc';
@@ -37,7 +38,6 @@ import {
 import type { IAddExistingWalletMode } from '../../../../routes';
 import type { IOnboardingRoutesParams } from '../../routes/types';
 import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 type RouteProps = RouteProp<
   IOnboardingRoutesParams,

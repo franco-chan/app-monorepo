@@ -5,6 +5,7 @@ import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
 
 import { Icon, ListItem, Text } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { shortenAddress } from '@onekeyhq/components/src/utils';
 import type { IDecodedTxAction } from '@onekeyhq/engine/src/vaults/types';
 import {
@@ -35,8 +36,6 @@ import type {
   ITxActionMetaIcon,
   ITxActionMetaTitle,
 } from '../types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 const NOBODY = '0x0000000000000000000000000000000000000000';
 
@@ -165,7 +164,7 @@ type NavigationProps = StackNavigationProp<
   SendRoutesParams,
   SendModalRoutes.NFTDetailModal
 > &
-  NativeStackNavigationProp<RootRoutesParams, RootRoutes.Main>;
+  StackNavigationProp<RootRoutesParams, RootRoutes.Main>;
 
 export function TxActionNFTTransfer(props: ITxActionCardProps) {
   const { decodedTx, meta, network, isShortenAddress = false } = props;

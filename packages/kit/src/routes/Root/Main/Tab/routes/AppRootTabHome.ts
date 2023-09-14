@@ -21,7 +21,6 @@ const config: TabRouteConfig = {
     toFocusedLazy(HomeScreen, {
       rootTabName: name,
     }),
-    name,
   ),
   children: [
     {

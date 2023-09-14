@@ -12,6 +12,7 @@ import {
   Typography,
   useTheme,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { copyToClipboard } from '@onekeyhq/components/src/utils/ClipboardUtils';
 import backgroundApiProxy from '@onekeyhq/kit/src/background/instance/backgroundApiProxy';
 import { getLogZipPath } from '@onekeyhq/shared/src/logger/debugLogger';
@@ -22,11 +23,10 @@ import { HomeRoutes } from '../../../routes/routesEnum';
 import type { RootRoutes } from '../../../routes/routesEnum';
 import type { HomeRoutesParams, RootRoutesParams } from '../../../routes/types';
 import type { CompositeNavigationProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type NavigationProps = CompositeNavigationProp<
-  NativeStackNavigationProp<RootRoutesParams, RootRoutes.Main>,
-  NativeStackNavigationProp<HomeRoutesParams, HomeRoutes.ClearCache>
+  StackNavigationProp<RootRoutesParams, RootRoutes.Main>,
+  StackNavigationProp<HomeRoutesParams, HomeRoutes.ClearCache>
 >;
 
 const getShareModule = async () => {

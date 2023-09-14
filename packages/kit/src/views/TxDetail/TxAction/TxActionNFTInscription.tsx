@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useIntl } from 'react-intl';
 
 import { HStack, Icon, ListItem, Pressable, Text } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { shortenAddress } from '@onekeyhq/components/src/utils';
 import type { NFTBTCAssetModel } from '@onekeyhq/engine/src/types/nft';
 import type { IDecodedTxAction } from '@onekeyhq/engine/src/vaults/types';
@@ -36,8 +37,6 @@ import type {
   ITxActionMetaIcon,
   ITxActionMetaTitle,
 } from '../types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 const SHOW_ASSETS_DEFAULT = 3;
 
@@ -111,7 +110,7 @@ type NavigationProps = StackNavigationProp<
   SendRoutesParams,
   SendModalRoutes.NFTDetailModal
 > &
-  NativeStackNavigationProp<RootRoutesParams, RootRoutes.Main>;
+  StackNavigationProp<RootRoutesParams, RootRoutes.Main>;
 
 export function TxActionNFTInscription(props: ITxActionCardProps) {
   const { decodedTx, action, meta, network, isShortenAddress = false } = props;

@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useCallback, useMemo } from 'react';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import { useIntl } from 'react-intl';
 
 import {

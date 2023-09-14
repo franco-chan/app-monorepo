@@ -18,7 +18,6 @@ const config: TabRouteConfig = {
       rootTabName: name,
       freezeWhenBlur: true,
     }),
-    name,
   ),
   children: [],
 };

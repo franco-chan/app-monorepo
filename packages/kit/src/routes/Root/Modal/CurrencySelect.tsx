@@ -1,9 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import CurrencySelect from '../../../views/Me/GenaralSection/CurrencySelect';
 import { CurrencySelectModal } from '../../../views/Me/GenaralSection/CurrencySelect/types';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { CurrencySelectModalParams } from '../../../views/Me/GenaralSection/CurrencySelect/types';
 

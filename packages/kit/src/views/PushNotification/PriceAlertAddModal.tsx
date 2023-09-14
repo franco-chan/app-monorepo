@@ -16,6 +16,7 @@ import {
   Typography,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { PriceAlertOperator } from '@onekeyhq/engine/src/managers/notification';
 import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
@@ -29,9 +30,8 @@ import { PreSendAmountPreview } from '../Send/modals/PreSendAmount';
 import type { ManageTokenModalRoutes } from '../../routes/routesEnum';
 import type { ManageTokenRoutesParams } from '../ManageTokens/types';
 import type { RouteProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   ManageTokenRoutesParams,
   ManageTokenModalRoutes.PriceAlertList
 >;

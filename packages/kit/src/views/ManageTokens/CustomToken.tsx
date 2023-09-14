@@ -1,7 +1,5 @@
-import type { FC } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
-import { useNavigation } from '@react-navigation/core';
 import { useIntl } from 'react-intl';
 
 import {
@@ -12,6 +10,7 @@ import {
   useForm,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackScreenProps } from '@onekeyhq/components/src/Navigation';
 import type { Token } from '@onekeyhq/engine/src/types/token';
 
 import backgroundApiProxy from '../../background/instance/backgroundApiProxy';
@@ -21,18 +20,13 @@ import {
   useDebounce,
   useNetworkSimple,
 } from '../../hooks';
-import {
-  ManageTokenModalRoutes,
-  ModalRoutes,
-  RootRoutes,
-} from '../../routes/routesEnum';
+import { ManageTokenModalRoutes } from '../../routes/routesEnum';
 
 import { notifyIfRiskToken } from './helpers/TokenSecurityModalWrapper';
 
 import type { ManageTokenRoutesParams } from './types';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackScreenProps<
+type NavigationProps = StackScreenProps<
   ManageTokenRoutesParams,
   ManageTokenModalRoutes.CustomToken
 >;
@@ -43,12 +37,12 @@ type AddCustomTokenValues = {
   decimal: string;
 };
 
-export const AddCustomToken: FC<NavigationProps> = ({ route }) => {
+export function AddCustomToken({ navigation, route }: NavigationProps) {
   const address = route.params?.address;
   const networkId = route.params?.networkId;
   const intl = useIntl();
 
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
   const [isSearching, setSearching] = useState(false);
   const [inputDisabled, setInputDisabled] = useState(false);
@@ -133,21 +127,15 @@ export const AddCustomToken: FC<NavigationProps> = ({ route }) => {
         activeNetwork.id,
       );
       if (vaultSettings?.activateTokenRequired) {
-        navigation.navigate(RootRoutes.Modal, {
-          screen: ModalRoutes.ManageToken,
-          params: {
-            screen: ManageTokenModalRoutes.ActivateToken,
-            params: {
-              walletId,
-              accountId: $accountId,
-              networkId: $networkId,
-              tokenId,
-              onSuccess() {
-                onAddToken($accountId, $networkId, tokenId).finally(() => {
-                  setLoading(false);
-                });
-              },
-            },
+        navigation.navigate(ManageTokenModalRoutes.ActivateToken, {
+          walletId,
+          accountId: $accountId,
+          networkId: $networkId,
+          tokenId,
+          onSuccess() {
+            onAddToken($accountId, $networkId, tokenId).finally(() => {
+              setLoading(false);
+            });
           },
         });
       } else {
@@ -215,6 +203,7 @@ export const AddCustomToken: FC<NavigationProps> = ({ route }) => {
         }
       }
     }
+
     doQuery();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address, activeAccount, activeNetwork, onSearch, debouncedAddress]);
@@ -320,6 +309,6 @@ export const AddCustomToken: FC<NavigationProps> = ({ route }) => {
       </KeyboardDismissView>
     </Modal>
   );
-};
+}
 
 export default AddCustomToken;

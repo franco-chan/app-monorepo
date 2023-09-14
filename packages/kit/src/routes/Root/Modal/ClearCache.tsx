@@ -1,10 +1,9 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import ClearCacheModal from '../../../views/ClearCache/ClearCacheModal';
 import CopyBrowserUrlModal from '../../../views/ClearCache/CopyBrowserUrlModal';
 import { ClearCacheModalRoutes } from '../../routesEnum';
-
-import createStackNavigator from './createStackNavigator';
 
 export type ClearCacheModalRoutesParams = {
   [ClearCacheModalRoutes.ClearCacheModal]: undefined;

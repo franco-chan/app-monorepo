@@ -18,6 +18,7 @@ import {
   Token,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { Network } from '@onekeyhq/engine/src/types/network';
 
 import backgroundApiProxy from '../../../background/instance/backgroundApiProxy';
@@ -31,9 +32,8 @@ import { ManageNetworkModalRoutes } from '../../../routes/routesEnum';
 import { NetworkListEmpty, strIncludes } from './NetworkListEmpty';
 
 import type { ManageNetworkRoutesParams } from '../../../routes/Root/Modal/ManageNetwork';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   ManageNetworkRoutesParams,
   ManageNetworkModalRoutes.Listing
 >;

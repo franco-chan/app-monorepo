@@ -1,6 +1,10 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  CommonActions,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import BigNumber from 'bignumber.js';
 import { isEmpty, isNil, map } from 'lodash';
 import { useIntl } from 'react-intl';
@@ -355,12 +359,14 @@ function SendProgress({
       debugLogger.common.error(error);
       if (backRouteName) {
         // navigation.navigate(backRouteName);
-        navigation.navigate({
-          merge: true,
-          name: backRouteName,
-          // pass empty params, as backRouteName params format may be different
-          params: {},
-        });
+        navigation.dispatch(
+          CommonActions.navigate({
+            merge: true,
+            name: backRouteName,
+            // pass empty params, as backRouteName params format may be different
+            params: {},
+          }),
+        );
       } else {
         /**
          * No need to goBack after component destroyed to avoid routing order confusion
@@ -515,6 +521,7 @@ function SendProgress({
     </Center>
   );
 }
+
 const SendProgressMemo = memo(SendProgress);
 
 function BatchSendProgress() {

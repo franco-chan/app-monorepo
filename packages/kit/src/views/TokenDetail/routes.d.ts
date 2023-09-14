@@ -1,5 +1,6 @@
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
+
 import type { HomeRoutes } from '../../routes/routesEnum';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type TokenDetailScreenValues = {
   accountId: string;
@@ -11,7 +12,7 @@ export type TokenDetailRoutesParams = {
   [HomeRoutes.ScreenTokenDetail]: TokenDetailScreenValues;
 };
 
-export type TokenDetailNavigation = NativeStackNavigationProp<
+export type TokenDetailNavigation = StackNavigationProp<
   TokenDetailRoutesParams,
   HomeRoutes.ScreenTokenDetail
 >;

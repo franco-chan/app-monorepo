@@ -13,6 +13,7 @@ import {
   Text,
 } from '@onekeyhq/components';
 import useModalClose from '@onekeyhq/components/src/Modal/Container/useModalClose';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import LogoAmber from '@onekeyhq/kit/assets/onboarding/logo_amber.png';
 import LogoCoboWallet from '@onekeyhq/kit/assets/onboarding/logo_cobo_wallet.png';
 import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
@@ -33,7 +34,6 @@ import type { CreateWalletModalRoutes } from '../../routes/routesEnum';
 import type { WalletService } from './types';
 import type { IConnectToWalletResult } from './useWalletConnectQrcodeModal';
 import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ImageSourcePropType } from 'react-native';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

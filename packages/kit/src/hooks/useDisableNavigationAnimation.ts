@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react';
 
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/core';
 
 import type { StackAnimationTypes } from 'react-native-screens';
 

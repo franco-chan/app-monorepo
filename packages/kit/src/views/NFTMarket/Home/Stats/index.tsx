@@ -14,6 +14,7 @@ import {
   ToggleButtonGroup,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { Network } from '@onekeyhq/engine/src/types/network';
 
 import { HomeRoutes } from '../../../../routes/routesEnum';
@@ -27,9 +28,8 @@ import Ranking from './Ranking';
 
 import type { HomeRoutesParams } from '../../../../routes/types';
 import type { StatsListContextValue } from './context';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HomeRoutesParams,
   HomeRoutes.NFTMarketStatsList
 >;

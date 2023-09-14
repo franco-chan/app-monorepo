@@ -26,6 +26,7 @@ import {
   Typography,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import { shortenAddress } from '@onekeyhq/components/src/utils';
 import { getClipboard } from '@onekeyhq/components/src/utils/ClipboardUtils';
@@ -54,10 +55,9 @@ import { useReloadAccountBalance } from '../utils/useReloadAccountBalance';
 
 import type { SendRoutesParams } from '../types';
 import type { RouteProp } from '@react-navigation/core';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { MessageDescriptor } from 'react-intl';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   SendRoutesParams,
   SendModalRoutes.PreSendAmount
 >;

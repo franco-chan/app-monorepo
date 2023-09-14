@@ -11,6 +11,7 @@ import {
   Text,
   useTheme,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import {
   HomeRoutes,
   ModalRoutes,
@@ -28,10 +29,9 @@ import { gotoScanQrcode } from '../../../utils/gotoScanQrcode';
 import { ManageConnectedSitesRoutes } from '../../ManageConnectedSites/types';
 
 import type { ManageConnectedSitesRoutesParams } from '../../ManageConnectedSites/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type NavigationProps = ModalScreenProps<ManageConnectedSitesRoutesParams>;
-type NavigationStackProps = NativeStackNavigationProp<HomeRoutesParams>;
+type NavigationStackProps = StackNavigationProp<HomeRoutesParams>;
 export const UtilSection = () => {
   const intl = useIntl();
   const { themeVariant } = useTheme();

@@ -1,10 +1,9 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import UpdateFeature from '../../../views/Update/Feature';
 import ForcedUpdate from '../../../views/Update/ForcedUpdate';
 import { UpdateFeatureModalRoutes } from '../../routesEnum';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { VersionInfo } from '../../../utils/updates/type';
 

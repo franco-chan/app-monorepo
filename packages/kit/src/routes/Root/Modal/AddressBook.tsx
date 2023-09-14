@@ -1,4 +1,5 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import EditAddress from '../../../views/AddressBook/EditAddress';
 import EnterAddress from '../../../views/AddressBook/EnterAddress';
@@ -6,8 +7,6 @@ import AddressBookModal from '../../../views/AddressBook/Listing';
 import NewAddress from '../../../views/AddressBook/NewAddress';
 import PickAddress from '../../../views/AddressBook/PickAddress';
 import { AddressBookRoutes } from '../../../views/AddressBook/routes';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { AddressBookRoutesParams } from '../../../views/AddressBook/routes';
 

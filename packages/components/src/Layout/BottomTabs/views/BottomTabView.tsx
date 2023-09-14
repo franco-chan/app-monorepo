@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable @typescript-eslint/no-use-before-define,@typescript-eslint/no-unused-vars */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable @typescript-eslint/no-shadow */
 import { useMemo, useState } from 'react';
@@ -10,21 +10,23 @@ import {
   getHeaderTitle,
 } from '@react-navigation/elements';
 import { Platform, StyleSheet } from 'react-native';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 
 import { useIsVerticalLayout, useThemeValue } from '@onekeyhq/components';
 
-import NavigationBar from '../../NavigationBar';
-import { getTabBarHeight } from '../../NavigationBar/MobileBottomTabBar';
 import BottomTabBarHeightCallbackContext from '../utils/BottomTabBarHeightCallbackContext';
 import BottomTabBarHeightContext from '../utils/BottomTabBarHeightContext';
 
+import BottomTabBar, { getTabBarHeight } from './BottomTabBar';
 import { MaybeScreen, MaybeScreenContainer } from './ScreenFallback';
 
 import type {
+  BottomTabBarProps,
   BottomTabDescriptorMap,
   BottomTabHeaderProps,
   BottomTabNavigationConfig,
   BottomTabNavigationHelpers,
+  BottomTabNavigationProp,
 } from '../types';
 import type {
   ParamListBase,
@@ -41,9 +43,11 @@ export default function BottomTabView(props: Props) {
   const isVerticalLayout = useIsVerticalLayout();
   const bgColor = useThemeValue('background-default');
   const {
+    tabBar = (props: BottomTabBarProps) => <BottomTabBar {...props} />,
     state,
     navigation,
     descriptors,
+    safeAreaInsets,
     detachInactiveScreens = Platform.OS === 'web' ||
       Platform.OS === 'android' ||
       Platform.OS === 'ios',
@@ -60,22 +64,34 @@ export default function BottomTabView(props: Props) {
   const dimensions = SafeAreaProviderCompat.initialMetrics.frame;
   const [tabBarHeight, setTabBarHeight] = useState(() =>
     getTabBarHeight({
+      state,
+      descriptors,
+      dimensions,
+      layout: { width: dimensions.width, height: 0 },
       insets: {
         ...SafeAreaProviderCompat.initialMetrics.insets,
         ...props.safeAreaInsets,
       },
+      style: descriptors[state.routes[state.index].key].options.tabBarStyle,
     }),
   );
 
-  const tabBar = useMemo(
-    () => (
-      <NavigationBar
-        navigation={navigation}
-        state={state}
-        descriptors={descriptors}
-      />
-    ),
-    [descriptors, navigation, state],
+  const renderTabBar = () => (
+    <SafeAreaInsetsContext.Consumer>
+      {(insets) =>
+        tabBar({
+          state,
+          descriptors,
+          navigation,
+          insets: {
+            top: safeAreaInsets?.top ?? insets?.top ?? 0,
+            right: safeAreaInsets?.right ?? insets?.right ?? 0,
+            bottom: safeAreaInsets?.bottom ?? insets?.bottom ?? 0,
+            left: safeAreaInsets?.left ?? insets?.left ?? 0,
+          },
+        })
+      }
+    </SafeAreaInsetsContext.Consumer>
   );
 
   const { routes } = state;
@@ -112,10 +128,11 @@ export default function BottomTabView(props: Props) {
                 title={getHeaderTitle(options, route.name)}
               />
             ),
+            headerShown,
+            headerStatusBarHeight,
+            headerTransparent,
           } = descriptor.options;
 
-          // @ts-ignore
-          // @ts-ignore
           return (
             <MaybeScreen
               key={route.key}
@@ -129,15 +146,14 @@ export default function BottomTabView(props: Props) {
                   focused={isFocused}
                   route={descriptor.route}
                   navigation={descriptor.navigation}
-                  headerShown={descriptor.options.headerShown}
-                  headerTransparent={descriptor.options.headerTransparent}
-                  headerStatusBarHeight={
-                    descriptor.options.headerStatusBarHeight
-                  }
+                  headerShown={headerShown}
+                  headerStatusBarHeight={headerStatusBarHeight}
+                  headerTransparent={headerTransparent}
                   header={header({
                     layout: dimensions,
                     route: descriptor.route,
-                    navigation: descriptor.navigation,
+                    navigation:
+                      descriptor.navigation as BottomTabNavigationProp<ParamListBase>,
                     options: descriptor.options,
                   })}
                   style={[sceneContainerStyle, { backgroundColor: bgColor }]}
@@ -150,7 +166,7 @@ export default function BottomTabView(props: Props) {
         })}
       </MaybeScreenContainer>
       <BottomTabBarHeightCallbackContext.Provider value={setTabBarHeight}>
-        {tabBar}
+        {renderTabBar()}
       </BottomTabBarHeightCallbackContext.Provider>
     </SafeAreaProviderCompat>
   );

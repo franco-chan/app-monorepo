@@ -1,4 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 import type { IWallet } from '@onekeyhq/engine/src/types';
 import type { Account } from '@onekeyhq/engine/src/types/account';
 import type { UserInputCheckResult } from '@onekeyhq/engine/src/types/credential';
@@ -25,9 +29,6 @@ import OnekeyLiteRestorePinCode from '../../../views/Hardware/OnekeyLite/PinCode
 import OnekeyLiteRestore from '../../../views/Hardware/OnekeyLite/Restore';
 import OnekeyLiteRestoreDoneView from '../../../views/Hardware/OnekeyLite/Restore/Done';
 import { CreateWalletModalRoutes } from '../../routesEnum';
-
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 import type { WalletService } from '../../../components/WalletConnect/types';
 import type { SearchDevice } from '../../../utils/hardware';
@@ -214,7 +215,7 @@ const CreateWalletModalStack = () => {
   return (
     <CreateWalletNavigator.Navigator
       screenOptions={(navInfo) => ({
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

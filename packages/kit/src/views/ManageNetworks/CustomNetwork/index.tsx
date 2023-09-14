@@ -15,6 +15,10 @@ import {
   useForm,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type {
+  StackNavigationProp,
+  StackScreenProps,
+} from '@onekeyhq/components/src/Navigation';
 
 import backgroundApiProxy from '../../../background/instance/backgroundApiProxy';
 import { useActiveWalletAccount, useDebounce } from '../../../hooks';
@@ -24,10 +28,6 @@ import type {
   ManageNetworkModalRoutes,
   ManageNetworkRoutesParams,
 } from '../types';
-import type {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from '@react-navigation/native-stack';
 
 type NetworkValues = {
   name?: string;
@@ -38,12 +38,12 @@ type NetworkValues = {
   id: string;
 };
 
-type NetworkCustomViewProps = NativeStackScreenProps<
+type NetworkCustomViewProps = StackScreenProps<
   ManageNetworkRoutesParams,
   ManageNetworkModalRoutes.CustomNetwork
 >;
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   ManageNetworkRoutesParams,
   ManageNetworkModalRoutes.CustomNetwork
 >;

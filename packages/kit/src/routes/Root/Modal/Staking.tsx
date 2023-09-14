@@ -1,4 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 
 import ETHPoolSelector from '../../../views/Staking/ETHPoolSelector';
 import ETHStake from '../../../views/Staking/ETHStake';
@@ -22,9 +26,6 @@ import StakingAmount from '../../../views/Staking/StakingAmount';
 import { StakingRoutes } from '../../../views/Staking/typing';
 import UnstakeAmount from '../../../views/Staking/UnstakeAmount';
 import WithdrawAmount from '../../../views/Staking/WithdrawAmount';
-
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 import type { StakingRoutesParams } from '../../../views/Staking/typing';
 
@@ -123,7 +124,7 @@ const StakingModalStack = () => {
     <StakingNavigator.Navigator
       screenOptions={(navInfo) => ({
         headerShown: false,
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

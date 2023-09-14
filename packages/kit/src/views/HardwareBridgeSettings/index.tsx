@@ -12,6 +12,7 @@ import {
   useIsVerticalLayout,
   useTheme,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { EOnekeyDomain } from '@onekeyhq/shared/types';
 
 import backgroundApiProxy from '../../background/instance/backgroundApiProxy';
@@ -22,9 +23,8 @@ import { showRefreshExtSheet } from './RefreshExtSheet';
 
 import type { HomeRoutes } from '../../routes/routesEnum';
 import type { HomeRoutesParams } from '../../routes/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HomeRoutesParams,
   HomeRoutes.HardwareBridgeSettings
 >;

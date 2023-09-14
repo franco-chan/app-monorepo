@@ -13,6 +13,7 @@ import {
   Text,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { Network } from '@onekeyhq/engine/src/types/network';
 
 import backgroundApiProxy from '../../../../background/instance/backgroundApiProxy';
@@ -26,9 +27,8 @@ import { LiveMintListContext, useLiveMintContext } from './context';
 
 import type { HomeRoutesParams } from '../../../../routes/types';
 import type { LiveMintListContextValue } from './context';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HomeRoutesParams,
   HomeRoutes.NFTMarketLiveMintingList
 >;

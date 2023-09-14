@@ -1,4 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 import type { Device } from '@onekeyhq/engine/src/types/device';
 
 import UpdateInfoModel from '../../../views/Hardware/UpdateFirmware/UpdateInfo';
@@ -7,9 +11,6 @@ import UpdateWarningModel from '../../../views/Hardware/UpdateFirmware/UpdateWar
 import UpdatingModel from '../../../views/Hardware/UpdateFirmware/Updating';
 import UpdatingBootloaderModal from '../../../views/Hardware/UpdateFirmware/UpdatingBootloader';
 import { HardwareUpdateModalRoutes } from '../../routesEnum';
-
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 import type { IResourceUpdateInfo } from '../../../utils/updates/type';
 
@@ -83,7 +84,7 @@ const HardwareUpdateModalStack = () => {
     <HardwareUpdateNavigator.Navigator
       screenOptions={(navInfo) => ({
         headerShown: false,
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

@@ -1,15 +1,15 @@
 import type { FC } from 'react';
 
 import { Box, useSafeAreaInsets } from '@onekeyhq/components';
+import type { StackScreenProps } from '@onekeyhq/components/src/Navigation';
 
 import { useActiveWalletAccount } from '../../hooks';
 import { FullTokenAssetsList } from '../Wallet/AssetsList';
 
 import type { HomeRoutes } from '../../routes/routesEnum';
 import type { FullTokenListRoutesParams } from './routes';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-export type FullTokenListProps = NativeStackScreenProps<
+export type FullTokenListProps = StackScreenProps<
   FullTokenListRoutesParams,
   HomeRoutes.FullTokenListScreen
 >;

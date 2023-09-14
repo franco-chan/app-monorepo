@@ -1,4 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 import type {
   Account,
   ImportableHDAccount,
@@ -16,14 +20,12 @@ import ExportAddresses from '../../../views/Account/BulkCopyAddress/ExportAddres
 import FetchAddressModal from '../../../views/Account/BulkCopyAddress/FetchAddressModal';
 import { CreateAccountModalRoutes } from '../../routesEnum';
 
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
-
 import type {
   IFetchAddressByRange,
   IFetchAddressByWallet,
 } from '../../../views/Account/BulkCopyAddress';
 import type { IExportAddressData } from '../../../views/Account/BulkCopyAddress/FetchAddressModal';
+import type { ModalRoutesType } from './types';
 
 type RecoverAccountsAdvancedParams = {
   fromIndex: number;
@@ -98,7 +100,7 @@ export type CreateAccountRoutesParams = {
 const CreateAccountNavigator =
   createStackNavigator<CreateAccountRoutesParams>();
 
-const modalRoutes = [
+const modalRoutes: ModalRoutesType<CreateAccountModalRoutes> = [
   {
     name: CreateAccountModalRoutes.CreateAccountForm,
     component: AddNewAccountModal,
@@ -150,7 +152,7 @@ const CreateAccountModalStack = () => {
   return (
     <CreateAccountNavigator.Navigator
       screenOptions={(navInfo) => ({
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

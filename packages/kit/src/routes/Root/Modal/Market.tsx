@@ -1,9 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import MarketSrarchModal from '../../../views/Market/MarketSearch';
 import { MarketRoutes } from '../../../views/Market/types';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { MarketRoutesParams } from '../../../views/Market/types';
 

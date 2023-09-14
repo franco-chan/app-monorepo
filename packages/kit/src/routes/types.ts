@@ -5,6 +5,7 @@ import type { ComponentType, FC } from 'react';
 
 import type { LocaleIds } from '@onekeyhq/components/src/locale';
 import type { HeaderTitleProps } from '@onekeyhq/components/src/NavHeader/HeaderTitle';
+import type { StackScreenProps } from '@onekeyhq/components/src/Navigation';
 import type { PriceAlertItem } from '@onekeyhq/engine/src/managers/notification';
 import type { BulkTypeEnum } from '@onekeyhq/engine/src/types/batchTransfer';
 import type { Network } from '@onekeyhq/engine/src/types/network';
@@ -30,7 +31,6 @@ import type {
   NavigatorScreenParams,
   ParamListBase,
 } from '@react-navigation/native';
-import type { StackScreenProps } from '@react-navigation/stack';
 
 export type ScreensListItem<T extends string> = {
   name: T;

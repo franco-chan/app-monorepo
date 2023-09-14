@@ -1,11 +1,12 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 import type { Token } from '@onekeyhq/engine/src/types/token';
 import { InscriptionControl } from '@onekeyhq/kit/src/views/InscriptionControl';
 
 import { InscriptionControlModalRoutes } from '../../routesEnum';
-
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 export type InscriptionControlRoutesParams = {
   [InscriptionControlModalRoutes.InscriptionControlModal]: {
@@ -32,7 +33,7 @@ const InscriptionControlModalStack = () => {
     <InscriptionControlNavigator.Navigator
       screenOptions={(navInfo) => ({
         headerShown: false,
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

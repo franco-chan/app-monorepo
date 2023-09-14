@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable import/named */
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
+
 import type { StackBasicRoutes } from '../../../../routes';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type OnekeyLiteDetailScreenValues = {
   liteId: string;
@@ -13,7 +14,7 @@ export type OnekeyLiteDetailRoutesParams = {
   };
 };
 
-export type OnekeyLiteDetailNavigation = NativeStackNavigationProp<
+export type OnekeyLiteDetailNavigation = StackNavigationProp<
   OnekeyLiteDetailRoutesParams,
   StackBasicRoutes
 >;

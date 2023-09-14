@@ -12,6 +12,7 @@ import {
   useIsVerticalLayout,
   useSafeAreaInsets,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import backgroundApiProxy from '@onekeyhq/kit/src/background/instance/backgroundApiProxy';
 import type { MarketTokenDetail } from '@onekeyhq/kit/src/store/reducers/market';
 
@@ -24,12 +25,8 @@ import { MarketDetailComponent } from './MarketDetailComponent';
 import MarketPriceChart from './MarketPriceChart';
 
 import type { TabRoutesParams } from '../../../../routes/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
-  TabRoutesParams,
-  TabRoutes.Home
->;
+type NavigationProps = StackNavigationProp<TabRoutesParams, TabRoutes.Home>;
 
 const MarketDetailActionButton = ({
   marketTokenId,

@@ -1,4 +1,5 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import OnekeyLiteChangePin from '../../../views/Hardware/OnekeyLite/ChangePin';
 import {
@@ -7,8 +8,6 @@ import {
   OnekeyLiteNewSetPinCode,
 } from '../../../views/Hardware/OnekeyLite/ChangePinInputPin';
 import { OnekeyLiteChangePinModalRoutes } from '../../routesEnum';
-
-import createStackNavigator from './createStackNavigator';
 
 import type {
   OnekeyLiteModalRoutes,

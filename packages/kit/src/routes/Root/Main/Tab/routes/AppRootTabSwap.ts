@@ -17,7 +17,6 @@ const config: TabRouteConfig = {
     toFocusedLazy(ScreenSwap, {
       rootTabName: name,
     }),
-    name,
   ),
   children: [
     {

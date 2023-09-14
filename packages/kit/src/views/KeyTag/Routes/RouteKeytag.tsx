@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import EnterPhrase from '../Screen/EnterPhrase';
 import ImportKeyTag from '../Screen/ImportKeyTag';
@@ -30,7 +30,7 @@ export const stackScreenList = [
   },
 ];
 
-export const StackNavigator = createNativeStackNavigator<
+export const StackNavigator = createStackNavigator<
   IKeytagRoutesParams & HomeRoutesParams
 >();
 

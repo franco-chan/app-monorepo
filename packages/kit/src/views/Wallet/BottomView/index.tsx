@@ -3,6 +3,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
 import { VStack } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 
 import { useActiveWalletAccount } from '../../../hooks';
 import { HomeRoutes } from '../../../routes/routesEnum';
@@ -13,9 +14,8 @@ import { useWalletsSwapTransactions } from '../../Swap/hooks/useTransactions';
 import Offline from './Offline';
 
 import type { HomeRoutesParams } from '../../../routes/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<HomeRoutesParams>;
+type NavigationProps = StackNavigationProp<HomeRoutesParams>;
 
 const BottomView = memo(() => {
   const [offline, setOffline] = useState(false);

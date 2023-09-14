@@ -1,4 +1,5 @@
 import { IconButton, useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import { getAppNavigation } from '../../../hooks/useAppNavigation';
 import { ChainSelector } from '../../../views/Discover/ChainSelector';
@@ -10,8 +11,6 @@ import { History } from '../../../views/Discover/History';
 import { MobileTabs } from '../../../views/Discover/MobileTabs';
 import { ShareView } from '../../../views/Discover/Share';
 import { DiscoverModalRoutes } from '../../../views/Discover/type';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { DiscoverRoutesParams } from '../../../views/Discover/type';
 

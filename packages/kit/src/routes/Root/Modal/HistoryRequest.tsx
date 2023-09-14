@@ -1,12 +1,11 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import { HistoryRequest } from '../../../views/Help/Request/HistoryRequest';
 import { ReplyTicket } from '../../../views/Help/Request/ReplyTicket';
 import { SubmitRequest } from '../../../views/Help/Request/SubmitRequest';
 import { TicketDetail } from '../../../views/Help/Request/TicketDetail';
 import { HistoryRequestRoutes } from '../../../views/Help/Request/types';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { HistoryRequestModalRoutesParams } from '../../../views/Help/Request/types';
 

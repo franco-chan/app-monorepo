@@ -19,6 +19,7 @@ import {
   useIsVerticalLayout,
 } from '@onekeyhq/components';
 import type { ICON_NAMES } from '@onekeyhq/components/src/Icon';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import { backupPlatform } from '@onekeyhq/shared/src/cloudfs';
 import { RestoreResult } from '@onekeyhq/shared/src/services/ServiceCloudBackup/ServiceCloudBackup.enums';
@@ -53,7 +54,6 @@ import type {
   RootRoutesParams,
 } from '../../../../routes/types';
 import type { RouteProp } from '@react-navigation/core';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { IBoxProps } from 'native-base';
 
 type BackupDetailsRouteProp = RouteProp<
@@ -61,10 +61,7 @@ type BackupDetailsRouteProp = RouteProp<
   HomeRoutes.CloudBackupDetails
 >;
 
-type NavigationProps = NativeStackNavigationProp<
-  RootRoutesParams,
-  RootRoutes.Main
->;
+type NavigationProps = StackNavigationProp<RootRoutesParams, RootRoutes.Main>;
 
 type ListItem = {
   icon?: Avatar | ICON_NAMES;

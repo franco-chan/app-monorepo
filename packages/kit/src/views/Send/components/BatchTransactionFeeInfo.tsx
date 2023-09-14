@@ -16,6 +16,7 @@ import {
   Tooltip,
   VStack,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type {
   IEncodedTx,
   IFeeInfoPayload,
@@ -34,7 +35,6 @@ import { useNetworkFeeInfoEditable } from '../utils/useNetworkFeeInfoEditable';
 import { FeeSpeedLabel } from './FeeSpeedLabel';
 
 import type { BatchSendConfirmParams, SendRoutesParams } from '../types';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 interface Props {
   feeInfoPayloads: IFeeInfoPayload[];

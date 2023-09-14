@@ -17,6 +17,7 @@ import {
   Token,
   Typography,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { ChainListConfig } from '@onekeyhq/engine/src/managers/network';
 import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
 
@@ -25,9 +26,8 @@ import { useDebounce, useManageNetworks } from '../../../hooks';
 import { ManageNetworkModalRoutes } from '../types';
 
 import type { ManageNetworkRoutesParams } from '../types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   ManageNetworkRoutesParams,
   ManageNetworkModalRoutes.Listing
 >;

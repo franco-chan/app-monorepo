@@ -1,9 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import { MonitorSettings } from '../../../views/Monitor';
 import { MonitorRoutes } from '../../../views/Monitor/types';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { MonitorRouteParams } from '../../../views/Monitor/types';
 

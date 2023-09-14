@@ -344,6 +344,7 @@ function SendConfirm({
       }
 
       if (result.success) {
+        // @ts-expect-error
         return navigation[nextRouteAction](
           SendModalRoutes.SendAuthentication,
           nextRouteParams,
@@ -367,6 +368,7 @@ function SendConfirm({
         return;
       }
 
+      // @ts-expect-error
       return navigation[nextRouteAction](SendModalRoutes.SendSpecialWarning, {
         ...nextRouteParams,
         hintMsgKey: result.key ?? '',

@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/naming-convention */
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import {
+  CommonActions,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import BigNumber from 'bignumber.js';
 import { cloneDeep, last } from 'lodash';
 import { useIntl } from 'react-intl';
@@ -19,6 +23,7 @@ import {
   useIsVerticalLayout,
 } from '@onekeyhq/components';
 import type { LocaleIds } from '@onekeyhq/components/src/locale';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { EIP1559Fee } from '@onekeyhq/engine/src/types/network';
 import type { IEncodedTxBtc } from '@onekeyhq/engine/src/vaults/impl/btc/types';
 import type { IEncodedTxEvm } from '@onekeyhq/engine/src/vaults/impl/evm/Vault';
@@ -58,7 +63,6 @@ import type {
   SendRoutesParams,
 } from '../../types';
 import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 type RouteProps = RouteProp<SendRoutesParams, SendModalRoutes.SendEditFee>;
 type NavigationProps = StackNavigationProp<
@@ -331,11 +335,13 @@ function ScreenSendEditFee({ ...rest }) {
       return;
     }
 
-    return navigation.navigate({
-      merge: true,
-      name: toRouteName,
-      params,
-    });
+    return navigation.dispatch(
+      CommonActions.navigate({
+        merge: true,
+        name: toRouteName,
+        params,
+      }),
+    );
   });
 
   const setFormValuesFromFeeInfo = useCallback(

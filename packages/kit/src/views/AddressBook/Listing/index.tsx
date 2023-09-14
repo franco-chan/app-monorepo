@@ -16,6 +16,7 @@ import {
   Typography,
   useSafeAreaInsets,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { copyToClipboard } from '@onekeyhq/components/src/utils/ClipboardUtils';
 import debugLogger from '@onekeyhq/shared/src/logger/debugLogger';
 
@@ -28,10 +29,9 @@ import AddressBookMenu from './menu';
 import type { Contact } from '../../../store/reducers/contacts';
 import type { AddressBookRoutesParams } from '../routes';
 import type { RouteProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { ListRenderItem } from 'react-native';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   AddressBookRoutesParams,
   AddressBookRoutes.NewPickAddressRoute
 >;

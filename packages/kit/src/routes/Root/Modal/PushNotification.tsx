@@ -1,9 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import GuideToPushFirstTime from '../../../views/PushNotification/GuideToPushFirstTime';
 import { PushNotificationRoutes } from '../../../views/PushNotification/types';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { PushNotificationRoutesParams } from '../../../views/PushNotification/types';
 

@@ -17,6 +17,7 @@ import {
   VStack,
 } from '@onekeyhq/components';
 import useModalClose from '@onekeyhq/components/src/Modal/Container/useModalClose';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { WalletType } from '@onekeyhq/engine/src/types/wallet';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
@@ -33,11 +34,10 @@ import { WalletSelectDropdown } from './WalletSelectDropdown';
 
 import type { ManageNetworkRoutesParams } from '../../../../views/ManageNetworks/types';
 import type { useAccountSelectorInfo } from '../../hooks/useAccountSelectorInfo';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const { updateIsLoading } = reducerAccountSelector.actions;
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   ManageNetworkRoutesParams,
   ManageNetworkModalRoutes.RPCNode
 >;

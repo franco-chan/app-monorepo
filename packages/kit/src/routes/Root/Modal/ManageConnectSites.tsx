@@ -1,9 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import ConnectedSites from '../../../views/ManageConnectedSites/ConnectedSites';
 import { ManageConnectedSitesRoutes } from '../../../views/ManageConnectedSites/types';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { ManageConnectedSitesRoutesParams } from '../../../views/ManageConnectedSites/types';
 

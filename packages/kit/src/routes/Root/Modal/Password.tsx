@@ -1,9 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import { Password } from '../../../views/Password';
 import { PasswordRoutes } from '../../../views/Password/types';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { PasswordRoutesParams } from '../../../views/Password/types';
 

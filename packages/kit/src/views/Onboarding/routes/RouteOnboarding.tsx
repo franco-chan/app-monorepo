@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from 'react';
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 import { RouteKeytag } from '@onekeyhq/kit/src/views/KeyTag/Routes/RouteKeytag';
 
 import backgroundApiProxy from '../../../background/instance/backgroundApiProxy';
@@ -87,8 +86,7 @@ export const stackScreenList = [
   },
 ];
 
-export const StackNavigator =
-  createNativeStackNavigator<IOnboardingRoutesParams>();
+export const StackNavigator = createStackNavigator<IOnboardingRoutesParams>();
 
 export default function RouteOnboarding() {
   const stackScreens = useMemo(

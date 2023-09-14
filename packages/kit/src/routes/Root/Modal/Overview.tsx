@@ -1,9 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import OverviewProtocolDetail from '../../../views/Overview/components/OverviewDefiProtocol/ProtocolDetailModal';
 import { OverviewModalRoutes } from '../../../views/Overview/types';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { OverviewModalRoutesParams } from '../../../views/Overview/types';
 

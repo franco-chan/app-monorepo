@@ -1,10 +1,9 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import EnableLocalAuthentication from '../../../views/EnableLocalAuthentication';
 import { EnableLocalAuthenticationRoutes } from '../../../views/EnableLocalAuthentication/types';
 import EnableWebAuthn from '../../../views/EnableWebAuthn';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { EnableLocalAuthenticationRoutesParams } from '../../../views/EnableLocalAuthentication/types';
 

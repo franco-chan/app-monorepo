@@ -13,6 +13,7 @@ import {
   Text,
   useUserDevice,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import ContentHardwareImage from '@onekeyhq/kit/assets/onboarding/welcome_hardware.png';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
@@ -34,7 +35,6 @@ import TermsOfService from './TermsOfService';
 
 import type { IOnboardingRoutesParams } from '../../routes/types';
 import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 type NavigationProps = StackNavigationProp<
   IOnboardingRoutesParams,

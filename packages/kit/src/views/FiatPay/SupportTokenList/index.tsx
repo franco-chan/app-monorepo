@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import Fuse from 'fuse.js';
 import { useIntl } from 'react-intl';
 
@@ -31,7 +31,7 @@ import { useFiatPayTokens } from '../../ManageTokens/hooks';
 
 import type { FiatPayModalRoutesParams } from '../../../routes/Root/Modal/FiatPay';
 import type { FiatPayModeType } from '../types';
-import type { RouteProp } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/core';
 import type { ListRenderItem } from 'react-native';
 
 type RouteProps = RouteProp<

@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import { useNavigation } from '@react-navigation/core';
 
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { Network } from '@onekeyhq/engine/src/types/network';
 import type { Collection } from '@onekeyhq/engine/src/types/nft';
 import { OnekeyNetwork } from '@onekeyhq/shared/src/config/networkIds';
@@ -10,11 +11,10 @@ import { useNetworks } from '../../../hooks/redux';
 import { HomeRoutes } from '../../../routes/routesEnum';
 
 import type { HomeRoutesParams } from '../../../routes/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 const ethNetwokId = OnekeyNetwork.eth;
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HomeRoutesParams,
   HomeRoutes.NFTMarketCollectionScreen
 >;

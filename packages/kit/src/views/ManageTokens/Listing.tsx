@@ -22,6 +22,7 @@ import {
   Typography,
 } from '@onekeyhq/components';
 import type { LocaleIds } from '@onekeyhq/components/src/locale';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { getBalanceKey } from '@onekeyhq/engine/src/managers/token';
 import type { Token } from '@onekeyhq/engine/src/types/token';
 import { TokenRiskLevel } from '@onekeyhq/engine/src/types/token';
@@ -52,9 +53,8 @@ import { notifyIfRiskToken } from './helpers/TokenSecurityModalWrapper';
 
 import type { IAccountToken } from '../Overview/types';
 import type { ManageTokenRoutesParams } from './types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   ManageTokenRoutesParams,
   ManageTokenModalRoutes.Listing
 >;
@@ -456,6 +456,7 @@ function ListRenderToken({ isOwned, ...item }: IManageNetworkTokenType) {
     const routeName = isOwned
       ? ManageTokenModalRoutes.ViewToken
       : ManageTokenModalRoutes.AddToken;
+    // @ts-expect-error
     navigation.navigate(routeName, {
       name: item.name,
       symbol: item.symbol,

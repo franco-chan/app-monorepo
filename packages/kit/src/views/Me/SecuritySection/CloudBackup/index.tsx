@@ -17,6 +17,7 @@ import {
   Text,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import {
   backupPlatform,
   logoutFromGoogleDrive,
@@ -47,14 +48,10 @@ import type {
   RootRoutesParams,
 } from '../../../../routes/types';
 import type { CompositeNavigationProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type NavigationProps = CompositeNavigationProp<
-  NativeStackNavigationProp<RootRoutesParams, RootRoutes.Main>,
-  NativeStackNavigationProp<
-    HomeRoutesParams,
-    HomeRoutes.CloudBackupPreviousBackups
-  >
+  StackNavigationProp<RootRoutesParams, RootRoutes.Main>,
+  StackNavigationProp<HomeRoutesParams, HomeRoutes.CloudBackupPreviousBackups>
 >;
 
 const EnabledContent = ({

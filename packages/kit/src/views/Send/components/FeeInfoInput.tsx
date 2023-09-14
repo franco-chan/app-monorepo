@@ -16,6 +16,7 @@ import {
   Text,
   Tooltip,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { IFeeInfoPayload } from '@onekeyhq/engine/src/vaults/types';
 import type { IEncodedTxBtc } from '@onekeyhq/engine/src/vaults/utils/btcForkChain/types';
 
@@ -35,7 +36,6 @@ import type {
   SendRoutesParams,
 } from '../types';
 import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 type NavigationProps = StackNavigationProp<
   SendRoutesParams,

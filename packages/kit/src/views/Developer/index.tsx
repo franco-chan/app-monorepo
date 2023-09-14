@@ -24,6 +24,7 @@ import {
   Typography,
   VStack,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import { getClipboard } from '@onekeyhq/components/src/utils/ClipboardUtils';
 import { batchTransferContractAddress } from '@onekeyhq/engine/src/presets/batchTransferContractAddress';
@@ -65,11 +66,10 @@ import { GasPanelRoutes } from '../GasPanel/types';
 
 import type { GalleryParams } from '../../routes/Root/Gallery';
 import type { CompositeNavigationProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type NavigationProps = CompositeNavigationProp<
-  NativeStackNavigationProp<RootRoutesParams, RootRoutes.Main>,
-  NativeStackNavigationProp<GalleryParams, GalleryRoutes.Components>
+  StackNavigationProp<RootRoutesParams, RootRoutes.Main>,
+  StackNavigationProp<GalleryParams, GalleryRoutes.Components>
 >;
 
 const DEFAULT_TEST_EVM_ADDRESS_1 = '0x76f3f64cb3cd19debee51436df630a342b736c24';

@@ -9,6 +9,7 @@ import {
   Text,
   useTheme,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { HomeRoutes, RootRoutes } from '@onekeyhq/kit/src/routes/routesEnum';
 import type { HomeRoutesParams } from '@onekeyhq/kit/src/routes/types';
 import supportedNFC from '@onekeyhq/shared/src/detector/nfc';
@@ -18,9 +19,7 @@ import { useAddressBook } from '../../AddressBook/Listing';
 import { EOnboardingRoutes } from '../../Onboarding/routes/enums';
 import { MigrationEnable } from '../../Onboarding/screens/Migration/util';
 
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HomeRoutesParams,
   HomeRoutes.ScreenOnekeyLiteDetail
 >;

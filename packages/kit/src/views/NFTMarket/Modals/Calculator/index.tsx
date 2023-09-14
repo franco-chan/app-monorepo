@@ -18,6 +18,7 @@ import {
   Skeleton,
   Text,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { Collection, MarketPlace } from '@onekeyhq/engine/src/types/nft';
 import { OnekeyNetwork } from '@onekeyhq/shared/src/config/networkIds';
 
@@ -26,9 +27,8 @@ import { useDebounce } from '../../../../hooks';
 import { NFTMarketRoutes } from '../type';
 
 import type { NFTMarketRoutesParams } from '../type';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   NFTMarketRoutesParams,
   NFTMarketRoutes.MarketPlaceScreen
 >;

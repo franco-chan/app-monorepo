@@ -14,6 +14,7 @@ import {
   Typography,
   useTheme,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import { useAppSelector } from '@onekeyhq/kit/src/hooks/redux';
 import {
@@ -43,11 +44,10 @@ import ResetButton from './ResetButton';
 
 import type { HomeRoutesParams, RootRoutesParams } from '../../../routes/types';
 import type { CompositeNavigationProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type NavigationProps = CompositeNavigationProp<
-  NativeStackNavigationProp<RootRoutesParams, RootRoutes.Main>,
-  NativeStackNavigationProp<HomeRoutesParams, HomeRoutes.Protected>
+  StackNavigationProp<RootRoutesParams, RootRoutes.Main>,
+  StackNavigationProp<HomeRoutesParams, HomeRoutes.Protected>
 >;
 
 export const SecuritySection = () => {

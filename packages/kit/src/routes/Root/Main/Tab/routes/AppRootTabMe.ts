@@ -29,7 +29,6 @@ const config: TabRouteConfig = {
       rootTabName: name,
       // freezeWhenBlur: true, // cause HomeTab white screen when switch from this tab
     }),
-    name,
   ),
   children: [
     {

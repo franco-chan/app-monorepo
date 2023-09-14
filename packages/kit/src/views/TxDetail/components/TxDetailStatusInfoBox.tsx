@@ -12,6 +12,7 @@ import {
   Text,
   ToastManager,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import type { Token } from '@onekeyhq/engine/src/types/token';
 import { IDecodedTxStatus } from '@onekeyhq/engine/src/vaults/types';
@@ -30,14 +31,13 @@ import { getTxStatusInfo } from '../utils/utilsTxDetail';
 import type { TabRoutesParams } from '../../../routes/types';
 import type { IBaseMenuOptions } from '../../Overlay/BaseMenu';
 import type { ITxActionListViewProps } from '../types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { ImageURISource } from 'react-native';
 
 type Props = ITxActionListViewProps & {
   tokensInTx: Token[];
 };
 
-type NavigationProps = NativeStackNavigationProp<TabRoutesParams>;
+type NavigationProps = StackNavigationProp<TabRoutesParams>;
 
 function TxDetailStatusInfoBox(props: Props) {
   const { decodedTx, isSendConfirm, tokensInTx } = props;

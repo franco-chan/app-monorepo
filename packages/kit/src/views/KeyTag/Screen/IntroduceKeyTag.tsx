@@ -10,6 +10,7 @@ import {
   Typography,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import introductionImage from '@onekeyhq/kit/assets/keytag/introduction.png';
 
 import { useNavigation } from '../../../hooks';
@@ -18,7 +19,6 @@ import { useIntroductionBigImage } from '../hooks/useKeyTagLayout';
 import { KeyTagRoutes } from '../Routes/enums';
 
 import type { IKeytagRoutesParams } from '../Routes/types';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 type NavigationProps = StackNavigationProp<IKeytagRoutesParams>;
 

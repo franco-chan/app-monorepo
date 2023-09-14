@@ -16,7 +16,6 @@ const config: TabRouteConfig = {
     toFocusedLazy(ScreenMarket, {
       rootTabName: name,
     }),
-    name,
   ),
   children: [
     {

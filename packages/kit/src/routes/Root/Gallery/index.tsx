@@ -1,6 +1,5 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import { useThemeValue } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import ComponentsScreen from '../../../views/Components';
 import AccountGallery from '../../../views/Components/stories/Account';
@@ -266,7 +265,7 @@ export const stackScreenList = [
   },
 ];
 
-const DevStack = createNativeStackNavigator();
+const DevStack = createStackNavigator();
 
 const DevScreen = () => {
   const [bgColor, textColor] = useThemeValue([

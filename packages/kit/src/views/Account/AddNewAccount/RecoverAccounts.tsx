@@ -2,7 +2,7 @@
 import type { ComponentProps, FC } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import { useIntl } from 'react-intl';
 
 import {
@@ -60,7 +60,7 @@ import type {
   AdvancedValues,
   RecoverAccountType as RecoverAccountConfirmType,
 } from './types';
-import type { RouteProp } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/core';
 import type { ListRenderItemInfo } from 'react-native';
 
 type NavigationProps = ModalScreenProps<CreateAccountRoutesParams>;

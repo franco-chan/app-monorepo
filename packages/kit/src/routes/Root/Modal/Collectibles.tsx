@@ -1,12 +1,15 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 import type { Collection, INFTAsset } from '@onekeyhq/engine/src/types/nft';
 
 import CollectionModalView from '../../../views/Wallet/NFT/CollectionModal';
 import NFTDetailView from '../../../views/Wallet/NFT/NFTDetail';
 import { CollectiblesModalRoutes } from '../../routesEnum';
 
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
+import type { ModalRoutesType } from './types';
 
 export type CollectiblesRoutesParams = {
   [CollectiblesModalRoutes.CollectionModal]: {
@@ -25,7 +28,7 @@ export type CollectiblesRoutesParams = {
 
 const CollectibleNavigator = createStackNavigator<CollectiblesRoutesParams>();
 
-const modalRoutes = [
+const modalRoutes: ModalRoutesType<CollectiblesModalRoutes> = [
   {
     name: CollectiblesModalRoutes.CollectionModal,
     component: CollectionModalView,
@@ -42,7 +45,7 @@ const CollectibleModalStack = () => {
     <CollectibleNavigator.Navigator
       screenOptions={(navInfo) => ({
         headerShown: false,
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

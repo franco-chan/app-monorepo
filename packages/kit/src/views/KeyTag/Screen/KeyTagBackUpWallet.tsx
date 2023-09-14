@@ -12,6 +12,7 @@ import {
   Typography,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { IWallet } from '@onekeyhq/engine/src/types';
 import { openUrlExternal } from '@onekeyhq/kit/src/utils/openUrl';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
@@ -25,7 +26,6 @@ import { KeyTagRoutes } from '../Routes/enums';
 import { Bip39DotmapUrl } from '../utils';
 
 import type { IKeytagRoutesParams } from '../Routes/types';
-import type { StackNavigationProp } from '@react-navigation/stack';
 import type { ListRenderItem } from 'react-native';
 
 type NavigationProps = StackNavigationProp<IKeytagRoutesParams>;

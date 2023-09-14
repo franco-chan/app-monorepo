@@ -16,6 +16,7 @@ import {
   SegmentedControl,
   Typography,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { shortenAddress } from '@onekeyhq/components/src/utils';
 import type { Account } from '@onekeyhq/engine/src/types/account';
 import type { Wallet, WalletType } from '@onekeyhq/engine/src/types/wallet';
@@ -32,10 +33,9 @@ import { AddressBookRoutes } from '../routes';
 import type { Contact } from '../../../store/reducers/contacts';
 import type { AddressBookRoutesParams } from '../routes';
 import type { RouteProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { ListRenderItem, SectionListRenderItem } from 'react-native';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   AddressBookRoutesParams,
   AddressBookRoutes.PickAddressRoute
 >;

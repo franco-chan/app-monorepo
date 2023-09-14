@@ -59,7 +59,7 @@ const Header: FC<{ onPressSearch: () => void }> = ({ onPressSearch }) => {
   );
 };
 
-// type NavigationProps = NativeStackNavigationProp<
+// type NavigationProps = StackNavigationProp<
 //   TabRoutesParams,
 //   TabRoutes.Market
 // >;

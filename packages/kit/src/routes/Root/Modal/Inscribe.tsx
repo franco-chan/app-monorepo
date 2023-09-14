@@ -1,4 +1,5 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 import type { Token } from '@onekeyhq/engine/src/types/token';
 import type {
   IInscriptionContent,
@@ -12,8 +13,6 @@ import OrderDetail from '../../../views/Inscribe/OrderDetail';
 import OrderList from '../../../views/Inscribe/OrderList';
 import ReceiveAddress from '../../../views/Inscribe/ReceiveAddress';
 import { InscribeModalRoutes } from '../../routesEnum';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { InscribeFile } from '../../../views/Inscribe/Components/InscribeUploader/type';
 

@@ -5,6 +5,7 @@ import { useRoute } from '@react-navigation/native';
 import { useIntl } from 'react-intl';
 
 import { Box, Icon, Text } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 
 import Layout from '../../../Layout';
 import { EOnboardingRoutes } from '../../../routes/enums';
@@ -13,7 +14,6 @@ import SecondaryContent from './SecondaryContent';
 
 import type { IOnboardingRoutesParams } from '../../../routes/types';
 import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 type NavigationProps = StackNavigationProp<
   IOnboardingRoutesParams,

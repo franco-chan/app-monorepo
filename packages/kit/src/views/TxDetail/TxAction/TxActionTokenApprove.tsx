@@ -6,6 +6,7 @@ import { isNil } from 'lodash';
 import { useIntl } from 'react-intl';
 
 import { Typography } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { shortenAddress } from '@onekeyhq/components/src/utils';
 
 import { formatBalanceDisplay } from '../../../components/Format';
@@ -34,9 +35,8 @@ import type {
   ITxActionMetaIcon,
   ITxActionMetaTitle,
 } from '../types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   SendRoutesParams,
   SendModalRoutes.TokenApproveAmountEdit
 >;

@@ -1,17 +1,17 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import PreviewSend from '../../../views/ScanQrcode/PreviewSend';
 import ScanQrcode from '../../../views/ScanQrcode/ScanQrcode';
 import ScanQrcodeResult from '../../../views/ScanQrcode/ScanQrcodeResult';
 import { ScanQrcodeRoutes } from '../../../views/ScanQrcode/types';
 
-import createStackNavigator from './createStackNavigator';
-
 import type { ScanQrcodeRoutesParams } from '../../../views/ScanQrcode/types';
+import type { ModalRoutesType } from './types';
 
 const ScanQrcodeNavigator = createStackNavigator<ScanQrcodeRoutesParams>();
 
-const modalRoutes = [
+const modalRoutes: ModalRoutesType<ScanQrcodeRoutes> = [
   {
     name: ScanQrcodeRoutes.ScanQrcode,
     component: ScanQrcode,

@@ -1,4 +1,5 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import CustomToken from '../../../views/ManageTokens/CustomToken';
 import ChainSelector from '../../../views/Swap/ChainSelector';
@@ -25,13 +26,12 @@ import { SwapRoutes } from '../../../views/Swap/typings';
 import Webview from '../../../views/Swap/Webview';
 import Welcome from '../../../views/Swap/Welcome';
 
-import createStackNavigator from './createStackNavigator';
-
 import type { SwapRoutesParams } from '../../../views/Swap/typings';
+import type { ModalRoutesType } from './types';
 
 const SwapNavigator = createStackNavigator<SwapRoutesParams>();
 
-const modalRoutes = [
+const modalRoutes: ModalRoutesType<SwapRoutes> = [
   {
     name: SwapRoutes.Input,
     component: Input,

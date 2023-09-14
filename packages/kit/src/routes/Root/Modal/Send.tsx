@@ -1,4 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 
 import LNURLAuthenticationModal from '../../../views/Account/AddNewAccount/Authentication';
 import LNURLAuth from '../../../views/LightningNetwork/Send/LNURLAuth';
@@ -24,9 +28,6 @@ import { TokenApproveAmountEdit } from '../../../views/Send/modals/TokenApproveA
 import { SendModalRoutes } from '../../../views/Send/types';
 import { TransactionSendContextProvider } from '../../../views/Send/utils/TransactionSendContext';
 import NFTDetailView from '../../../views/Wallet/NFT/NFTDetail';
-
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 import type { SendRoutesParams } from '../../../views/Send/types';
 
@@ -128,7 +129,7 @@ const TransactionStack = () => {
     <TransactionSendContextProvider>
       <SendNavigator.Navigator
         screenOptions={(navInfo) => ({
-          ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+          ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
         })}
       >
         {modalRoutes.map((route) => (

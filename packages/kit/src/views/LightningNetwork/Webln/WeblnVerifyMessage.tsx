@@ -9,6 +9,7 @@ import {
   useForm,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import type { VerifyMessageArgs } from '@onekeyhq/engine/src/vaults/impl/lightning-network/types/webln';
 
@@ -20,9 +21,8 @@ import LNSignMessageForm from '../components/LNSignMessageForm';
 
 import type { ISignMessageFormValues } from '../components/LNSignMessageForm';
 import type { WeblnModalRoutes, WeblnRoutesParams } from './types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   WeblnRoutesParams,
   WeblnModalRoutes.VerifyMessage
 >;

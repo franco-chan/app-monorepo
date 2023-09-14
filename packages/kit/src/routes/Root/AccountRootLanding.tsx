@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useRoute } from '@react-navigation/core';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { UserInputCategory } from '@onekeyhq/engine/src/types/credential';
 
 import backgroundApiProxy from '../../background/instance/backgroundApiProxy';

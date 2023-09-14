@@ -10,6 +10,7 @@ import {
   useForm,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import type { IEncodedTxLightning } from '@onekeyhq/engine/src/vaults/impl/lightning-network/types';
 import type { IInvoiceDecodedResponse } from '@onekeyhq/engine/src/vaults/impl/lightning-network/types/invoice';
@@ -25,9 +26,8 @@ import LNSendPaymentForm from '../components/LNSendPaymentForm';
 
 import type { SendRoutesParams } from '../../../routes';
 import type { ISendPaymentFormValues } from '../components/LNSendPaymentForm';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   SendRoutesParams,
   SendModalRoutes.LNURLPayRequest
 >;

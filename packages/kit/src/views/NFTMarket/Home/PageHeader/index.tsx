@@ -13,6 +13,7 @@ import {
   Pressable,
   Text,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import {
   HomeRoutes,
   ModalRoutes,
@@ -27,10 +28,9 @@ import { NFTMarketRoutes } from '../../Modals/type';
 import { useCollectionDetail } from '../hook';
 
 import type { NFTMarketRoutesParams } from '../../Modals/type';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type ModalNavigationProps = ModalScreenProps<NFTMarketRoutesParams>;
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HomeRoutesParams,
   HomeRoutes.NFTPNLScreen
 >;

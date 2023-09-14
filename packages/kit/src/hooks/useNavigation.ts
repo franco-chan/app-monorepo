@@ -1,1 +1,1 @@
-export { useNavigation as default } from '@react-navigation/native';
+export { useNavigation as default } from '@react-navigation/core';

@@ -11,6 +11,7 @@ import {
   VStack,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { BulkTypeEnum } from '@onekeyhq/engine/src/types/batchTransfer';
 
 import { useNavigation } from '../../../hooks';
@@ -21,14 +22,13 @@ import ManyToOneIcon from './ManyToOneIcon';
 import OneToManyIcon from './OneToManyIcon';
 
 import type { HomeRoutesParams } from '../../../routes/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { MessageDescriptor } from 'react-intl';
 
 type Props = {
   mode: BulkTypeEnum;
 } & ComponentProps<typeof Pressable>;
 
-type NavigationProps = NativeStackNavigationProp<HomeRoutesParams>;
+type NavigationProps = StackNavigationProp<HomeRoutesParams>;
 
 function AddressElement({ elementText }: { elementText: string }) {
   return (

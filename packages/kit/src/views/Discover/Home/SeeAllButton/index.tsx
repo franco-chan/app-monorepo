@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/core';
 import { useIntl } from 'react-intl';
 
 import { Button } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import {
   HomeRoutes,
   ModalRoutes,
@@ -17,9 +18,8 @@ import { getAppNavigation } from '../../../../hooks/useAppNavigation';
 import { DiscoverModalRoutes } from '../../type';
 
 import type { DAppItemType } from '../../type';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HomeRoutesParams,
   HomeRoutes.DAppListScreen
 >;

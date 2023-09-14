@@ -7,6 +7,7 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useIsVerticalLayout, useThemeValue } from '@onekeyhq/components';
+import type { StackHeaderProps } from '@onekeyhq/components/src/Navigation';
 
 import Box from '../Box';
 
@@ -14,7 +15,6 @@ import HeaderBackButton from './HeaderBackButton';
 import HeaderTitle from './HeaderTitle';
 
 import type { HeaderTitleProps } from './HeaderTitle';
-import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import type { StyleProp, ViewStyle } from 'react-native';
 
 interface HeaderProps extends HeaderTitleProps {
@@ -29,7 +29,7 @@ interface HeaderProps extends HeaderTitleProps {
 const defaultMobileHeight = 56;
 const defaultDesktopHeight = 64;
 
-const NavHeader: FC<HeaderProps & Partial<NativeStackHeaderProps>> = ({
+const NavHeader: FC<HeaderProps & Partial<StackHeaderProps>> = ({
   headerLeft,
   headerRight,
   headerTitle,

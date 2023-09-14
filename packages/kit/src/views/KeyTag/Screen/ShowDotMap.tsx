@@ -13,6 +13,7 @@ import {
   useIsVerticalLayout,
 } from '@onekeyhq/components';
 import useModalClose from '@onekeyhq/components/src/Modal/Container/useModalClose';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { IWallet } from '@onekeyhq/engine/src/types';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
@@ -24,7 +25,6 @@ import { mnemonicWordsToKeyTagMnemonic } from '../utils';
 import type { KeyTagRoutes } from '../Routes/enums';
 import type { IKeytagRoutesParams } from '../Routes/types';
 import type { RouteProp } from '@react-navigation/core';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 type RouteProps = RouteProp<IKeytagRoutesParams, KeyTagRoutes.ShowDotMap>;
 type NavigationProps = StackNavigationProp<IKeytagRoutesParams>;

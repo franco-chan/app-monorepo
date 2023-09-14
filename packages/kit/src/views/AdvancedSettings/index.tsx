@@ -11,6 +11,7 @@ import {
   VStack,
   useTheme,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 
 import backgroundApiProxy from '../../background/instance/backgroundApiProxy';
 import { useAppSelector, useNavigation } from '../../hooks';
@@ -18,9 +19,8 @@ import { setAdvancedSettings } from '../../store/reducers/settings';
 
 import type { HomeRoutes } from '../../routes/routesEnum';
 import type { HomeRoutesParams } from '../../routes/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HomeRoutesParams,
   HomeRoutes.AdvancedSettings
 >;

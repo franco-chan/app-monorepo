@@ -1,11 +1,10 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import { useOnboardingRequired } from '../../../hooks/useOnboardingRequired';
 import Connection from '../../../views/DappModals/Connection';
 import NetworkNotMatch from '../../../views/DappModals/NetworkNotMatch';
 import { DappConnectionModalRoutes } from '../../routesEnum';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { DappConnectionRoutesParams } from '../../../views/DappModals/types';
 

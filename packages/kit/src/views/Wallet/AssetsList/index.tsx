@@ -5,6 +5,7 @@ import { isEqual, isNil } from 'lodash';
 import type { FlatList } from '@onekeyhq/components';
 import type { FlatListProps } from '@onekeyhq/components/src/FlatList';
 import type { FlatListPlain } from '@onekeyhq/components/src/FlatListPlain';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { isAllNetworks } from '@onekeyhq/engine/src/managers/network';
 import type {
   HomeRoutes,
@@ -37,13 +38,12 @@ import {
 } from './contextAssetsList';
 
 import type { IAccountToken } from '../../Overview/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-export type NavigationProps = NativeStackNavigationProp<
+export type NavigationProps = StackNavigationProp<
   RootRoutesParams,
   RootRoutes.Main
 > &
-  NativeStackNavigationProp<HomeRoutesParams, HomeRoutes.ScreenTokenDetail>;
+  StackNavigationProp<HomeRoutesParams, HomeRoutes.ScreenTokenDetail>;
 
 export type IAssetsListProps = Omit<
   FlatListProps<IAccountToken>,

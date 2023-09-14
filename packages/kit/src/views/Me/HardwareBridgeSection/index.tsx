@@ -11,6 +11,7 @@ import {
   Typography,
   useTheme,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { HomeRoutes } from '@onekeyhq/kit/src/routes/routesEnum';
 import type { HomeRoutesParams } from '@onekeyhq/kit/src/routes/types';
 import { openUrlExternal } from '@onekeyhq/kit/src/utils/openUrl';
@@ -18,9 +19,7 @@ import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
 import { useAppSelector } from '../../../hooks';
 
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HomeRoutesParams,
   HomeRoutes.HardwareBridgeSettings
 >;

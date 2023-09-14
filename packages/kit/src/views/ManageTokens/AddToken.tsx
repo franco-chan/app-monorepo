@@ -15,6 +15,7 @@ import {
   Typography,
 } from '@onekeyhq/components';
 import type { ModalProps } from '@onekeyhq/components/src/Modal';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { TokenVerifiedIcon } from '@onekeyhq/components/src/Token';
 import { shortenAddress } from '@onekeyhq/components/src/utils';
 import { copyToClipboard } from '@onekeyhq/components/src/utils/ClipboardUtils';
@@ -44,14 +45,13 @@ import { notifyIfRiskToken } from './helpers/TokenSecurityModalWrapper';
 import type { ListItem } from '../ManageNetworks/SwitchRpc';
 import type { ManageTokenRoutesParams } from './types';
 import type { RouteProp } from '@react-navigation/core';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type RouteProps = RouteProp<
   ManageTokenRoutesParams,
   ManageTokenModalRoutes.AddToken
 >;
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   ManageTokenRoutesParams,
   ManageTokenModalRoutes.AddToken
 >;

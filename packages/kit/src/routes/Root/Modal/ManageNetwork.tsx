@@ -1,4 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 
 import { NetworkAccountSelectorModal } from '../../../components/NetworkAccountSelector';
 import { NetworkSelectorModal } from '../../../components/NetworkAccountSelector/modals/NetworkSelectorModal/NetworkSelectorModal';
@@ -16,15 +20,13 @@ import { SwitchNetwork } from '../../../views/ManageNetworks/SwitchNetwork';
 import { SwitchRpcModal } from '../../../views/ManageNetworks/SwitchRpc';
 import { ManageNetworkModalRoutes } from '../../../views/ManageNetworks/types';
 
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
-
 import type { ManageNetworkRoutesParams } from '../../../views/ManageNetworks/types';
+import type { ModalRoutesType } from './types';
 
 const ManageNetworkNavigator =
   createStackNavigator<ManageNetworkRoutesParams>();
 
-const modalRoutes = [
+const modalRoutes: ModalRoutesType<ManageNetworkModalRoutes> = [
   {
     name: ManageNetworkModalRoutes.NetworkAccountSelector,
     component: NetworkAccountSelectorModal,
@@ -88,7 +90,7 @@ const ManageNetworkModalStack = () => {
   return (
     <ManageNetworkNavigator.Navigator
       screenOptions={(navInfo) => ({
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

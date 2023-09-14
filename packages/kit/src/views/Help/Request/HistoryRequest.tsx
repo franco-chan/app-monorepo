@@ -17,6 +17,7 @@ import {
   Spinner,
   Text,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
 import backgroundApiProxy from '../../../background/instance/backgroundApiProxy';
@@ -32,10 +33,9 @@ import { listUri } from './TicketService';
 import { HistoryRequestRoutes } from './types';
 
 import type { HistoryRequestModalRoutesParams, TicketType } from './types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { ListRenderItem } from 'react-native';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HistoryRequestModalRoutesParams,
   HistoryRequestRoutes.TicketDetailModal
 >;

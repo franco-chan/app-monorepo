@@ -19,7 +19,6 @@ const config: TabRouteConfig = {
     toFocusedLazy(NFTMarket, {
       rootTabName: name,
     }),
-    name,
   ),
   children: [
     {

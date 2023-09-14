@@ -1,9 +1,9 @@
-import { useContext } from 'react';
+import * as React from 'react';
 
 import BottomTabBarHeightContext from './BottomTabBarHeightContext';
 
-export default function useFloatingBottomTabBarHeight() {
-  const height = useContext(BottomTabBarHeightContext);
+export default function useBottomTabBarHeight() {
+  const height = React.useContext(BottomTabBarHeightContext);
 
   if (height === undefined) {
     throw new Error(

@@ -1,13 +1,14 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 import type { AccountCredential } from '@onekeyhq/engine/src/types/account';
 
 import ManagerAccountModalView from '../../../views/ManagerAccount/AccountInfo';
 import ExportPrivateViewModal from '../../../views/ManagerAccount/ExportPrivate';
 import ExportPublicViewModal from '../../../views/ManagerAccount/ExportPrivate/ExportPublic';
 import { ManagerAccountModalRoutes } from '../../routesEnum';
-
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 export type ManagerAccountRoutesParams = {
   [ManagerAccountModalRoutes.ManagerAccountModal]: {
@@ -51,7 +52,7 @@ const ManagerAccountModalStack = () => {
   return (
     <ManagerAccountNavigator.Navigator
       screenOptions={(navInfo) => ({
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

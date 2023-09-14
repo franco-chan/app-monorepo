@@ -2,12 +2,13 @@
 import { memo, useMemo } from 'react';
 
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalScreenOptions,
+} from '@onekeyhq/components/src/Navigation';
 
 import { createLazyComponent } from '../../../utils/createLazyComponent';
 import { ModalRoutes } from '../../routesEnum';
-
-import { buildModalOpenAnimationOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 import type { ModalRoutesParams } from '../../types';
 
@@ -260,14 +261,11 @@ const ModalStack = createStackNavigator<ModalRoutesParams>();
 const ModalStackNavigator = () => {
   const isVerticalLayout = useIsVerticalLayout();
   const screenOptions = useMemo(
-    () => ({
-      headerShown: false,
-      presentation: 'modal' as const,
-      ...buildModalOpenAnimationOptions({ isVerticalLayout }),
-    }),
+    () => makeModalScreenOptions(isVerticalLayout),
     [isVerticalLayout],
   );
   return (
+    // @ts-expect-error
     <ModalStack.Navigator screenOptions={screenOptions}>
       {modalStackScreenList.map((modal) => (
         <ModalStack.Screen

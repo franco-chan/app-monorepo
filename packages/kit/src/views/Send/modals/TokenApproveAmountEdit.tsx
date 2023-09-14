@@ -1,9 +1,11 @@
 import { useState } from 'react';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/core';
+import { CommonActions } from '@react-navigation/native';
 import { useIntl } from 'react-intl';
 
 import { Form, useForm } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { InfiniteAmountText } from '@onekeyhq/engine/src/vaults/impl/evm/decoder/decoder';
 
 import backgroundApiProxy from '../../../background/instance/backgroundApiProxy';
@@ -15,7 +17,6 @@ import { IS_REPLACE_ROUTE_TO_FEE_EDIT } from '../utils/sendConfirmConsts';
 
 import type { SendRoutesParams } from '../types';
 import type { RouteProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type RouteProps = RouteProp<
   SendRoutesParams,
@@ -26,7 +27,7 @@ type FeeValues = {
   amount: string;
 };
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   SendRoutesParams,
   SendModalRoutes.TokenApproveAmountEdit
 >;
@@ -82,11 +83,14 @@ function TokenApproveAmountEdit({ ...rest }) {
     if (IS_REPLACE_ROUTE_TO_FEE_EDIT) {
       return navigation.replace(prevRouteName, prevRouteParams);
     }
-    return navigation.navigate({
-      merge: true,
-      name: prevRouteName,
-      params: prevRouteParams,
-    });
+
+    return navigation.dispatch(
+      CommonActions.navigate({
+        merge: true,
+        name: prevRouteName,
+        params: prevRouteParams,
+      }),
+    );
   });
 
   const validateRules = {

@@ -19,6 +19,7 @@ import {
   Typography,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { Token as TokenType } from '@onekeyhq/engine/src/types/token';
 import backgroundApiProxy from '@onekeyhq/kit/src/background/instance/backgroundApiProxy';
 import { useSettings } from '@onekeyhq/kit/src/hooks';
@@ -46,7 +47,6 @@ import { showMarketCellMoreMenu } from './MarketCellMoreMenu';
 import SparklineChart from './SparklineChart';
 
 import type { ListHeadTagType } from '../../types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface MarketTokenCellProps {
   onPress?: (marketTokenItem: MarketTokenItem) => void;
@@ -55,7 +55,7 @@ interface MarketTokenCellProps {
   headTags: ListHeadTagType[];
 }
 
-type NavigationProps = NativeStackNavigationProp<TabRoutesParams>;
+type NavigationProps = StackNavigationProp<TabRoutesParams>;
 
 const MarketTokenSwapEnable = ({ tokens }: { tokens?: TokenType[] }) => {
   const navigation = useNavigation<NavigationProps>();

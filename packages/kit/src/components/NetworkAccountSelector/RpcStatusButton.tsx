@@ -11,6 +11,7 @@ import {
   Text,
   Tooltip,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 
 import { useNavigation } from '../../hooks';
 import { ManageNetworkModalRoutes } from '../../routes/routesEnum';
@@ -19,10 +20,9 @@ import { useRpcMeasureStatus } from '../../views/ManageNetworks/hooks';
 import Speedindicator from './modals/NetworkAccountSelectorModal/SpeedIndicator';
 
 import type { ManageNetworkRoutesParams } from '../../routes';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { GestureResponderEvent } from 'react-native';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   ManageNetworkRoutesParams,
   ManageNetworkModalRoutes.RPCNode
 >;

@@ -1,4 +1,5 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import CalculatorModal from '../../../views/NFTMarket/Modals/Calculator';
 import MarketPlaceList from '../../../views/NFTMarket/Modals/Calculator/MarketPlaceList';
@@ -6,8 +7,6 @@ import NFTAttributesModal from '../../../views/NFTMarket/Modals/NFTAttributesMod
 import NFTSearchModal from '../../../views/NFTMarket/Modals/NFTSearchModal';
 import ShareNFTPNLModal from '../../../views/NFTMarket/Modals/Share';
 import { NFTMarketRoutes } from '../../../views/NFTMarket/Modals/type';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { NFTMarketRoutesParams } from '../../../views/NFTMarket/Modals/type';
 

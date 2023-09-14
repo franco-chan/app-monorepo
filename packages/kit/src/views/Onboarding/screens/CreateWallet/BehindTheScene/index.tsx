@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 
 import { Box, Center, ToastManager } from '@onekeyhq/components';
 import type { LocaleIds } from '@onekeyhq/components/src/locale';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { ToastManagerType } from '@onekeyhq/components/src/ToastManager';
 import type { SearchDevice } from '@onekeyhq/kit/src/utils/hardware';
 import { deviceUtils } from '@onekeyhq/kit/src/utils/hardware';
@@ -41,7 +42,6 @@ import type {
 } from '../../../routes/types';
 import type { IProcessAutoTypingRef } from './ProcessAutoTyping';
 import type { RouteProp } from '@react-navigation/native';
-import type { StackNavigationProp } from '@react-navigation/stack';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type NavigationProps = StackNavigationProp<

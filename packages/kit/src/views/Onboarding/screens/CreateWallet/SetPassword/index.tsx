@@ -2,10 +2,10 @@ import { memo, useEffect, useMemo } from 'react';
 
 import { useNavigation } from '@react-navigation/core';
 import { type RouteProp, useRoute } from '@react-navigation/native';
-import { type StackNavigationProp } from '@react-navigation/stack';
 import { useIntl } from 'react-intl';
 
 import { Center, Dialog, Spinner } from '@onekeyhq/components';
+import { type StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 
 import backgroundApiProxy from '../../../../../background/instance/backgroundApiProxy';
 import Protected, {

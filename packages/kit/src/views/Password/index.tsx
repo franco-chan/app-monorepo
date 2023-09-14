@@ -17,6 +17,7 @@ import {
   useForm,
 } from '@onekeyhq/components';
 import type { LocaleIds } from '@onekeyhq/components/src/locale';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { encodeSensitiveText } from '@onekeyhq/engine/src/secret/encryptors/aes256';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
@@ -29,14 +30,13 @@ import { savePassword } from '../../utils/localAuthentication';
 
 import type { PasswordRoutes, PasswordRoutesParams } from './types';
 import type { RouteProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type RouteProps = RouteProp<
   PasswordRoutesParams,
   PasswordRoutes.PasswordRoutes
 >;
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   PasswordRoutesParams,
   PasswordRoutes.PasswordRoutes
 >;

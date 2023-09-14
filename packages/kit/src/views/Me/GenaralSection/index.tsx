@@ -14,6 +14,7 @@ import {
   useTheme,
 } from '@onekeyhq/components';
 import { LOCALES_OPTION } from '@onekeyhq/components/src/locale';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { ThemeVariant } from '@onekeyhq/components/src/Provider/theme';
 import backgroundApiProxy from '@onekeyhq/kit/src/background/instance/backgroundApiProxy';
 import { useSettings } from '@onekeyhq/kit/src/hooks/redux';
@@ -36,11 +37,10 @@ import { CurrencySelectModal } from './CurrencySelect/types';
 
 import type { CurrencySelectModalParams } from './CurrencySelect/types';
 import type { CompositeNavigationProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type NavigationProps = CompositeNavigationProp<
-  NativeStackNavigationProp<RootRoutesParams, RootRoutes.Main>,
-  NativeStackNavigationProp<HomeRoutesParams, HomeRoutes.VolumeHaptic>
+  StackNavigationProp<RootRoutesParams, RootRoutes.Main>,
+  StackNavigationProp<HomeRoutesParams, HomeRoutes.VolumeHaptic>
 >;
 
 type ModalNavigationProps = ModalScreenProps<CurrencySelectModalParams>;

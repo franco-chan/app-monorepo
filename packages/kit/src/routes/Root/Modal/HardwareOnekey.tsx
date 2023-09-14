@@ -1,4 +1,8 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 import type { IOneKeyDeviceType } from '@onekeyhq/shared/types';
 
 import OnekeyDeviceWalletName from '../../../views/Hardware/Onekey/OnekeyDeviceWalletName';
@@ -10,9 +14,6 @@ import OnekeyHardwareHomescreen from '../../../views/Hardware/Onekey/OnekeyHardw
 import OnekeyHardwarePinCode from '../../../views/Hardware/Onekey/OnekeyHardwarePinCode';
 import OnekeyHardwareVerify from '../../../views/Hardware/Onekey/OnekeyHardwareVerify';
 import { OnekeyHardwareModalRoutes } from '../../routesEnum';
-
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 export type OnekeyHardwareRoutesParams = {
   [OnekeyHardwareModalRoutes.OnekeyHardwareDetailsModal]: {
@@ -89,7 +90,7 @@ const OnekeyHardwareModalStack = () => {
     <OnekeyHardwareNavigator.Navigator
       screenOptions={(navInfo) => ({
         headerShown: false,
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

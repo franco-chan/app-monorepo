@@ -31,6 +31,7 @@ type Props = DefaultNavigatorOptions<
   BottomTabNavigationConfig;
 
 function BottomTabNavigator({
+  id,
   initialRouteName,
   backBehavior,
   children,
@@ -106,6 +107,7 @@ function BottomTabNavigator({
       BottomTabNavigationOptions,
       BottomTabNavigationEventMap
     >(TabRouter, {
+      id,
       initialRouteName,
       backBehavior,
       children,
@@ -118,8 +120,6 @@ function BottomTabNavigator({
     <NavigationContent>
       <BottomTabView
         {...rest}
-        // @ts-expect-error
-        foldableList={screenOptions?.foldableList ?? []}
         state={state}
         navigation={navigation}
         descriptors={descriptors}

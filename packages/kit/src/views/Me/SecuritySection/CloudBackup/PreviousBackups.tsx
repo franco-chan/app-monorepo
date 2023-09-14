@@ -5,6 +5,7 @@ import { useIntl } from 'react-intl';
 import { StyleSheet } from 'react-native';
 
 import { Box, Center, Spinner, Text } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { IBackupItemSummary } from '@onekeyhq/shared/src/services/ServiceCloudBackup/ServiceCloudBackup.types';
 
 import backgroundApiProxy from '../../../../background/instance/backgroundApiProxy';
@@ -20,11 +21,10 @@ import type {
   RootRoutesParams,
 } from '../../../../routes/types';
 import type { CompositeNavigationProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type NavigationProps = CompositeNavigationProp<
-  NativeStackNavigationProp<RootRoutesParams, RootRoutes.Main>,
-  NativeStackNavigationProp<HomeRoutesParams, HomeRoutes.CloudBackupDetails>
+  StackNavigationProp<RootRoutesParams, RootRoutes.Main>,
+  StackNavigationProp<HomeRoutesParams, HomeRoutes.CloudBackupDetails>
 >;
 
 const PressableBackupSummary: FC<Omit<IBackupItemSummary, 'deviceInfo'>> = ({

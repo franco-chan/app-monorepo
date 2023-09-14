@@ -1,13 +1,14 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import {
+  createStackNavigator,
+  makeModalStackNavigatorOptions,
+} from '@onekeyhq/components/src/Navigation';
 import type { Avatar } from '@onekeyhq/shared/src/utils/emojiUtils';
 
 import ManagerWalletLocalValidationView from '../../../views/ManagerWallet/LocalValidationModal';
 import ModifyWalletEmojiView from '../../../views/ManagerWallet/ModifyWallet/emoji';
 import ModifyWalletNameView from '../../../views/ManagerWallet/ModifyWallet/name';
 import { ManagerWalletModalRoutes } from '../../routesEnum';
-
-import { buildModalStackNavigatorOptions } from './buildModalStackNavigatorOptions';
-import createStackNavigator from './createStackNavigator';
 
 import type { ValidationFields } from '../../../components/Protected/types';
 
@@ -54,7 +55,7 @@ const ManagerWalletModalStack = () => {
     <ManagerWalletNavigator.Navigator
       screenOptions={(navInfo) => ({
         headerShown: false,
-        ...buildModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
+        ...makeModalStackNavigatorOptions({ isVerticalLayout, navInfo }),
       })}
     >
       {modalRoutes.map((route) => (

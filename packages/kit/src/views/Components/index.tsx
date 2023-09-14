@@ -51,6 +51,7 @@ const Index = () => {
       renderItem={({ item, index }) => (
         <Pressable
           onPress={() => {
+            // @ts-expect-error
             navigation.navigate(item);
           }}
         >

@@ -12,6 +12,7 @@ import {
   VStack,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { isAllNetworks } from '@onekeyhq/engine/src/managers/network';
 import type { IOverviewAccountdefisResult } from '@onekeyhq/kit-bg/src/services/ServiceOverview';
 import { freezedEmptyArray } from '@onekeyhq/shared/src/consts/sharedConsts';
@@ -34,16 +35,9 @@ import { EOverviewScanTaskType, OverviewModalRoutes } from './types';
 
 import type { HomeRoutesParams, RootRoutesParams } from '../../routes/types';
 import type { OverviewDefiRes } from './types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
-  RootRoutesParams,
-  RootRoutes.Main
-> &
-  NativeStackNavigationProp<
-    HomeRoutesParams,
-    HomeRoutes.OverviewDefiListScreen
-  >;
+type NavigationProps = StackNavigationProp<RootRoutesParams, RootRoutes.Main> &
+  StackNavigationProp<HomeRoutesParams, HomeRoutes.OverviewDefiListScreen>;
 
 export type OverviewDefiListProps = {
   networkId: string;

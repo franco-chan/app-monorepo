@@ -3,14 +3,13 @@
 import type { FC } from 'react';
 import { useLayoutEffect } from 'react';
 
-import { useNavigation } from '@react-navigation/core';
-import { useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/core';
 
 import { Box, useIsVerticalLayout } from '@onekeyhq/components';
 import type { HomeRoutesParams } from '@onekeyhq/kit/src/routes/types';
 
 import type { HomeRoutes } from '../../../routes/routesEnum';
-import type { RouteProp } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/core';
 
 type RouteProps = RouteProp<HomeRoutesParams, HomeRoutes.DAppListScreen>;
 

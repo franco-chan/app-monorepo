@@ -14,6 +14,7 @@ import {
   Pressable,
   Typography,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 
 import backgroundApiProxy from '../../background/instance/backgroundApiProxy';
 import { HomeRoutes } from '../../routes/routesEnum';
@@ -22,9 +23,8 @@ import { setTransactionViewed } from '../../store/reducers/swapTransactions';
 import { useWalletsSwapTransactions } from './hooks/useTransactions';
 
 import type { HomeRoutesParams } from '../../routes/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<HomeRoutesParams>;
+type NavigationProps = StackNavigationProp<HomeRoutesParams>;
 
 const HistoryPendingIndicator = () => {
   const [len, setLen] = useState(1);

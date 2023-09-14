@@ -17,7 +17,6 @@ const config: TabRouteConfig = {
     toFocusedLazy(DiscoverScreen, {
       rootTabName: name,
     }),
-    name,
   ),
   children: [
     {

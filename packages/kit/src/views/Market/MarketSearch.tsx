@@ -19,6 +19,7 @@ import {
 } from '@onekeyhq/components';
 import NavigationButton from '@onekeyhq/components/src/Modal/Container/Header/NavigationButton';
 import useModalClose from '@onekeyhq/components/src/Modal/Container/useModalClose';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { HomeRoutes } from '@onekeyhq/kit/src/routes/routesEnum';
 import type { HomeRoutesParams } from '@onekeyhq/kit/src/routes/types';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
@@ -39,9 +40,8 @@ import {
 
 import type { MarketTokenItem } from '../../store/reducers/market';
 import type { SearchTabItem } from './Components/MarketSearch/MarketSearchTabView';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<HomeRoutesParams>;
+type NavigationProps = StackNavigationProp<HomeRoutesParams>;
 
 const MarketSearch: FC<{
   closeOverlay: () => void;

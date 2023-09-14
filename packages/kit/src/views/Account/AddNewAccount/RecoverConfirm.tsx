@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import { useKeepAwake } from 'expo-keep-awake';
 import { useIntl } from 'react-intl';
 

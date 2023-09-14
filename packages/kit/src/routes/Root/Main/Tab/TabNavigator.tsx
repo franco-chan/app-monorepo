@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useIntl } from 'react-intl';
 
 import { useIsVerticalLayout, useThemeValue } from '@onekeyhq/components';
 import { createBottomTabNavigator } from '@onekeyhq/components/src/Layout/BottomTabs';
+import NavigationBar from '@onekeyhq/components/src/Layout/NavigationBar';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
+import { LazyDisplayView } from '@onekeyhq/kit/src/components/LazyDisplayView';
 import platformEnv from '@onekeyhq/shared/src/platformEnv';
 
-import { LazyDisplayView } from '../../../../components/LazyDisplayView';
-import { TabRoutes } from '../../../routesEnum';
 import { buildAppRootTabName } from '../../../routesUtils';
 
 import { tabRoutes } from './routes/tabRoutes';
@@ -18,6 +18,7 @@ import {
   buildTabScreenHeaderRender,
 } from './tabNavHeader';
 
+import type { TabRoutes } from '../../../routesEnum';
 import type {
   ScreensList,
   TabRouteConfig,
@@ -26,7 +27,7 @@ import type {
 
 const Tab = createBottomTabNavigator<TabRoutesParams>();
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export const getStackTabScreen = (
   tabName: TabRoutes,
@@ -94,28 +95,23 @@ const TabNavigator = () => {
     [],
   );
 
-  const tabRoutesList = useMemo(() => {
-    let tabs = tabRoutes;
-    if (isVerticalLayout && !platformEnv.isNewRouteMode)
-      tabs = tabRoutes.filter((t) => t.name !== TabRoutes.Swap);
-    return tabs.map((tab) => (
-      <Tab.Screen
-        key={tab.name}
-        name={tab.name}
-        component={
-          platformEnv.isNewRouteMode || !isVerticalLayout
-            ? getStackTabScreen(tab.name, isVerticalLayout)
-            : tab.component
-        }
-        options={{
-          tabBarIcon: tab.tabBarIcon,
-          tabBarLabel: intl.formatMessage({ id: tab.translationId }),
-          // TODO not working
-          tabBarStyle: { display: 'none', height: 0 },
-        }}
-      />
-    ));
-  }, [intl, isVerticalLayout]);
+  const tabRoutesList = useMemo(
+    () =>
+      tabRoutes.map((tab) => (
+        <Tab.Screen
+          key={tab.name}
+          name={tab.name}
+          component={getStackTabScreen(tab.name, isVerticalLayout)}
+          options={{
+            tabBarIcon: tab.tabBarIcon,
+            tabBarLabel: intl.formatMessage({ id: tab.translationId }),
+            // TODO not working
+            tabBarStyle: { display: 'none', height: 0 },
+          }}
+        />
+      )),
+    [intl, isVerticalLayout],
+  );
 
   return useMemo(
     () => (
@@ -125,6 +121,9 @@ const TabNavigator = () => {
         isLazyDisabled={platformEnv.isNative}
       >
         <Tab.Navigator
+          tabBar={(props) => (
+            <NavigationBar isVerticalLayout={isVerticalLayout} {...props} />
+          )}
           screenOptions={{
             // TODO make component content lazy
             // FIXME: lazy causes issues with overlays
@@ -137,7 +136,7 @@ const TabNavigator = () => {
         </Tab.Navigator>
       </LazyDisplayView>
     ),
-    [tabNavigatorHeaderRender, tabRoutesList],
+    [isVerticalLayout, tabNavigatorHeaderRender, tabRoutesList],
   );
 };
 

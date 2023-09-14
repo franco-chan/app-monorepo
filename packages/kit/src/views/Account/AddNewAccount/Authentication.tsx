@@ -2,7 +2,7 @@
 import type { FC } from 'react';
 import { useEffect } from 'react';
 
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/core';
 
 import { Center, Modal, Spinner } from '@onekeyhq/components';
 import Protected, {
@@ -13,7 +13,7 @@ import type { CreateAccountRoutesParams } from '@onekeyhq/kit/src/routes';
 import { useNavigation } from '../../../hooks';
 
 import type { CreateAccountModalRoutes } from '../../../routes/routesEnum';
-import type { RouteProp } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/core';
 
 export type EnableLocalAuthenticationProps = {
   password: string;

@@ -28,7 +28,7 @@ import type {
   IWalletAccountsRefType,
   IWalletAccountsReturnType,
 } from './WalletAccounts';
-import type { RouteProp } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/core';
 
 export type IFetchAddressByRange = {
   type: 'setRange';

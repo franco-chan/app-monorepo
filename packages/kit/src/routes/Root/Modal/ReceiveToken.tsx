@@ -1,11 +1,10 @@
 import { useIsVerticalLayout } from '@onekeyhq/components';
+import { createStackNavigator } from '@onekeyhq/components/src/Navigation';
 
 import ReceiveInvoice from '../../../views/LightningNetwork/Receive';
 import CreateInvoice from '../../../views/LightningNetwork/Receive/CreateInvoice';
 import ReceiveToken from '../../../views/ReceiveToken';
 import { ReceiveTokenModalRoutes } from '../../../views/ReceiveToken/types';
-
-import createStackNavigator from './createStackNavigator';
 
 import type { ReceiveTokenRoutesParams } from '../../../views/ReceiveToken/types';
 

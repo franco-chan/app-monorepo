@@ -6,6 +6,7 @@ import { useIntl } from 'react-intl';
 
 import type { ICON_NAMES } from '@onekeyhq/components';
 import { Box, Divider, Typography } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import { isAllNetworks } from '@onekeyhq/engine/src/managers/network';
 import { WALLET_TYPE_WATCHING } from '@onekeyhq/engine/src/types/wallet';
 import {
@@ -30,13 +31,8 @@ import { showHomeBalanceSettings } from '../../Overlay/HomeBalanceSettings';
 import { HomeTabActionHeader } from '../HomeTabActionHeader';
 import { HomeTabAssetsHeader } from '../HomeTabAssetsHeader';
 
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
-type NavigationProps = NativeStackNavigationProp<
-  RootRoutesParams,
-  RootRoutes.Main
-> &
-  NativeStackNavigationProp<HomeRoutesParams, HomeRoutes.FullTokenListScreen>;
+type NavigationProps = StackNavigationProp<RootRoutesParams, RootRoutes.Main> &
+  StackNavigationProp<HomeRoutesParams, HomeRoutes.FullTokenListScreen>;
 
 const OverviewTokenListColumns = memo(() => {
   const intl = useIntl();

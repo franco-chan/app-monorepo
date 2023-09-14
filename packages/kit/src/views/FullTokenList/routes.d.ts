@@ -1,5 +1,6 @@
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
+
 import type { HomeRoutes } from '../../routes/routesEnum';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type FullTokenListScreenValues = {
   accountId: string;
@@ -10,7 +11,7 @@ export type FullTokenListRoutesParams = {
   [HomeRoutes.FullTokenListScreen]: FullTokenListScreenValues;
 };
 
-export type FullTokenListNavigation = NativeStackNavigationProp<
+export type FullTokenListNavigation = StackNavigationProp<
   FullTokenListRoutesParams,
   HomeRoutes.FullTokenListScreen
 >;

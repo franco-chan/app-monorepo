@@ -24,7 +24,7 @@ import { useFetchWalletAddress } from './useFetchWalletAddress';
 import type { CreateAccountRoutesParams } from '../../../routes';
 import type { ModalScreenProps } from '../../../routes/types';
 import type { INetworkDerivationItem } from './WalletAccounts';
-import type { RouteProp } from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/core';
 
 export type IExportAddressData = {
   data: {

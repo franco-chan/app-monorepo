@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react';
 
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from '@react-navigation/core';
 import { useIntl } from 'react-intl';
 import { Platform } from 'react-native';
 import ViewShot from 'react-native-view-shot';

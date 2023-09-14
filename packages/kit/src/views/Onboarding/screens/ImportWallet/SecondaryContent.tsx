@@ -12,6 +12,7 @@ import {
   Pressable,
   Text,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import LogoMetaMask from '@onekeyhq/kit/assets/onboarding/logo_metamask.png';
 
 import WalletAvatar from '../../../../components/WalletSelector/WalletAvatar';
@@ -20,7 +21,6 @@ import { EOnboardingRoutes } from '../../routes/enums';
 
 import type { IAddExistingWalletMode } from '../../../../routes';
 import type { IOnboardingRoutesParams } from '../../routes/types';
-import type { StackNavigationProp } from '@react-navigation/stack';
 import type { MessageDescriptor } from 'react-intl';
 
 type NavigationProps = StackNavigationProp<

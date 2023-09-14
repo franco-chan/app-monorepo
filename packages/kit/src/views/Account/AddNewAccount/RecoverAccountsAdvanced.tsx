@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import BigNumber from 'bignumber.js';
 import { useIntl } from 'react-intl';
 
@@ -17,20 +17,20 @@ import {
   useForm,
   useIsVerticalLayout,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { CreateAccountRoutesParams } from '@onekeyhq/kit/src/routes';
 
 import { useNetwork } from '../../../hooks';
 
 import type { CreateAccountModalRoutes } from '../../../routes/routesEnum';
-import type { RouteProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import type { RouteProp } from '@react-navigation/core';
 
 type RouteProps = RouteProp<
   CreateAccountRoutesParams,
   CreateAccountModalRoutes.RecoverAccountsAdvanced
 >;
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   CreateAccountRoutesParams,
   CreateAccountModalRoutes.RecoverAccountsAdvanced
 >;

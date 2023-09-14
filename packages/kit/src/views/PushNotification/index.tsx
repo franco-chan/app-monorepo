@@ -15,6 +15,7 @@ import {
   Text,
   useTheme,
 } from '@onekeyhq/components';
+import type { StackNavigationProp } from '@onekeyhq/components/src/Navigation';
 import type { PressableItemProps } from '@onekeyhq/components/src/Pressable/Pressable';
 import type { SelectItem } from '@onekeyhq/components/src/Select';
 import backgroundApiProxy from '@onekeyhq/kit/src/background/instance/backgroundApiProxy';
@@ -31,9 +32,8 @@ import { HomeRoutes } from '../../routes/routesEnum';
 import { useEnabledAccountDynamicAccounts, usePriceAlertlist } from './hooks';
 
 import type { HomeRoutesParams } from '../../routes/types';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-type NavigationProps = NativeStackNavigationProp<
+type NavigationProps = StackNavigationProp<
   HomeRoutesParams,
   HomeRoutes.PushNotification
 >;
